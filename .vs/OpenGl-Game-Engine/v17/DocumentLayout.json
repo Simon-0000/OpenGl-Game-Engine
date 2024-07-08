@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\USERS\\ASMAR\\DOCUMENTS\\VISUAL STUDIO 2022\\OPENGLPRACTICE PROJECTS\\OPENGL-GAME-ENGINE\\DEPENDENCIES\\GLAD\\INCLUDE\\GLAD\\GLAD.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:DEPENDENCIES\\GLAD\\INCLUDE\\GLAD\\GLAD.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "glad.h",
+              "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Dependencies\\glad\\include\\glad\\glad.h",
+              "RelativeDocumentMoniker": "Dependencies\\glad\\include\\glad\\glad.h",
+              "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Dependencies\\glad\\include\\glad\\glad.h",
+              "RelativeToolTip": "Dependencies\\glad\\include\\glad\\glad.h",
+              "ViewState": "AQIAABIAAAAAAAAAAAAuwBoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-07-08T18:06:22.741Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +41,7 @@
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAUAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-08T16:03:37.358Z",
               "EditorCaption": ""
