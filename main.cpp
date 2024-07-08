@@ -92,26 +92,30 @@ int main() {
 		1, 2, 3    // second triangle
 	};
 
-	//VBO
+	//generate VAO(VBO,EBO) which VAO Also stores the vertex attributes
+	unsigned int vertexArrayObject;
+	glGenVertexArrays(1, &vertexArrayObject);
+
+	unsigned int elementBufferObjectId;
+	glGenBuffers(1, &elementBufferObjectId);
+
 	unsigned int verticesBufferObjectId;
 	glGenBuffers(1, &verticesBufferObjectId);
+
+
+	//bind the VAO before the other two
+	glBindVertexArray(vertexArrayObject);
+
 	glBindBuffer(GL_ARRAY_BUFFER, verticesBufferObjectId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	//VAO //stores which VBO to use + our vertex attribute configuration
-	unsigned int vertexArrayObject;
-	glGenVertexArrays(1, &vertexArrayObject);
-	glBindVertexArray(vertexArrayObject);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	//vertex attributes
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	
-	//EBO
-	unsigned int elementBufferObjectId;
-	glGenBuffers(1, &elementBufferObjectId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 
 
 	//shaders
@@ -122,12 +126,10 @@ int main() {
 	{
 		processInput(window);
 
-		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		//glClear(GL_COLOR_BUFFER_BIT);
-
 		glUseProgram(shaderProgramId);
-		glBindVertexArray(vertexArrayObject);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(vertexArrayObject);// no need to bind the vbo and ebo because the vao does it 
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
 
 
 		glfwPollEvents();
