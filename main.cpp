@@ -1,9 +1,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "Shader.hpp"
 using namespace std;
 #define EXIT_MAIN(message) {cout<<message<<endl; glfwTerminate(); return -1;}
-static constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600, ERROR_MESSAGE_BUFFER_LENGTH = 512;
+static constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
@@ -12,43 +13,7 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 }
-unsigned int createAndCompileShader(GLenum shaderType, const char* shaderSrc)
-{
-	//vertex shader
-	unsigned int shaderId = glCreateShader(shaderType);
-	glShaderSource(shaderId, 1, &shaderSrc, NULL);
-	glCompileShader(shaderId);
 
-	//check if the shader it compiled correctly:
-	int  success;
-	char infoLog[ERROR_MESSAGE_BUFFER_LENGTH];
-	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(shaderId, ERROR_MESSAGE_BUFFER_LENGTH, NULL, infoLog);
-		std::cout << "ERROR::SHADER::"<<shaderType<<"::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-	return shaderId;
-}
-unsigned int createShaderProgram(const char* vertexShaderSrc, const char* fragmentShaderSrc) {
-	unsigned int vertexShader = createAndCompileShader(GL_VERTEX_SHADER, vertexShaderSrc);
-	unsigned int fragmentShader = createAndCompileShader(GL_FRAGMENT_SHADER, fragmentShaderSrc);
-	unsigned int shaderProgramId = glCreateProgram();
-
-	glAttachShader(shaderProgramId, vertexShader);
-	glAttachShader(shaderProgramId, fragmentShader);
-	glLinkProgram(shaderProgramId);
-	glDeleteShader(vertexShader);//dont need the shader once they have been linked 
-	glDeleteShader(fragmentShader);
-	int success;
-	glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
-	char infoLog[ERROR_MESSAGE_BUFFER_LENGTH];
-	if (!success) {
-		glGetProgramInfoLog(shaderProgramId, ERROR_MESSAGE_BUFFER_LENGTH, NULL, infoLog);
-		std::cout << "ERROR::SHADER PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-	return shaderProgramId;
-}
 
 int main() {
 
@@ -67,24 +32,10 @@ int main() {
 
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);//display rendering on the whole window
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	//other
-	const char* vertexShaderSource = "#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"layout (location = 1) in vec3 aColor;\n"
-		"out vec3 ourColor;"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-		"   ourColor = aColor;\n"
-		"}\0";
 
-	const char* fragmentShaderSource = "#version 330 core\n"
-		"out vec4 FragColor;\n"
-		"in vec3 ourColor;"
-		"void main()\n"
-		"{\n"
-		"FragColor = vec4(ourColor,1.0f);\n"
-		"}\0";
+
+
+	//init
 	float vertices[] = {//two triangles with common point on the origin
 		-0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
 		-1.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
@@ -129,21 +80,14 @@ int main() {
 
 
 	//shaders and uniforms
-	unsigned int shaderProgramId = createShaderProgram(vertexShaderSource, fragmentShaderSource);
-
-	//int location = glGetUniformLocation(shaderProgramId, "ourColor");
-	//if (location == -1)
-	//	EXIT_MAIN("UNIFORM NAME DOESNT EXIST");
-	//glUseProgram(shaderProgramId);//need to use/bind the program to set its uniform value
-	//glUniform4f(location, 0.0f, 1.0f, 0.0f, 1.0f);
-
+	Shader shader("shader.vs", "shader.fs");
 
 	//main render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
 
-		glUseProgram(shaderProgramId);
+		shader.use();
 		glBindVertexArray(vertexArrayObject);// no need to bind the vbo and ebo because the vao does it 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);

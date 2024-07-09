@@ -29,5 +29,12 @@
     <ClInclude Include="Shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGLDebug.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="shader.vs" />
+    <Text Include="shader.fs" />
   </ItemGroup>
 </Project>
