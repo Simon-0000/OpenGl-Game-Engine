@@ -81,7 +81,7 @@ int main() {
 
 	//shaders and uniforms
 	Shader shader("shader.vs", "shader.fs");
-
+	shader.useThenSetFloat("offset", 0.1f);
 	//main render loop
 	while (!glfwWindowShouldClose(window))
 	{

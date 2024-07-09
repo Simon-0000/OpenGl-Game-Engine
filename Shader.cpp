@@ -11,16 +11,27 @@ std::string Shader::readShaderFile(const char* shaderPath) {
 void Shader::use() const{
 	glUseProgram(id_);
 }
-void Shader::useThenSetVec4f(const char* name, float a, float b, float c, float d) const {
+void Shader::useThenSetFloat(const char* name, float a) const {
 	use();
-	glUniform4f(getUniformId(name), a,b,c,d);
-}
+	glUniform1f(getUniformId(name), a);
 
+}
+void Shader::useThenSetVec2f(const char* name, float a, float b) const {
+	use();
+	glUniform2f(getUniformId(name), a, b);
+
+}
 void Shader::useThenSetVec3f(const char* name, float a, float b, float c) const {
 	use();
 	glUniform3f(getUniformId(name), a, b, c);
 
 }
+void Shader::useThenSetVec4f(const char* name, float a, float b, float c, float d) const {
+	use();
+	glUniform4f(getUniformId(name), a,b,c,d);
+}
+
+
 int Shader::getUniformId(const char* name) const {
 	int location = glGetUniformLocation(id_, name);
 	if (location == -1)
