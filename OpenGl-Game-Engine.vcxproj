@@ -71,13 +71,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64); $(SolutionDir)\Dependencies\GLFW\lib</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Dependencies\GLFW\include;$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\stb_image\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)\Dependencies\GLFW\lib;$(SolutionDir)\Dependencies\GLM\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Dependencies\GLFW\include;$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\stb_image\include;$(SolutionDir)\Dependencies\GLM\include</IncludePath>
     <SourcePath>$(VC_SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64); $(SolutionDir)\Dependencies\GLFW\lib</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Dependencies\GLFW\include;$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\stb_image\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)\Dependencies\GLFW\lib;$(SolutionDir)\Dependencies\GLM\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\Dependencies\GLFW\include;$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\stb_image\include;$(SolutionDir)\Dependencies\GLM\include</IncludePath>
     <SourcePath>$(VC_SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

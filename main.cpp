@@ -4,6 +4,9 @@
 #include <iostream>
 #include "Shader.hpp"
 #include "Texture.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace std;
 
@@ -88,12 +91,19 @@ int main() {
 	Texture texture1("coolGuy.png", &shader,1);
 	Texture texture2("container.jpg", &shader, &texture1); //set the other image and link it to texture1 to be able to bind them at the same time
 
+
+
 	//main render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
+		glClear(GL_COLOR_BUFFER_BIT);
+		//glm
+		glm::mat4 trans = glm::mat4(1.0f);
+		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+		shader.useThenSetMat4f("transform", &trans);
 
-		shader.use();
 		texture1.bind();
 		glBindVertexArray(vertexArrayObject);// no need to bind the vbo and ebo because the vao does it 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

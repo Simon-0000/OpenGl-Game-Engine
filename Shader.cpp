@@ -37,6 +37,12 @@ void Shader::useThenSetVec4f(const char* name, float a, float b, float c, float 
 	glUniform4f(getUniformId(name), a,b,c,d);
 }
 
+void Shader::useThenSetMat4f(const char* name, glm::mat4* mat) const {
+	use();
+	glUniformMatrix4fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
+}
+
+
 
 int Shader::getUniformId(const char* name) const {
 	int location = glGetUniformLocation(id_, name);
