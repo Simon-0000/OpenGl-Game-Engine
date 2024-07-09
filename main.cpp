@@ -1,11 +1,12 @@
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "Shader.hpp"
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "Texture.hpp"
 
 using namespace std;
+
 #define EXIT_MAIN(message) {cout<<message<<endl; glfwTerminate(); return -1;}
 static constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
 
@@ -83,37 +84,17 @@ int main() {
 
 	//shaders and uniforms
 	Shader shader("shader.vs", "shader.fs");
-	//shader.useThenSetFloat("offset", 0.1f);
 
-	//texture
-	int width, height, nrChannels;
-	unsigned int textureId;
-	glGenTextures(1,&textureId);
-	glBindTexture(GL_TEXTURE_2D, textureId);
+	Texture texture1("coolGuy.png", &shader,1);
+	Texture texture2("container.jpg", &shader, &texture1);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);//increases performance and look
-	}
-	else {
-		EXIT_MAIN("Failed to load texture");
-	}
-	stbi_image_free(data);//free up memory after generating texture
-
-	
 	//main render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
 
 		shader.use();
-		glBindTexture(GL_TEXTURE_2D,textureId);
+		texture1.bind();
 		glBindVertexArray(vertexArrayObject);// no need to bind the vbo and ebo because the vao does it 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);

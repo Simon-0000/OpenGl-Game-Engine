@@ -11,6 +11,12 @@ std::string Shader::readShaderFile(const char* shaderPath) {
 void Shader::use() const{
 	glUseProgram(id_);
 }
+void Shader::useThenSetInt(const char* name, int a) const {
+	use();
+	glUniform1i(getUniformId(name), a);
+
+}
+
 void Shader::useThenSetFloat(const char* name, float a) const {
 	use();
 	glUniform1f(getUniformId(name), a);
@@ -35,7 +41,7 @@ void Shader::useThenSetVec4f(const char* name, float a, float b, float c, float 
 int Shader::getUniformId(const char* name) const {
 	int location = glGetUniformLocation(id_, name);
 	if (location == -1)
-		throw std::invalid_argument(std::format("the uniform {} doesnt exist",name));
+		throw std::invalid_argument(std::format("The uniform {} doesnt exist",name));
 	return location;
 }
 

@@ -12,6 +12,7 @@ class Shader {
 public:
 	Shader(const char* vertexShaderPath, const char* fragmentShaderPath);
 	void use() const;
+	void useThenSetInt(const char* name, int a) const;
 	void useThenSetFloat(const char* name, float a) const;
 	void useThenSetVec2f(const char* name, float a, float b) const;
 	void useThenSetVec3f(const char* name, float a, float b, float c) const;
