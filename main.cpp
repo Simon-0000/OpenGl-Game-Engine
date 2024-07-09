@@ -42,10 +42,10 @@ int main() {
 	//init
 	float vertices[] = {
 		// positions          // colors           // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f,   // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f,   // bottom right
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f    // top left 
 	};
 	unsigned int indices[] = {
 		0, 1, 2,   // first triangle
@@ -86,7 +86,7 @@ int main() {
 	Shader shader("shader.vs", "shader.fs");
 
 	Texture texture1("coolGuy.png", &shader,1);
-	Texture texture2("container.jpg", &shader, &texture1);
+	Texture texture2("container.jpg", &shader, &texture1); //set the other image and link it to texture1 to be able to bind them at the same time
 
 	//main render loop
 	while (!glfwWindowShouldClose(window))

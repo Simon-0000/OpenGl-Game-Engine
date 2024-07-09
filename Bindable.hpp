@@ -12,6 +12,4 @@ public:
 	void linkChild(Bindable* child);
 private:
 	std::vector<Bindable*> childs_;
-
-
 };
