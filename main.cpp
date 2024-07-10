@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Primitive.hpp"
+#include <vector>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 }
+
+
 
 int main() {
 
@@ -41,42 +44,29 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-	
-	//init
-	float vertices[] = {
-		// positions          // colors           // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f    // top left 
-	};
-	unsigned int indices[] = {
-		0, 1, 2,   // first triangle
-		2, 3, 0    // second triangle
-	};
-
-	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,3},{GL_FLOAT,2} };
-
-	Primitive square(vertices, sizeof(vertices), indices, sizeof(indices),attributes,3 );
+	glEnable(GL_DEPTH_TEST);
 
 	//shaders and uniforms
 	Shader shader("shader.vs", "shader.fs");
 
+
+	Primitive cube = Primitive::cube();
 	Texture texture1("coolGuy.png", &shader,1);
-	Texture texture2("container.jpg", &shader, &texture1); //set the other image and link it to texture1 to be able to bind them at the same time
-
-
-
+	Texture texture2("container.jpg", &shader, 2); //set the other image and link it to texture1 to be able to bind them at the same time
+	cube.linkChild(&texture1);
+	cube.linkChild(&texture2);
+	texture1.unbind();
+	texture2.unbind();
 
 	//main render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//glm
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
@@ -90,10 +80,9 @@ int main() {
 
 
 
-		texture1.bind();
-		square.bind();// no need to bind the vbo and ebo because the vao does it 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
+		cube.bind();// no need to bind the vbo and ebo because the vao does it 
+		glDrawElements(GL_TRIANGLES, cube.getNumberOfIndices(), GL_UNSIGNED_INT, 0);
+		cube.unbind();
 
 
 		glfwPollEvents();

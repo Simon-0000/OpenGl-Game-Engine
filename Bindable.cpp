@@ -2,9 +2,18 @@
 
 void Bindable::bind() {
 	localBind();
-	for (auto child : childs_)
-		child->bind();
+	if(child_)
+		child_->bind();
 }
+void Bindable::unbind() {
+	localUnbind();
+	if (child_)
+		child_->unbind();
+}
+
 void Bindable::linkChild(Bindable* child) {
-	childs_.push_back(child);
+	if (child_)
+		child_->linkChild(child);
+	else
+		child_ = child;
 }

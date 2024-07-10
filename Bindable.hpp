@@ -8,8 +8,11 @@ public:
 	virtual ~Bindable() = default;
 
 	virtual void localBind() = 0;
+	virtual void localUnbind() = 0;
 	void bind();
+	void unbind();
+
 	void linkChild(Bindable* child);
 private:
-	std::vector<Bindable*> childs_;
+	Bindable* child_ = nullptr;
 };

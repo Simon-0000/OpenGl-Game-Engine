@@ -12,6 +12,8 @@ public:
 	Texture(const char* imagePath, Shader* shader, Texture* parentTexture);
 
 	void localBind() override;
+	void localUnbind() override;
+
 private:
 	int getNumberOfTextureUnits();
 

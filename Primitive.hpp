@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <vector>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Bindable.hpp"
 
 
@@ -23,6 +25,10 @@ struct AttributeDescriptor {
 	unsigned int size;
 };
 
+struct Vertex {
+	glm::vec3 positions;
+	glm::vec2 TextureCoords;
+};
 class Primitive:public Bindable {
 public:
 	template<typename T>
@@ -31,9 +37,10 @@ public:
 		unsigned int VAO;
 		glGenVertexArrays(1, &VAO);
 		id_ = VAO;
-
+		numberOfIndices_ = indicesSize / sizeof(unsigned int);
 		unsigned int EBO;
 		glGenBuffers(1, &EBO);
+
 		unsigned int VBO;
 		glGenBuffers(1, &VBO);
 
@@ -42,10 +49,10 @@ public:
 		glBindVertexArray(VAO);
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(T) * verticesSize, vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indicesSize, indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize, indices, GL_STATIC_DRAW);
 
 		//vertex attributes
 		std::vector<unsigned int> offsets = { 0 };
@@ -58,6 +65,10 @@ public:
 		}
 	}
 	void localBind() override;
+	void localUnbind() override;
+
+	unsigned int getNumberOfIndices();
+	static Primitive cube();
 private:
-	unsigned int id_;
+	unsigned int id_,numberOfIndices_;
 };

@@ -24,7 +24,7 @@ Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit
 
 	std::string path(imagePath);
 	if(path.ends_with(".png"))
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);//Rgba
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);//Rgba
 	else
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);//Rgb
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -39,6 +39,10 @@ Texture::Texture(const char* imagePath, Shader * shader, Texture * parentTexture
 void Texture::localBind() {
 	glActiveTexture(GL_TEXTURE0 + textureUnit_);
 	glBindTexture(GL_TEXTURE_2D, id_);
+}
+void Texture::localUnbind() {
+	glActiveTexture(GL_TEXTURE0 + textureUnit_);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 int Texture::getNumberOfTextureUnits() {
