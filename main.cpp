@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Primitive.hpp"
 
 using namespace std;
 
@@ -20,7 +21,6 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 }
-
 
 int main() {
 
@@ -41,7 +41,7 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-
+	
 	//init
 	float vertices[] = {
 		// positions          // colors           // texture coords
@@ -55,35 +55,9 @@ int main() {
 		2, 3, 0    // second triangle
 	};
 
-	//generate VAO(VBO,EBO) which VAO Also stores the vertex attributes
-	unsigned int vertexArrayObject;
-	glGenVertexArrays(1, &vertexArrayObject);
+	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,3},{GL_FLOAT,2} };
 
-	unsigned int elementBufferObjectId;
-	glGenBuffers(1, &elementBufferObjectId);
-
-	unsigned int verticesBufferObjectId;
-	glGenBuffers(1, &verticesBufferObjectId);
-
-
-	//bind the VAO before the other two
-	glBindVertexArray(vertexArrayObject);
-
-	glBindBuffer(GL_ARRAY_BUFFER, verticesBufferObjectId);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	//vertex attributes
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3*sizeof(float)));
-
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	Primitive square(vertices, sizeof(vertices), indices, sizeof(indices),attributes,3 );
 
 	//shaders and uniforms
 	Shader shader("shader.vs", "shader.fs");
@@ -93,19 +67,31 @@ int main() {
 
 
 
+
 	//main render loop
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
 		glClear(GL_COLOR_BUFFER_BIT);
+
 		//glm
-		glm::mat4 trans = glm::mat4(1.0f);
-		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-		trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-		shader.useThenSetMat4f("transform", &trans);
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		glm::mat4 projection;
+		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+
+		shader.useThenSetMat4f("model", &model);
+		shader.useThenSetMat4f("view", &view);
+		shader.useThenSetMat4f("projection", &projection);
+
+
 
 		texture1.bind();
-		glBindVertexArray(vertexArrayObject);// no need to bind the vbo and ebo because the vao does it 
+		square.bind();// no need to bind the vbo and ebo because the vao does it 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 

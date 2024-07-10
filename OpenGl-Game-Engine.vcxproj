@@ -144,12 +144,14 @@
     <ClCompile Include="Bindable.cpp" />
     <ClCompile Include="Dependencies\glad\src\glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bindable.hpp" />
     <ClInclude Include="OpenGLDebug.hpp" />
+    <ClInclude Include="Primitive.hpp" />
     <ClInclude Include="Shader.hpp" />
     <ClInclude Include="Texture.hpp" />
   </ItemGroup>

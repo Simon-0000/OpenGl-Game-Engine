@@ -30,6 +30,9 @@
     <ClCompile Include="Bindable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Primitive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.hpp">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bindable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
