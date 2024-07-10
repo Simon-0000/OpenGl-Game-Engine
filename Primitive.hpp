@@ -31,8 +31,16 @@ struct Vertex {
 };
 class Primitive:public Bindable {
 public:
+
 	template<typename T>
-	Primitive(T* vertices, size_t verticesSize, unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize) {
+	Primitive(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize): 
+		Primitive(&vertices[0], sizeof(Vertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize){
+		
+	}
+
+
+	template<typename T>
+	Primitive(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize) {
 		//generate VAO(VBO,EBO) which VAO Also stores the vertex attributes
 		unsigned int VAO;
 		glGenVertexArrays(1, &VAO);
@@ -68,7 +76,7 @@ public:
 	void localUnbind() override;
 
 	unsigned int getNumberOfIndices();
-	static Primitive cube();
+	static Primitive cube(float halfSideLength = 0.5f);
 private:
 	unsigned int id_,numberOfIndices_;
 };

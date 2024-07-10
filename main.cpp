@@ -49,6 +49,12 @@ int main() {
 	//shaders and uniforms
 	Shader shader("shader.vs", "shader.fs");
 
+	glm::vec3 cubePositions[] = {
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+	};
 
 	Primitive cube = Primitive::cube();
 	Texture texture1("coolGuy.png", &shader,1);
@@ -59,14 +65,21 @@ int main() {
 	texture2.unbind();
 
 	//main render loop
+	double previousTime = glfwGetTime();
+	int fps = 0;
 	while (!glfwWindowShouldClose(window))
 	{
+		double currentTime = glfwGetTime();
+		++fps;
+		if (currentTime - previousTime >= 5.0)
+		{
+			system("cls");
+			std::cout << "FPS: " << fps/5<<std::endl;
+			fps = 0;
+			previousTime = currentTime;
+		}
 		processInput(window);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		//glm
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
@@ -74,14 +87,23 @@ int main() {
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
-		shader.useThenSetMat4f("model", &model);
 		shader.useThenSetMat4f("view", &view);
 		shader.useThenSetMat4f("projection", &projection);
 
 
+		cube.bind();
+		for (unsigned int i = 0; i < 4; i++)
+		{
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, cubePositions[i]);
+			model = glm::rotate(model, (float)currentTime * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
-		cube.bind();// no need to bind the vbo and ebo because the vao does it 
-		glDrawElements(GL_TRIANGLES, cube.getNumberOfIndices(), GL_UNSIGNED_INT, 0);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			shader.useThenSetMat4f("model", &model);
+
+			glDrawElements(GL_TRIANGLES, cube.getNumberOfIndices(), GL_UNSIGNED_INT, 0);
+		}
 		cube.unbind();
 
 

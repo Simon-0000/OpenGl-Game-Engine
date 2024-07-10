@@ -13,13 +13,13 @@ unsigned int Primitive::getNumberOfIndices() {
 }
 
 
-Primitive Primitive::cube() {
+Primitive Primitive::cube(float halfSideLength) {
 	//init 
 	Vertex baseVertices[] = {
-		{{ 0.5f,  0.5f, 0.5f},	 {1.0f, 1.0f}},   // top right
-		{{ 0.5f, -0.5f, 0.5f},	 {1.0f, 0.0f}},   // bottom right
-		{{-0.5f, -0.5f, 0.5f},	 {0.0f, 0.0f}},   // bottom left
-		{{-0.5f,  0.5f, 0.5f},	 {0.0f, 1.0f}}    // top left 
+		{{ halfSideLength,  halfSideLength, halfSideLength},	 {1.0f, 1.0f}},   // top right
+		{{ halfSideLength, -halfSideLength, halfSideLength},	 {1.0f, 0.0f}},   // bottom right
+		{{-halfSideLength, -halfSideLength, halfSideLength},	 {0.0f, 0.0f}},   // bottom left
+		{{-halfSideLength,  halfSideLength, halfSideLength},	 {0.0f, 1.0f}}    // top left 
 	};
 	
 	std::vector<Vertex> vertices;
@@ -52,7 +52,6 @@ Primitive Primitive::cube() {
 			indices.push_back(baseIndices[j] + 4 * i);
 		}
 	}
-
 	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2} };
-	return Primitive(&vertices[0], sizeof(Vertex) * vertices.size(), &indices[0], sizeof(unsigned int) * indices.size(), attributes, 3);
+	return Primitive(vertices, indices, attributes, 3);
 }
