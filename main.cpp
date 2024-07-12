@@ -9,20 +9,75 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Primitive.hpp"
 #include <vector>
+#include <cmath>
+#include "Inputs.hpp"
+
 
 using namespace std;
 
 #define EXIT_MAIN(message) {cout<<message<<endl; glfwTerminate(); return -1;}
 static constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
 
+//time
+static float deltaTime;
+
+//camera variables
+
+static constexpr float TURN_SENSITIVITY = 0.1f, TRANSLATION_SENSITIVITY = 2.0f;
+static bool shiftFunctionsEnabled = false, controlFunctionsEnabled = false;
+static double oldXPos, oldYPos;
+static float yaw = -90.0f, pitch = 0;
+static glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+static glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
-void processInput(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-}
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
 
+	if (action == GLFW_PRESS)
+	{
+		switch(key) {
+			case GLFW_KEY_ESCAPE:
+				break;
+			case GLFW_KEY_LEFT_SHIFT:
+				shiftFunctionsEnabled = true;
+				break;
+			case GLFW_KEY_LEFT_CONTROL:
+				controlFunctionsEnabled = true;
+				break;
+		}
+	}
+	else if (action == GLFW_RELEASE) {
+		switch (key) {
+			case GLFW_KEY_LEFT_SHIFT:
+				shiftFunctionsEnabled = false;
+				break;
+			case GLFW_KEY_LEFT_CONTROL:
+				controlFunctionsEnabled = false;
+				break;
+		}
+	}
+}
+static void mouse_callback(GLFWwindow* window, double xpos,double ypos){
+	if (!controlFunctionsEnabled) {
+		
+		yaw += (xpos - oldXPos) * TURN_SENSITIVITY;
+		pitch = max(min( pitch + ((oldYPos - ypos) * TURN_SENSITIVITY), 89.9), -89.9);
+
+
+		cameraFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+		cameraFront.y = sin(glm::radians(pitch));
+		cameraFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		cameraFront = glm::normalize(cameraFront);
+
+	}
+	oldXPos = xpos;
+	oldYPos = ypos;
+
+}
 
 
 int main() {
@@ -41,7 +96,22 @@ int main() {
 		EXIT_MAIN("Failed to initialize GLAD");
 
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);//display rendering on the whole window
+
+	glfwGetCursorPos(window, &oldXPos, &oldYPos);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	Inputs::init(window);
+	Inputs::addKeyCallback({ GLFW_KEY_ESCAPE ,GLFW_PRESS }, [window]() {glfwSetWindowShouldClose(window, true); });
+	Inputs::addKeyCallback({ GLFW_KEY_LEFT_SHIFT ,GLFW_PRESS }, []() {shiftFunctionsEnabled = true; });
+	Inputs::addKeyCallback({ GLFW_KEY_LEFT_SHIFT ,GLFW_RELEASE }, []() {shiftFunctionsEnabled = false; });
+	Inputs::addKeyCallback({ GLFW_KEY_LEFT_CONTROL ,GLFW_PRESS }, []() {controlFunctionsEnabled = true;  });
+	Inputs::addKeyCallback({ GLFW_KEY_LEFT_CONTROL ,GLFW_RELEASE }, []() {controlFunctionsEnabled = false;  });
+
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_W ,GLFW_PRESS }, []() {cameraPos += deltaTime * TRANSLATION_SENSITIVITY * cameraFront; });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_A ,GLFW_PRESS }, []() {cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * TRANSLATION_SENSITIVITY * deltaTime;});
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_S ,GLFW_PRESS }, []() {cameraPos -= deltaTime * TRANSLATION_SENSITIVITY * cameraFront; });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_D ,GLFW_PRESS }, []() {cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * TRANSLATION_SENSITIVITY * deltaTime; });
+
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -64,25 +134,26 @@ int main() {
 	texture1.unbind();
 	texture2.unbind();
 
+
 	//main render loop
-	double previousTime = glfwGetTime();
-	int fps = 0;
+	float currentTime, previousTime;
+	currentTime = previousTime = glfwGetTime();
+
 	while (!glfwWindowShouldClose(window))
 	{
-		double currentTime = glfwGetTime();
-		++fps;
-		if (currentTime - previousTime >= 5.0)
-		{
-			system("cls");
-			std::cout << "FPS: " << fps/5<<std::endl;
-			fps = 0;
-			previousTime = currentTime;
-		}
-		processInput(window);
+		Inputs::checkContinuousInputs();
+
+		currentTime = glfwGetTime();
+		deltaTime = currentTime - previousTime;
+		previousTime = currentTime;
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		const float radius = 10.0f;
+		float camX = sin(glfwGetTime()) * radius;
+		float camZ = cos(glfwGetTime()) * radius;
+		glm::mat4 view;
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -90,13 +161,12 @@ int main() {
 		shader.useThenSetMat4f("view", &view);
 		shader.useThenSetMat4f("projection", &projection);
 
-
 		cube.bind();
 		for (unsigned int i = 0; i < 4; i++)
 		{
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
-			model = glm::rotate(model, (float)currentTime * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+			model = glm::rotate(model, currentTime * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 			float angle = 20.0f * i;
 			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
