@@ -165,6 +165,9 @@
     <Image Include="container.jpg" />
     <Image Include="coolGuy.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="lightShader.fs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,14 +1,35 @@
 #version 330 core 
+
+//INPUT
+in vec2 Uv;
+in vec3 Normal;
+//in vec3 FragmentPosition;  
+
+
+
+//OUTPUT
 out vec4 FragColor; 
-in vec2 ourTextureCoord;
 
 
-uniform sampler2D texture1;
-uniform sampler2D texture2;
+//UNIFORMS
+uniform vec3 uObjectColor;
+uniform vec3 uLightColor;
+uniform vec3 uLightPosition;
 
-//uniform sampler2D texture2;
+
 
 void main()
 {
-    FragColor = mix(texture(texture1, ourTextureCoord), texture(texture2, ourTextureCoord), 0.5);
+//    vec3 norm = normalize(Normal);
+//    vec3 lightDir = normalize(uLightPosition - FragmentPosition);  
+
+
+    float ambientStrength = 0.1;
+    vec3 ambient = ambientStrength * uLightColor;
+    vec3 result = ambient * uObjectColor;
+    FragColor = vec4(result, 1.0);
+
+
+
+
 }

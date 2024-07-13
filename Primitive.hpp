@@ -25,16 +25,18 @@ struct AttributeDescriptor {
 	unsigned int size;
 };
 
-struct Vertex {
+struct BasicVertex {
 	glm::vec3 positions;
 	glm::vec2 TextureCoords;
+	glm::vec3 normals;
+
 };
 class Primitive:public Bindable {
 public:
 
 	template<typename T>
 	Primitive(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize): 
-		Primitive(&vertices[0], sizeof(Vertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize){
+		Primitive(&vertices[0], sizeof(BasicVertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize){
 		
 	}
 

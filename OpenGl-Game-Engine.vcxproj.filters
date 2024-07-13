@@ -69,4 +69,7 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="lightShader.fs" />
+  </ItemGroup>
 </Project>
