@@ -16,10 +16,17 @@ public:
 	void use() const;
 	void useThenSetInt(const char* name, int a) const;
 	void useThenSetFloat(const char* name, float a) const;
+
 	void useThenSetVec2f(const char* name, float a, float b) const;
+	void useThenSetVec2f(const char* name, const glm::vec2* vec) const;
+
 	void useThenSetVec3f(const char* name, float a, float b, float c) const;
+	void useThenSetVec3f(const char* name, const glm::vec3* vec) const;
+
 	void useThenSetVec4f(const char* name, float a, float b, float c, float d) const;
-	void useThenSetMat4f(const char* name, glm::mat4* mat) const;
+	void useThenSetVec4f(const char* name, const glm::vec4* vec) const;
+
+	void useThenSetMat4f(const char* name, const glm::mat4* mat) const;
 
 
 private:

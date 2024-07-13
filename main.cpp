@@ -118,7 +118,7 @@ int main() {
 
 	//shaders and uniforms
 	Shader shader("shader.vs", "shader.fs");
-	Shader lightShader("shader.vs", "lightShader.fs");
+	Shader lightShader("unlitShader.vs", "unlitShader.fs");
 
 
 	Primitive cube = Primitive::cube();
@@ -127,6 +127,7 @@ int main() {
 	glm::vec3 lightPosition = { 1.0f, 2.0f, -2.0f };
 	shader.useThenSetVec3f("uObjectColor", 1.0f, 0.5f, 0.31f);
 	shader.useThenSetVec3f("uLightColor", 1.0f, 1.0f, 1.0f);
+	shader.useThenSetVec3f("uLightPosition", &lightPosition);
 	//shader.useThenSetVec3f("uLightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
 
 	//Texture texture1("coolGuy.png", &shader,1);

@@ -22,22 +22,42 @@ void Shader::useThenSetFloat(const char* name, float a) const {
 	glUniform1f(getUniformId(name), a);
 
 }
+
 void Shader::useThenSetVec2f(const char* name, float a, float b) const {
 	use();
 	glUniform2f(getUniformId(name), a, b);
-
 }
+void Shader::useThenSetVec2f(const char* name, const glm::vec2* vec) const
+{
+	use();
+	glUniform2f(getUniformId(name), vec->x,vec->y);
+}
+
+
 void Shader::useThenSetVec3f(const char* name, float a, float b, float c) const {
 	use();
 	glUniform3f(getUniformId(name), a, b, c);
 
 }
+void Shader::useThenSetVec3f(const char* name, const glm::vec3* vec) const
+{
+	use();
+	glUniform3f(getUniformId(name), vec->x, vec->y,vec->z);
+}
+
 void Shader::useThenSetVec4f(const char* name, float a, float b, float c, float d) const {
 	use();
 	glUniform4f(getUniformId(name), a,b,c,d);
 }
+void Shader::useThenSetVec4f(const char* name, const glm::vec4* vec) const
+{
+	use();
+	glUniform4f(getUniformId(name), vec->x, vec->y, vec->z, vec->w);
 
-void Shader::useThenSetMat4f(const char* name, glm::mat4* mat) const {
+}
+
+
+void Shader::useThenSetMat4f(const char* name, const glm::mat4* mat) const {
 	use();
 	glUniformMatrix4fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
 }

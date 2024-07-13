@@ -70,6 +70,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lightShader.fs" />
+    <None Include="unlitShader.fs" />
+    <None Include="unlitShader.vs" />
   </ItemGroup>
 </Project>

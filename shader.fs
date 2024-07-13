@@ -3,7 +3,7 @@
 //INPUT
 in vec2 Uv;
 in vec3 Normal;
-//in vec3 FragmentPosition;  
+in vec3 FragmentPosition;  
 
 
 
@@ -20,13 +20,13 @@ uniform vec3 uLightPosition;
 
 void main()
 {
-//    vec3 norm = normalize(Normal);
-//    vec3 lightDir = normalize(uLightPosition - FragmentPosition);  
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(uLightPosition - FragmentPosition);  
 
 
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * uLightColor;
-    vec3 result = ambient * uObjectColor;
+    vec3 result = ambient * uObjectColor * uLightPosition;
     FragColor = vec4(result, 1.0);
 
 
