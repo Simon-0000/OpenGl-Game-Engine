@@ -27,7 +27,7 @@ void main()
 
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * uLightColor;
-    vec3 result = (ambient + diffuse) * uObjectColor * uLightPosition;
+    vec3 result = (ambient + diffuse) * uObjectColor;
     FragColor = vec4(result, 1.0);
 
 

@@ -9,7 +9,7 @@ layout (location = 2) in vec3 normal;
 //OUTPUT
 out vec2 Uv;
 out vec3 Normal;
-//out vec3 FragmentPosition;
+out vec3 FragmentPosition;
 
 
 //UNIFORMS
@@ -20,8 +20,8 @@ uniform mat4 uProjection;
 
 void main()  
 {  
+	FragmentPosition = vec3(uModel * vec4(position, 1.0));
 	gl_Position = uProjection * uView * uModel * vec4(position, 1.0);  
-	//FragmentPosition = vec3(model * vec4(aPos, 1.0));
 	Uv = uv;
-	Normal = normal;
+	Normal = mat3(transpose(inverse(uModel))) * normal;//inversing is costly, should calculate it once on cpu instead
 } 

@@ -122,9 +122,10 @@ int main() {
 
 
 	Primitive cube = Primitive::cube();
-	Primitive light = Primitive::cube();
+	Primitive light = Primitive::cube(0.1f);
 
-	glm::vec3 lightPosition = { 1.0f, 2.0f, -2.0f };
+	glm::vec3 lightPosition = { -1.0f, 0.0f, 1.65f };
+	glm::vec3 cubePosition = { 0.0f, 0.0f, 0.0f };
 	shader.useThenSetVec3f("uObjectColor", 1.0f, 0.5f, 0.31f);
 	shader.useThenSetVec3f("uLightColor", 1.0f, 1.0f, 1.0f);
 	shader.useThenSetVec3f("uLightPosition", &lightPosition);
@@ -154,7 +155,7 @@ int main() {
 
 		//CUBE
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::translate(model, cubePosition);
 		glm::mat4 view;
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		glm::mat4 projection;
@@ -169,12 +170,10 @@ int main() {
 		cube.unbind();
 
 		//LIGHT
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPosition);
-
+		auto lightModel = glm::translate(glm::mat4(1.0f), lightPosition);
 		lightShader.useThenSetMat4f("uView", &view);
 		lightShader.useThenSetMat4f("uProjection", &projection);
-		lightShader.useThenSetMat4f("uModel", &model);
+		lightShader.useThenSetMat4f("uModel", &lightModel);
 
 		light.bind();
 		glDrawElements(GL_TRIANGLES, light.getNumberOfIndices(), GL_UNSIGNED_INT, 0);
