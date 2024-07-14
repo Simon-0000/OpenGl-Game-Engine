@@ -124,16 +124,14 @@ int main() {
 	Primitive cube = Primitive::cube();
 	Primitive light = Primitive::cube(0.1f);
 
-	glm::vec3 lightPosition = { -1.0f, 0.0f, 1.65f };
+	glm::vec3 lightPosition = { -2.0f, 0.0f, 1.65f };
 	glm::vec3 cubePosition = { 0.0f, 0.0f, 0.0f };
-	shader.useThenSetVec3f("uObjectColor", 1.0f, 0.5f, 0.31f);
 	shader.useThenSetVec3f("uLightColor", 1.0f, 1.0f, 1.0f);
 	shader.useThenSetVec3f("uLightPosition", &lightPosition);
-	//shader.useThenSetVec3f("uLightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
 
-	//Texture texture1("coolGuy.png", &shader,1);
+	Texture texture1("container.jpg", &shader);
 	//Texture texture2("container.jpg", &shader, 2); //set the other image and link it to texture1 to be able to bind them at the same time
-	//cube.linkChild(&texture1);
+	cube.linkChild(&texture1);
 	//cube.linkChild(&texture2);
 	//texture1.unbind();
 	//texture2.unbind();
@@ -178,6 +176,9 @@ int main() {
 		light.bind();
 		glDrawElements(GL_TRIANGLES, light.getNumberOfIndices(), GL_UNSIGNED_INT, 0);
 		light.unbind();
+
+		shader.useThenSetVec3f("uViewPosition", &cameraPos);
+
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
