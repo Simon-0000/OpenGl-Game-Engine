@@ -13,6 +13,11 @@ public:
 	void unbind();
 
 	void linkChild(Bindable* child);
+	void linkBrother(Bindable* brother);
+
+	void unlinkBrother();
+
 private:
-	Bindable* child_ = nullptr;
+	Bindable* relative_ = nullptr;
+	int childCounter = 0;
 };
