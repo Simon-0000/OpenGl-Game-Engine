@@ -1,12 +1,9 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "Bindable.hpp"
+#include "Transform.hpp"
 
-class RelativeGameObject: public Bindable {
+class GameObject: public Transform {
 public:
-	RelativeGameObject(const glm::vec3& position);
-	void attachToParent(Bindable* parent);
-protected:
-	glm::vec3 position_;
-	Bindable* parent;
+	GameObject(glm::vec3 position_, glm::vec3 rotation);
+	void attachToParent(GameObject* parent);
 };

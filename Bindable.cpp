@@ -13,7 +13,7 @@ void Bindable::unbind() {
 
 void Bindable::linkChild(Bindable* child) {
 	if (relative_) {
-		if (childCounter == 0)//put the child before the brother in the linked list
+		if (childCounter_ == 0)//put the child before the brother in the linked list
 		{
 			auto brother = relative_;
 			relative_ = child;
@@ -24,7 +24,7 @@ void Bindable::linkChild(Bindable* child) {
 	else
 		relative_ = child;
 
-	++childCounter;
+	childCounter_ += child->childCounter_;
 }
 void Bindable::linkBrother(Bindable* brother) {
 	if (relative_)
@@ -33,10 +33,27 @@ void Bindable::linkBrother(Bindable* brother) {
 		relative_ = brother;
 }
 
-void Bindable::unlinkBrother() {
-	Bindable* brother = relative_;
-	for (int i = 0; i < childCounter - 1; ++i) {
-		brother = brother->relative_;
+
+void Bindable::unlinkChild(Bindable* child) {
+
+	Bindable*& relative = relative_;
+	while (relative != child) {
+		relative = relative->relative_;
 	}
-	brother->relative_ = nullptr;
+	if (relative) {
+		relative = relative->getBrother();
+		childCounter_ -= relative->childCounter_;
+	}
 }
+Bindable*& Bindable::getBrother() {
+	Bindable*& brother = relative_;
+	for (int i = 0; i < childCounter_; ++i)
+		brother = brother->relative_;
+	return brother;
+}
+
+bool Bindable::hasNoRelative()
+{
+	return relative_ == nullptr;
+}
+

@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Bindable.hpp"
+#include "GameObject.hpp"
 
 
 static std::unordered_map<GLenum, unsigned int> typeToSize{ 

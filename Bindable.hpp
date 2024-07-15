@@ -15,9 +15,11 @@ public:
 	void linkChild(Bindable* child);
 	void linkBrother(Bindable* brother);
 
-	void unlinkBrother();
-
+	void unlinkChild(Bindable* child);
+	Bindable*& getBrother();
+	
+	bool hasNoRelative();
 private:
 	Bindable* relative_ = nullptr;
-	int childCounter = 0;
+	int childCounter_ = 0;
 };
