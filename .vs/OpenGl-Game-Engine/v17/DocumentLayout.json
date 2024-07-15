@@ -123,9 +123,9 @@
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp*",
-              "RelativeToolTip": "main.cpp*",
-              "ViewState": "AQIAAHgAAAAAAAAAAAAQwIYAAAAbAAAA",
+              "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp",
+              "RelativeToolTip": "main.cpp",
+              "ViewState": "AQIAAHkAAAAAAAAAAAAhwIMAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-08T16:03:37.358Z",
               "IsPinned": true,
@@ -141,8 +141,7 @@
               "RelativeToolTip": "Transform.cpp",
               "ViewState": "AQIAAD0AAAAAAAAAAAAgwEsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-14T19:17:50.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T19:17:50.694Z"
             },
             {
               "$type": "Document",
@@ -154,8 +153,7 @@
               "RelativeToolTip": "Transform.hpp",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-14T19:02:35.356Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T19:02:35.356Z"
             },
             {
               "$type": "Document",
@@ -167,8 +165,7 @@
               "RelativeToolTip": "GameObject.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-14T18:41:29.902Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T18:41:29.902Z"
             },
             {
               "$type": "Document",
@@ -180,8 +177,7 @@
               "RelativeToolTip": "GameObject.hpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-14T02:29:17.631Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T02:29:17.631Z"
             },
             {
               "$type": "Document",
@@ -217,8 +213,7 @@
               "RelativeToolTip": "Shader.hpp",
               "ViewState": "AQIAAAkAAAAAAAAAAAAAABoAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-09T00:04:29.324Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T00:04:29.324Z"
             },
             {
               "$type": "Document",
@@ -230,8 +225,7 @@
               "RelativeToolTip": "Shader.cpp",
               "ViewState": "AQIAABUAAAAAAAAAAAAAAEUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-09T00:04:18.808Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T00:04:18.808Z"
             },
             {
               "$type": "Document",
@@ -243,8 +237,7 @@
               "RelativeToolTip": "Bindable.hpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-09T15:45:58.962Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T15:45:58.962Z"
             },
             {
               "$type": "Document",
@@ -256,8 +249,7 @@
               "RelativeToolTip": "Bindable.cpp",
               "ViewState": "AQIAACoAAAAAAAAAAAAlwDYAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-09T15:48:26.213Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T15:48:26.213Z"
             },
             {
               "$type": "Document",
@@ -269,8 +261,7 @@
               "RelativeToolTip": "Camera.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-14T02:19:27.871Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T02:19:27.871Z"
             },
             {
               "$type": "Document",
@@ -318,8 +309,7 @@
               "RelativeToolTip": "Inputs.cpp",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAABsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-11T18:54:15.441Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T18:54:15.441Z"
             },
             {
               "$type": "Document",
@@ -331,8 +321,7 @@
               "RelativeToolTip": "Primitive.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-10T02:23:47.555Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-10T02:23:47.555Z"
             },
             {
               "$type": "Document",
@@ -344,8 +333,7 @@
               "RelativeToolTip": "Primitive.hpp",
               "ViewState": "AQIAAEAAAAAAAAAAAAAlwE0AAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-10T02:23:58.608Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-10T02:23:58.608Z"
             },
             {
               "$type": "Document",
@@ -393,8 +381,7 @@
               "RelativeToolTip": "Texture.hpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAD4vw4AAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-09T14:49:50.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T14:49:50.54Z"
             },
             {
               "$type": "Document",
@@ -442,8 +429,7 @@
               "RelativeToolTip": "Dependencies\\glad\\src\\glad.c",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-07-09T00:40:14.539Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T00:40:14.539Z"
             },
             {
               "$type": "Document",
