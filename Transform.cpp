@@ -17,6 +17,8 @@ Transform& Transform::operator=(const Transform& other)//doesnt copy parent and 
 	rotation_ = other.rotation_;
 	scale_ = other.scale_;
 	localModelMatrix_ = other.localModelMatrix_;
+	parent_ = other.parent_;
+	modelMatrix_ = other.modelMatrix_;
 	modelNeedsUpdating_ = true;
 	return *this;
 }
@@ -39,6 +41,15 @@ void Transform::setScale(const glm::vec3& scale)
 	scale_ = scale;
 }
 
+void Transform::setParent(Transform* parent)
+{
+	if (parent_)
+		parent_->unlinkChild(this);
+	parent_ = parent;
+	parent_->linkChild(this);
+	modelNeedsUpdating_ = true;
+}
+
 const glm::mat4& Transform::getModelMatrix()
 {
 	updateModelMatrix();
@@ -47,15 +58,22 @@ const glm::mat4& Transform::getModelMatrix()
 
 void Transform::updateModelMatrix()
 {
+	bool updateOccured = parent_ && parent_->modelNeedsUpdating_;
 	if (modelNeedsUpdating_) {
 		localModelMatrix_ = glm::mat4(1.0f);
 		localModelMatrix_ = glm::translate(localModelMatrix_, position_);
 		//localModelMatrix_ = glm::rotate(localModelMatrix_, (float)rotation_.length(), rotation_);
 		localModelMatrix_ = glm::scale(localModelMatrix_, scale_);
+		updateOccured = true;
 	}
 
-	if (parent_->modelNeedsUpdating_) {
-		modelMatrix_ = parent_->getModelMatrix() * localModelMatrix_;
+	if(updateOccured)
+	{
+		if (parent_)
+			modelMatrix_ = parent_->getModelMatrix() * localModelMatrix_;
+		else
+			modelMatrix_ = localModelMatrix_;
+
 		modelNeedsUpdating_ = true;
 	}
 

@@ -120,12 +120,13 @@ int main() {
 	Shader shader("shader.vs", "shader.fs");
 	Shader lightShader("unlitShader.vs", "unlitShader.fs");
 
-
-	Primitive cube = Primitive::cube();
-	Primitive light = Primitive::cube(0.1f);
-
 	glm::vec3 lightPosition = { -2.0f, 0.0f, 1.65f };
 	glm::vec3 cubePosition = { 0.0f, 0.0f, 0.0f };
+
+	Primitive cube = Primitive::cube(&shader,{cubePosition});
+	Primitive light = Primitive::cube(&shader, {lightPosition}, 0.1f);
+
+
 	shader.useThenSetVec3f("uLightColor", 1.0f, 1.0f, 1.0f);
 	shader.useThenSetVec3f("uLightPosition", &lightPosition);
 
@@ -163,9 +164,7 @@ int main() {
 		shader.useThenSetMat4f("uProjection", &projection);
 		shader.useThenSetMat4f("uModel", &model);
 		
-		cube.bind();
-		glDrawElements(GL_TRIANGLES, cube.getNumberOfIndices(), GL_UNSIGNED_INT, 0);
-		cube.unbind();
+		cube.draw();
 
 		//LIGHT
 		auto lightModel = glm::translate(glm::mat4(1.0f), lightPosition);

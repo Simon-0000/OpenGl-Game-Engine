@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "GameObject.hpp"
-
+#include "Shader.hpp"
 
 static std::unordered_map<GLenum, unsigned int> typeToSize{ 
 	
@@ -31,18 +31,17 @@ struct BasicVertex {
 	glm::vec3 normals;
 
 };
-class Primitive:public Bindable {
+class Primitive : public GameObject {
 public:
 
 	template<typename T>
-	Primitive(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize): 
-		Primitive(&vertices[0], sizeof(BasicVertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize){
+	Primitive(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo):
+		Primitive(&vertices[0], sizeof(BasicVertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize,shader, transInfo){
 		
 	}
 
-
 	template<typename T>
-	Primitive(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize) {
+	Primitive(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo) : GameObject(shader,transInfo){
 		//generate VAO(VBO,EBO) which VAO Also stores the vertex attributes
 		unsigned int VAO;
 		glGenVertexArrays(1, &VAO);
@@ -74,11 +73,13 @@ public:
 			glVertexAttribPointer(i, attributes[i].size, attributes[i].type, GL_FALSE, offsets[offsets.size() - 1], (void*)offsets[i]);
 		}
 	}
+	
+	void draw() override;
 	void localBind() override;
 	void localUnbind() override;
 
 	unsigned int getNumberOfIndices();
-	static Primitive cube(float halfSideLength = 0.5f);
+	static Primitive cube(Shader* shader, const Transform& transInfo, float halfSideLength = 0.5f);
 private:
 	unsigned int id_,numberOfIndices_;
 };
