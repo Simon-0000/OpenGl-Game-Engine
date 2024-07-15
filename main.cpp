@@ -118,12 +118,9 @@ int main() {
 	lightShader.useThenSetMat4f("uProjection", &projection);
 
 
-
-
 	//GameObjects setup
 	Primitive cube = Primitive::cube(&shader,{cubePosition});
 	Primitive secondCube = Primitive::cube(&shader, { secondCubePosition });
-
 	Primitive light = Primitive::cube(&lightShader, {lightPosition}, 0.1f);
 
 

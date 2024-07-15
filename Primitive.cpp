@@ -25,32 +25,32 @@ Primitive Primitive::cube(Shader* shader, const Transform& transInfo, float half
 		{{-halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
 		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
 		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,1.0f}, {0.0f,  0.0f, -1.0f}},
-		{{-halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
+		{{-halfSideLength,  halfSideLength, -halfSideLength}, {0.0f,1.0f}, {0.0f,  0.0f, -1.0f}},
 					   			 
 		{{-halfSideLength, -halfSideLength,  halfSideLength}, {0.0f,0.0f},  {0.0f,  0.0f,  1.0f}},
 		{{ halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,0.0f},  {0.0f,  0.0f,  1.0f}},
 		{{ halfSideLength,  halfSideLength,  halfSideLength}, {1.0f,1.0f},  {0.0f,  0.0f,  1.0f}},
-		{{-halfSideLength,  halfSideLength,  halfSideLength}, {1.0f,0.0f},  {0.0f,  0.0f,  1.0f}},
+		{{-halfSideLength,  halfSideLength,  halfSideLength}, {0.0f,1.0f},  {0.0f,  0.0f,  1.0f}},
 					  			 
 		{{-halfSideLength,  halfSideLength,  halfSideLength}, {0.0f,0.0f}, {-1.0f,  0.0f,  0.0f}},
 		{{-halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,0.0f}, {-1.0f,  0.0f,  0.0f}},
 		{{-halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,1.0f}, {-1.0f,  0.0f,  0.0f}},
-		{{-halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,0.0f}, {-1.0f,  0.0f,  0.0f}},
+		{{-halfSideLength, -halfSideLength,  halfSideLength}, {0.0f,1.0f}, {-1.0f,  0.0f,  0.0f}},
 					  			 
 		{{ halfSideLength,  halfSideLength,  halfSideLength}, {0.0f,0.0f}, {1.0f,  0.0f,  0.0f}},
 		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,0.0f}, {1.0f,  0.0f,  0.0f}},
 		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,1.0f}, {1.0f,  0.0f,  0.0f}},
-		{{ halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,0.0f}, {1.0f,  0.0f,  0.0f}},
+		{{ halfSideLength, -halfSideLength,  halfSideLength}, {0.0f,1.0f}, {1.0f,  0.0f,  0.0f}},
 					  			 
 		{{-halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {0.0f, -1.0f,  0.0f}},
 		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f, -1.0f,  0.0f}},
 		{{ halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,1.0f}, {0.0f, -1.0f,  0.0f}},
-		{{-halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,0.0f}, {0.0f, -1.0f,  0.0f}},
+		{{-halfSideLength, -halfSideLength,  halfSideLength}, {0.0f,1.0f}, {0.0f, -1.0f,  0.0f}},
 		   			   			 
 		{{-halfSideLength,  halfSideLength, -halfSideLength}, {0.0f,0.0f}, {0.0f,  1.0f,  0.0f}},
 		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f,  1.0f,  0.0f}},
 		{{ halfSideLength,  halfSideLength,  halfSideLength}, {1.0f,1.0f}, {0.0f,  1.0f,  0.0f}},
-		{{-halfSideLength,  halfSideLength,  halfSideLength}, {1.0f,0.0f}, {0.0f,  1.0f,  0.0f}},
+		{{-halfSideLength,  halfSideLength,  halfSideLength}, {0.0f,1.0f}, {0.0f,  1.0f,  0.0f}},
 	};
 
 	unsigned int baseIndices[] = {
