@@ -13,13 +13,9 @@ public:
 	void unbind();
 
 	void linkChild(Bindable* child);
-	void linkBrother(Bindable* brother);
-
 	void unlinkChild(Bindable* child);
-	Bindable*& getBrother();
 	
-	bool hasNoRelative();
 private:
-	Bindable* relative_ = nullptr;
-	int childCounter_ = 0;
+	Bindable* sibling_ = nullptr;
+	Bindable* child_ = nullptr;
 };

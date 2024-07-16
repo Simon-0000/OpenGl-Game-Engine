@@ -1,8 +1,10 @@
 #include "Transform.hpp"
 
 Transform::Transform(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, Transform* parent) :
-	position_(position), rotation_(rotation), scale_(scale), localModelMatrix_(1.0f),modelMatrix_(1.0f),modelNeedsUpdating_(true), parent_(parent)
+	position_(position), rotation_(rotation), scale_(scale), localModelMatrix_(1.0f),modelMatrix_(1.0f),modelNeedsUpdating_(true), parent_(parent), childCount_(0)
 {
+	if (parent)
+		childId_ = ++parent->childCount_;
 	modelNeedsUpdating_ = true;
 }
 
@@ -17,9 +19,10 @@ Transform& Transform::operator=(const Transform& other)//doesnt copy parent and 
 	rotation_ = other.rotation_;
 	scale_ = other.scale_;
 	localModelMatrix_ = other.localModelMatrix_;
-	parent_ = other.parent_;
 	modelMatrix_ = other.modelMatrix_;
+	parent_ = other.parent_;
 	modelNeedsUpdating_ = true;
+	childId_ = parent_ ? childId_ = ++parent_->childCount_ : 0;
 	return *this;
 }
 
@@ -43,17 +46,17 @@ void Transform::setScale(const glm::vec3& scale)
 
 void Transform::setParent(Transform* parent)
 {
-	if (parent_)
-		parent_->unlinkChild(this);
-	parent_ = parent;
-	parent_->linkChild(this);
+	if (parent_ = parent)
+		childId_ = ++parent->childCount_;
+	else
+		childId_ = 0;
 	modelNeedsUpdating_ = true;
 }
 
-const glm::mat4& Transform::getModelMatrix()
+const glm::mat4& Transform::getUpdatedModelMatrix()
 {
 	updateModelMatrix();
-	return localModelMatrix_;
+	return modelMatrix_;
 }
 
 void Transform::updateModelMatrix()
@@ -62,7 +65,8 @@ void Transform::updateModelMatrix()
 	if (modelNeedsUpdating_) {
 		localModelMatrix_ = glm::mat4(1.0f);
 		localModelMatrix_ = glm::translate(localModelMatrix_, position_);
-		//localModelMatrix_ = glm::rotate(localModelMatrix_, (float)rotation_.length(), rotation_);
+		if(glm::length(rotation_) > ZERO_LENGTH_EPSILON)//prevent zero length rotation (nan)
+			localModelMatrix_ = glm::rotate(localModelMatrix_, glm::length(rotation_), glm::normalize(rotation_));
 		localModelMatrix_ = glm::scale(localModelMatrix_, scale_);
 		updateOccured = true;
 	}
@@ -70,18 +74,17 @@ void Transform::updateModelMatrix()
 	if(updateOccured)
 	{
 		if (parent_)
-			modelMatrix_ = parent_->getModelMatrix() * localModelMatrix_;
+			modelMatrix_ = parent_->getUpdatedModelMatrix() * localModelMatrix_;
 		else
 			modelMatrix_ = localModelMatrix_;
 
 		modelNeedsUpdating_ = true;
 	}
 
-	if(hasNoRelative())
-		resetUpdatingFlag();
-}
-void Transform::resetUpdatingFlag() {
-	modelNeedsUpdating_ = false;
-	if (parent_ && parent_->modelNeedsUpdating_)
-		parent_->resetUpdatingFlag();
+	if (parent_ && childId_ == parent_->childCount_)
+		parent_->modelNeedsUpdating_ = false;
+	else if (childCount_ == 0)
+		modelNeedsUpdating_ = false;
+
+
 }

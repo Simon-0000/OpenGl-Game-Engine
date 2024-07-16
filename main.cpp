@@ -64,6 +64,9 @@ static void initEditorInputs(GLFWwindow* window) {
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_A ,GLFW_PRESS }, []() {cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * TRANSLATION_SENSITIVITY * deltaTime; });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_S ,GLFW_PRESS }, []() {cameraPos -= deltaTime * TRANSLATION_SENSITIVITY * cameraFront; });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_D ,GLFW_PRESS }, []() {cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * TRANSLATION_SENSITIVITY * deltaTime; });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_E ,GLFW_PRESS }, []() {cameraPos += deltaTime * TRANSLATION_SENSITIVITY * cameraUp; });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_Q ,GLFW_PRESS }, []() {cameraPos -= deltaTime * TRANSLATION_SENSITIVITY * cameraUp; });
+
 }
 static GLFWwindow* initOpenGlLibraries() {
 	glfwInit();
@@ -119,8 +122,9 @@ int main() {
 
 
 	//GameObjects setup
-	Primitive cube = Primitive::cube(&shader,{cubePosition});
+	Primitive cube = Primitive::cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
 	Primitive secondCube = Primitive::cube(&shader, { secondCubePosition });
+	secondCube.setParent(&cube);
 	Primitive light = Primitive::cube(&lightShader, {lightPosition}, 0.1f);
 
 
@@ -151,8 +155,8 @@ int main() {
 		shader.useThenSetVec3f("uViewPosition", &cameraPos);
 		shader.useThenSetMat4f("uView", &view);
 		
-		cube.draw();
-		secondCube.draw();
+		cube.bind();
+		//secondCube.draw();
 
 		//light shader section
 		lightShader.useThenSetMat4f("uView", &view);
