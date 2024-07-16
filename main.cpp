@@ -106,6 +106,7 @@ int main() {
 	glm::vec3 lightPosition = { -2.0f, 0.0f, 1.65f };
 	glm::vec3 cubePosition = { 0.0f, 0.0f, 0.0f };
 	glm::vec3 secondCubePosition = { 0.0f, 2.0f, 0.0f };
+	glm::vec3 secondCubeChildPosition = { 0.0f, 1.0f, 0.0f };
 
 	float currentTime, previousTime;
 
@@ -124,13 +125,16 @@ int main() {
 	//GameObjects setup
 	Primitive cube = Primitive::cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
 	Primitive secondCube = Primitive::cube(&shader, { secondCubePosition });
-	secondCube.setParent(&cube);
+	Primitive secondCubeChild = Primitive::cube(&shader, { secondCubeChildPosition },0.1f);
+	secondCubeChild.setParent(&secondCube);
+
 	Primitive light = Primitive::cube(&lightShader, {lightPosition}, 0.1f);
 
 
 	//textures
 	Texture textureA("container.jpg", &shader);
 	cube.linkChild(&textureA);
+	secondCubeChild.linkChild(&textureA);
 	Texture textureB("coolGuy.png", &shader);
 	secondCube.linkChild(&textureB);
 
@@ -157,6 +161,7 @@ int main() {
 		
 		cube.draw();
 		secondCube.draw();
+		secondCubeChild.draw();
 		//secondCube.draw();
 
 		//light shader section

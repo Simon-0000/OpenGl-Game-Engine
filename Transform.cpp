@@ -37,6 +37,10 @@ void Transform::setRotation(const glm::vec3& rotation)
 	modelNeedsUpdating_ = true;
 	rotation_ = rotation;
 }
+void Transform::rotate(const glm::vec3& rotation) {
+	modelNeedsUpdating_ = true;
+	rotation_ += rotation;
+}
 
 void Transform::setScale(const glm::vec3& scale)
 {

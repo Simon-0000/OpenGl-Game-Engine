@@ -1,7 +1,7 @@
 #include "Primitive.hpp"
 
 void Primitive::localBind() {
-	draw();
+	glBindVertexArray(id_);
 }
 
 void Primitive::localUnbind() {
@@ -9,7 +9,7 @@ void Primitive::localUnbind() {
 }
 
 void Primitive::draw() {
-	glBindVertexArray(id_);
+	bind();
 	shader_->useThenSetMat4f("uModel", &getUpdatedModelMatrix());
 	glDrawElements(GL_TRIANGLES, getNumberOfIndices(), GL_UNSIGNED_INT, 0);
 }
