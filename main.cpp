@@ -155,7 +155,8 @@ int main() {
 		shader.useThenSetVec3f("uViewPosition", &cameraPos);
 		shader.useThenSetMat4f("uView", &view);
 		
-		cube.bind();
+		cube.draw();
+		secondCube.draw();
 		//secondCube.draw();
 
 		//light shader section

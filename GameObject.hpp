@@ -10,8 +10,6 @@ public:
 	GameObject(Shader* shader,const Transform& transInfo) : Transform(transInfo), shader_(shader) {}
 	virtual ~GameObject() = default;
 	virtual void draw() = 0;
-
-	void setParent(GameObject* parent);
 protected:
 	Shader* shader_;
 };
