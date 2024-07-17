@@ -142,11 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bindable.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Dependencies\glad\src\glad.c" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Inputs.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -154,9 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bindable.hpp" />
-    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="Inputs.hpp" />
+    <ClInclude Include="Material.hpp" />
     <ClInclude Include="OpenGLDebug.hpp" />
     <ClInclude Include="Primitive.hpp" />
     <ClInclude Include="Shader.hpp" />

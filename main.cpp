@@ -11,7 +11,7 @@
 #include <vector>
 #include <cmath>
 #include "Inputs.hpp"
-
+#include "Material.hpp"
 
 using namespace std;
 
@@ -111,15 +111,10 @@ int main() {
 	float currentTime, previousTime;
 
 
-	//shaders and uniforms
+	//shaders
 	Shader shader("shader.vs", "shader.fs");
 	Shader lightShader("unlitShader.vs", "unlitShader.fs");
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-	shader.useThenSetVec3f("uLightColor", 1.0f, 1.0f, 1.0f);
-	shader.useThenSetVec3f("uLightPosition", &lightPosition);
-	shader.useThenSetMat4f("uProjection", &projection);
-	lightShader.useThenSetMat4f("uProjection", &projection);
+
 
 
 	//GameObjects setup
@@ -130,13 +125,30 @@ int main() {
 
 	Primitive light = Primitive::cube(&lightShader, {lightPosition}, 0.1f);
 
-
 	//textures
 	Texture textureA("container.jpg", &shader);
 	cube.linkChild(&textureA);
 	secondCubeChild.linkChild(&textureA);
 	Texture textureB("coolGuy.png", &shader);
 	secondCube.linkChild(&textureB);
+
+	//other stuff >:)
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	shader.useThenSetMat4f("uProjection", &projection);
+	shader.useThenSetVec3f("uLight.position", &lightPosition);
+	shader.useThenSetVec3f("uLight.ambient", 0.2f, 0.2f, 0.2f);
+	shader.useThenSetVec3f("uLight.diffuse", 0.5f, 0.5f, 0.5f);
+	shader.useThenSetVec3f("uLight.specular", 1.0f, 1.0f, 1.0f);
+
+	lightShader.useThenSetMat4f("uProjection", &projection);
+
+	Material mat(&shader, { 1.0f, 0.5f, 0.31f }, { 1.0f, 0.5f, 0.31f }, { 0.5f, 0.5f, 0.5f }, 32.0f);
+	Material mat2(&shader, { 1.0f, 0.5f, 0.31f }, { 1.0f, 0.5f, 0.31f }, { 0.5f, 0.5f, 0.5f }, 1);
+
+	cube.linkChild(&mat);
+	secondCube.linkChild(&mat2);
+	secondCubeChild.linkChild(&mat2);
 
 
 	currentTime = previousTime = glfwGetTime();
