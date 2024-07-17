@@ -23,10 +23,10 @@ private:
 	void updateModelMatrix();
 	glm::vec3 position_, rotation_, scale_;
 	glm::mat4 localModelMatrix_,modelMatrix_;
-	bool modelNeedsUpdating_;
+	bool localModelNeedsUpdating_, childModelNeedsUpdating_;
 	static constexpr float ZERO_LENGTH_EPSILON = 0.0000000000000001f;
 protected:
 	Transform* parent_;
-	int childCount_ = 0, childId_ = 0;
+	int childCount_ = 0, childId_ = 0;//TODO add logic to refresh matrix if a model is drawn before its parent and its grandparents by propagating flag through grandchildrens
 
 };
