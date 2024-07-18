@@ -126,11 +126,11 @@ int main() {
 	Primitive light = Primitive::cube(&lightShader, {lightPosition}, 0.1f);
 
 	//textures
-	Texture textureA("container.jpg", &shader);
-	cube.linkChild(&textureA);
-	secondCubeChild.linkChild(&textureA);
-	Texture textureB("coolGuy.png", &shader);
-	secondCube.linkChild(&textureB);
+	//Texture textureA("container.jpg", &shader);
+	//cube.linkChild(&textureA);
+	//secondCubeChild.linkChild(&textureA);
+	//Texture textureB("coolGuy.png", &shader);
+	//secondCube.linkChild(&textureB);
 
 	//other stuff >:)
 	glm::mat4 projection;
@@ -143,8 +143,8 @@ int main() {
 
 	lightShader.useThenSetMat4f("uProjection", &projection);
 
-	Material mat(&shader, { 1.0f, 0.5f, 0.31f }, { 1.0f, 0.5f, 0.31f }, { 0.5f, 0.5f, 0.5f }, 32.0f);
-	Material mat2(&shader, { 1.0f, 0.5f, 0.31f }, { 1.0f, 0.5f, 0.31f }, { 0.5f, 0.5f, 0.5f }, 1);
+	Material mat("container2.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 32.0f);
+	Material mat2("coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
 
 	cube.linkChild(&mat);
 	secondCube.linkChild(&mat2);

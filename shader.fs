@@ -1,7 +1,6 @@
 #version 330 core 
 struct Material {
-	vec3 ambient;
-	vec3 diffuse;
+	sampler2D diffuse;
 	vec3 specular;
 	float shininess;
 };
@@ -24,25 +23,23 @@ out vec4 FragColor;
 
 //UNIFORMS
 uniform vec3 uViewPosition;
-
 uniform Material uMaterial;
 uniform Light uLight;
 
-uniform sampler2D texture0;
 
 
 void main()
 {
-
+    vec3 diffuseVec =  vec3(texture(uMaterial.diffuse,Uv));
     //ambient 
-    vec3 ambient = uMaterial.ambient * uLight.ambient;
+    vec3 ambient = diffuseVec * uLight.ambient;
 
 
     //diffuse
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(uLight.position - FragmentPosition);  
     float diff = max(dot(norm,lightDir), 0.0);
-    vec3 diffuse = (uMaterial.diffuse * diff) * uLight.diffuse;
+    vec3 diffuse = uLight.diffuse * diff * diffuseVec;
 
     //specular
     vec3 viewDir = normalize(uViewPosition - FragmentPosition);
@@ -50,6 +47,6 @@ void main()
     float spec = pow(max(dot(viewDir,reflectDir), 0.0),uMaterial.shininess);//the 32 makes it more targeted towards a small spot 
     vec3 specular = (uMaterial.specular * spec) * uLight.specular;  
 
-    FragColor = texture(texture0,Uv) * vec4(ambient + diffuse + specular, 1.0);
+    FragColor = vec4(ambient + diffuse + specular, 1.0);
 
 }

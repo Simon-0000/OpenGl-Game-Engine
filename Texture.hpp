@@ -8,8 +8,7 @@
 
 class Texture : public Bindable{
 public:
-	Texture(const char* imagePath, Shader* shader, unsigned int textureUnit = 0);
-	Texture(const char* imagePath, Shader* shader, Texture* parentTexture);
+	Texture(const char* imagePath, Shader* shader, unsigned int textureUnit = 0, const char* textureName = DEFAULT_SHADER_TEXTURE_NAME);
 
 	void localBind() override;
 	void localUnbind() override;

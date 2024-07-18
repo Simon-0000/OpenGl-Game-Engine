@@ -2,7 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit) : textureUnit_(textureUnit){
+Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit, const char* textureName) : textureUnit_(textureUnit){
 	static int MAX_TEXTURE_UNITS = getNumberOfTextureUnits();
 	if (textureUnit_ >= MAX_TEXTURE_UNITS)
 		throw std::range_error(std::format("Texture unit location out of maximum range: {}",MAX_TEXTURE_UNITS));
@@ -29,13 +29,9 @@ Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);//Rgb
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
-	shader->useThenSetInt(std::format("{}{}",DEFAULT_SHADER_TEXTURE_NAME, textureUnit_).c_str(), textureUnit_);
+	shader->useThenSetInt(textureName, textureUnit_);
 }
 
-Texture::Texture(const char* imagePath, Shader * shader, Texture * parentTexture) :Texture(imagePath, shader, parentTexture->textureUnit_ + 1) 
-{
-	parentTexture->linkChild(this);
-}
 void Texture::localBind() {
 	glActiveTexture(GL_TEXTURE0 + textureUnit_);
 	glBindTexture(GL_TEXTURE_2D, id_);
