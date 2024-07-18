@@ -12,6 +12,7 @@
 #include <cmath>
 #include "Inputs.hpp"
 #include "Material.hpp"
+#include "Constants.hpp"
 
 using namespace std;
 
@@ -136,10 +137,11 @@ int main() {
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 	shader.useThenSetMat4f("uProjection", &projection);
-	shader.useThenSetVec3f("uLight.position", &lightPosition);
+	shader.useThenSetVec3f("uLight.positionOrDirection", -0.2f, -1.0f, 0.0f);
 	shader.useThenSetVec3f("uLight.ambient", 0.2f, 0.2f, 0.2f);
 	shader.useThenSetVec3f("uLight.diffuse", 0.5f, 0.5f, 0.5f);
 	shader.useThenSetVec3f("uLight.specular", 1.0f, 1.0f, 1.0f);
+	shader.useThenSetInt("uLight.lightType", LightShader::LightType::DIRECTIONAL);
 
 	lightShader.useThenSetMat4f("uProjection", &projection);
 
