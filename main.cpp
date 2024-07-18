@@ -42,16 +42,13 @@ static void mouse_callback(GLFWwindow* window, double xpos,double ypos){
 		yaw += (xpos - oldXPos) * TURN_SENSITIVITY;
 		pitch = max(min( pitch + ((oldYPos - ypos) * TURN_SENSITIVITY), 89.9), -89.9);
 
-
 		cameraFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 		cameraFront.y = sin(glm::radians(pitch));
 		cameraFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 		cameraFront = glm::normalize(cameraFront);
-
 	}
 	oldXPos = xpos;
 	oldYPos = ypos;
-
 }
 static void initEditorInputs(GLFWwindow* window) {
 	Inputs::init(window);
@@ -137,11 +134,14 @@ int main() {
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 	shader.useThenSetMat4f("uProjection", &projection);
-	shader.useThenSetVec3f("uLight.positionOrDirection", -0.2f, -1.0f, 0.0f);
+	shader.useThenSetVec3f("uLight.positionOrDirection", &lightPosition);
 	shader.useThenSetVec3f("uLight.ambient", 0.2f, 0.2f, 0.2f);
 	shader.useThenSetVec3f("uLight.diffuse", 0.5f, 0.5f, 0.5f);
 	shader.useThenSetVec3f("uLight.specular", 1.0f, 1.0f, 1.0f);
-	shader.useThenSetInt("uLight.lightType", LightShader::LightType::DIRECTIONAL);
+	shader.useThenSetInt("uLight.lightType", LightShader::LightType::POSITIONAL);
+	shader.useThenSetFloat("uLight.constant", 1);
+	shader.useThenSetFloat("uLight.linear", 0.09f);
+	shader.useThenSetFloat("uLight.quadratic", 0.032f);
 
 	lightShader.useThenSetMat4f("uProjection", &projection);
 
@@ -173,9 +173,13 @@ int main() {
 		shader.useThenSetVec3f("uViewPosition", &cameraPos);
 		shader.useThenSetMat4f("uView", &view);
 		
-		cube.draw();
-		secondCube.draw();
-		secondCubeChild.draw();
+		for (int i = 0; i < 1000; ++i) {
+			cube.draw();
+			cube.translate({ -1,0,0 });
+		}
+		cube.setPosition(cubePosition);
+	/*	secondCube.draw();
+		secondCubeChild.draw();*/
 		//secondCube.draw();
 
 		//light shader section

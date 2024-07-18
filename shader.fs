@@ -14,6 +14,10 @@ struct Light {
     vec3 diffuse;
     vec3 specular;
     int lightType;
+
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 
@@ -59,6 +63,20 @@ void main()
     float spec = pow(max(dot(viewDir,reflectDir), 0.0),uMaterial.shininess);//the 32 makes it more targeted towards a small spot 
     vec3 specular = vec3(texture(uMaterial.specular,Uv)) * spec * uLight.specular;  
 
-    FragColor = vec4(ambient + diffuse + specular, 1.0);
+    
+    //attenuation
+    if (uLight.lightType == POSITIONAL_LIGHT){
+        
+        float distance = length(uLight.positionOrDirection - FragmentPosition);
+        float attenuation = 1.0/(
+                                uLight.constant +
+                                distance * uLight.linear + 
+                                (distance*distance) * uLight.quadratic
+                           );
+        FragColor = vec4(attenuation * (ambient + diffuse + specular), 1.0);
+
+    }else{
+        FragColor = vec4(ambient + diffuse + specular, 1.0);
+    }
 
 }

@@ -7,6 +7,8 @@ public:
 	Transform(const Transform& other);
 	Transform& operator=(const Transform& other);
 	void setPosition(const glm::vec3& position);
+	void translate(const glm::vec3& translation);
+
 	void setRotation(const glm::vec3& rotation);
 	void rotate(const glm::vec3& rotation);
 
