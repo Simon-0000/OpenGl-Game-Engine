@@ -145,6 +145,7 @@
     <ClCompile Include="Dependencies\glad\src\glad.c" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Inputs.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Primitive.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="Inputs.hpp" />
+    <ClInclude Include="Light.hpp" />
     <ClInclude Include="Material.hpp" />
     <ClInclude Include="OpenGLDebug.hpp" />
     <ClInclude Include="Primitive.hpp" />

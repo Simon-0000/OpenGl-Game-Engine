@@ -1,19 +1,26 @@
 #version 330 core 
-
-const int DIRECTIONAL_LIGHT = 0;
-const int POSITIONAL_LIGHT = 1;
+const int MAX_DIRECTIONAL_LIGHTS = 5;
+const int MAX_POINT_LIGHTS = 50;
 
 struct Material {
 	sampler2D diffuse;
 	sampler2D specular;
 	float shininess;
 };
-struct Light {
-    vec3 positionOrDirection;
+
+struct LightColors{
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
-    int lightType;
+};
+
+struct DirectionalLight {
+    vec3 direction;
+    LightColors light;
+};
+struct PointLight {
+    vec3 position;
+    LightColors light;
 
     float constant;
     float linear;
@@ -21,62 +28,80 @@ struct Light {
 };
 
 
+
+
 //INPUT
 in vec3 Normal;
 in vec3 FragmentPosition;  
 in vec2 Uv;
 
-
 //OUTPUT
 out vec4 FragColor; 
-
 
 //UNIFORMS
 uniform vec3 uViewPosition;
 uniform Material uMaterial;
-uniform Light uLight;
+uniform DirectionalLight[MAX_DIRECTIONAL_LIGHTS] uDirectionalLights;
+uniform PointLight[MAX_POINT_LIGHTS] uPointLights;
+uniform int uDirectionalLightsCount;
+uniform int uPointLightsCount;
 
 
+
+vec3 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light);
+vec3 calculateDirectional(DirectionalLight directionalLight);
+vec3 calculatePoint(PointLight pointLight);
 
 void main()
 {
+    vec3 finalColor = vec3(1.0);//calculateDirectional(uDirectionalLights[0]);
+    for(int i = 0; i < uDirectionalLightsCount; ++i)
+        finalColor += calculateDirectional(uDirectionalLights[i]);
+    for(int i = 0; i < uPointLightsCount; ++i)
+        finalColor += calculatePoint(uPointLights[0]);
+    FragColor = vec4(finalColor,1.0);
+}
+
+
+vec3 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light)
+{
     vec3 diffuseVec =  vec3(texture(uMaterial.diffuse,Uv));
+    
     //ambient 
-    vec3 ambient = diffuseVec * uLight.ambient;
-
-
+    vec3 ambient = diffuseVec * light.ambient;
+    
     //diffuse
     vec3 norm = normalize(Normal);
-    vec3 lightDir;
-    if (uLight.lightType == POSITIONAL_LIGHT){
-        lightDir = normalize(uLight.positionOrDirection - FragmentPosition);  
-    }else if (uLight.lightType == DIRECTIONAL_LIGHT){
-        lightDir = normalize(-uLight.positionOrDirection);
-    }
-
+    
     float diff = max(dot(norm,lightDir), 0.0);
-    vec3 diffuse = uLight.diffuse * diff * diffuseVec;
-
+    vec3 diffuse = light.diffuse * diff * diffuseVec;
+    
     //specular
     vec3 viewDir = normalize(uViewPosition - FragmentPosition);
     vec3 reflectDir = reflect(-lightDir, norm);  
     float spec = pow(max(dot(viewDir,reflectDir), 0.0),uMaterial.shininess);//the 32 makes it more targeted towards a small spot 
-    vec3 specular = vec3(texture(uMaterial.specular,Uv)) * spec * uLight.specular;  
-
+    vec3 specular = vec3(texture(uMaterial.specular,Uv)) * spec * light.specular;  
     
-    //attenuation
-    if (uLight.lightType == POSITIONAL_LIGHT){
-        
-        float distance = length(uLight.positionOrDirection - FragmentPosition);
-        float attenuation = 1.0/(
-                                uLight.constant +
-                                distance * uLight.linear + 
-                                (distance*distance) * uLight.quadratic
-                           );
-        FragColor = vec4(attenuation * (ambient + diffuse + specular), 1.0);
+    return ambient + diffuse + specular;
+}
 
-    }else{
-        FragColor = vec4(ambient + diffuse + specular, 1.0);
-    }
+vec3 calculateDirectional(DirectionalLight directionalLight)
+{
+    return calculateAmbientDiffuseSpecular(normalize(-directionalLight.direction),directionalLight.light);
+}
 
+vec3 calculatePoint(PointLight pointLight)
+{
+    vec3 lightDir = pointLight.position - FragmentPosition;  
+    
+    float distance = length(lightDir);
+    lightDir = normalize(lightDir);
+    
+    float attenuation = 1.0/(
+                            pointLight.constant +
+                            distance * pointLight.linear + 
+                            (distance*distance) * pointLight.quadratic
+                       );
+    
+    return attenuation * calculateAmbientDiffuseSpecular(lightDir,pointLight.light);
 }
