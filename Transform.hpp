@@ -17,9 +17,9 @@ public:
 
 	const glm::mat4& getUpdatedModelMatrix();
 	Transform* getParent() const;
-	const Transform& getPosition() const;
-	const Transform& getRotation() const;
-	const Transform& getScale() const;
+	const glm::vec3& getPosition() const;
+	const glm::vec3& getRotation() const;
+	const glm::vec3& getScale() const;
 
 private:
 	void updateModelMatrix();

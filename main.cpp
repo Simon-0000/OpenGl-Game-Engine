@@ -13,6 +13,7 @@
 #include "Inputs.hpp"
 #include "Material.hpp"
 #include "Constants.hpp"
+#include "Light.hpp"
 
 using namespace std;
 
@@ -134,14 +135,17 @@ int main() {
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 	shader.useThenSetMat4f("uProjection", &projection);
-	shader.useThenSetVec3f("uLight.positionOrDirection", &lightPosition);
-	shader.useThenSetVec3f("uLight.ambient", 0.2f, 0.2f, 0.2f);
-	shader.useThenSetVec3f("uLight.diffuse", 0.5f, 0.5f, 0.5f);
-	shader.useThenSetVec3f("uLight.specular", 1.0f, 1.0f, 1.0f);
-	shader.useThenSetInt("uLight.lightType", LightShader::LightType::POSITIONAL);
-	shader.useThenSetFloat("uLight.constant", 1);
-	shader.useThenSetFloat("uLight.linear", 0.09f);
-	shader.useThenSetFloat("uLight.quadratic", 0.032f);
+
+	LightColors colors;
+	colors.ambient = { 0.05f, 0.05f, 0.05f };
+	colors.diffuse = { 0.2f, 0.2f, 0.2f };
+	colors.specular = { 0.5f, 0.5f, 0.5f };
+
+	DirectionalLight directionalLight(&shader, { -1,-1,0 }, colors);
+	directionalLight.addToShader();
+	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colors);
+	pointLight.addToShader();
+
 
 	lightShader.useThenSetMat4f("uProjection", &projection);
 

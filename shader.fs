@@ -54,7 +54,7 @@ vec3 calculatePoint(PointLight pointLight);
 
 void main()
 {
-    vec3 finalColor = vec3(1.0);//calculateDirectional(uDirectionalLights[0]);
+    vec3 finalColor = vec3(0);//calculateDirectional(uDirectionalLights[0]);
     for(int i = 0; i < uDirectionalLightsCount; ++i)
         finalColor += calculateDirectional(uDirectionalLights[i]);
     for(int i = 0; i < uPointLightsCount; ++i)
