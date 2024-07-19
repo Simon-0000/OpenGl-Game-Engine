@@ -79,7 +79,16 @@ public:
 	void localUnbind() override;
 
 	unsigned int getNumberOfIndices();
-	static Primitive cube(Shader* shader, const Transform& transInfo, float halfSideLength = 0.5f);
 private:
 	unsigned int id_,numberOfIndices_;
 };
+
+class Cube :public Primitive{
+public:
+	Cube(Shader* shader, const Transform& transInfo, float halfSideLength = 0.5f);
+private:
+	static Primitive createCube(Shader* shader, const Transform& transInfo, float halfSideLength);
+
+
+};
+

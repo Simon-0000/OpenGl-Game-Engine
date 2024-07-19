@@ -30,7 +30,7 @@ void DirectionalLight::localUnbind()
 }
 
 PointLight::PointLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation, const LightColors& colors)
-:GameObject(shader,transInfo),attenuation_(attenuation),light_(colors)
+:Cube(shader, transInfo, 0.1f), attenuation_(attenuation), light_(colors)
 {
 }
 
@@ -51,12 +51,32 @@ void PointLight::addToShader() {
 }
 
 void PointLight::localBind() {
+	Primitive::localBind();
 	if (shaderIndex_ == -1)
 		addToShader();
 }
 
 void PointLight::localUnbind()
 {
+	Primitive::localUnbind();
+
 	//TODO implement a system to keep track of all lights in cpu in order to remove them if necessary
 
 }
+
+bool PointLight::tryUpdateModelMatrix()
+{
+	if (Transform::tryUpdateModelMatrix()) {
+
+		glm::vec3 position = getModelMatrix() * glm::vec4(getPosition(),1.0f);
+		shader_->useThenSetVec3f((std::format("uPointLights[{}].position", shaderIndex_)).c_str(), &position);
+		return true;
+	}
+
+	return false;
+}
+
+//void PointLight::updateModelMatrix()
+//{
+
+//}

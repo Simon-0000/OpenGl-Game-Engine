@@ -16,13 +16,16 @@ public:
 	void setParent(Transform* parent);
 
 	const glm::mat4& getUpdatedModelMatrix();
+	const glm::mat4& getModelMatrix() const;
+
 	Transform* getParent() const;
 	const glm::vec3& getPosition() const;
 	const glm::vec3& getRotation() const;
 	const glm::vec3& getScale() const;
 
+protected:
+	virtual bool tryUpdateModelMatrix();
 private:
-	void updateModelMatrix();
 	glm::vec3 position_, rotation_, scale_;
 	glm::mat4 localModelMatrix_,modelMatrix_;
 	bool localModelNeedsUpdating_, childModelNeedsUpdating_;

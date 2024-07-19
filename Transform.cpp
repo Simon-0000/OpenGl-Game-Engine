@@ -1,7 +1,7 @@
 #include "Transform.hpp"
 
 Transform::Transform(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, Transform* parent) :
-	position_(position), rotation_(rotation), scale_(scale), localModelMatrix_(1.0f),modelMatrix_(1.0f),localModelNeedsUpdating_(true), parent_(parent), childCount_(0)
+	position_(position), rotation_(rotation), scale_(scale), localModelMatrix_(1.0f),modelMatrix_(1.0f),localModelNeedsUpdating_(true), childModelNeedsUpdating_(true), parent_(parent), childCount_(0)
 {
 	if (parent)
 		childId_ = ++parent->childCount_;
@@ -68,11 +68,16 @@ void Transform::setParent(Transform* parent)
 
 const glm::mat4& Transform::getUpdatedModelMatrix()
 {
-	updateModelMatrix();
+	tryUpdateModelMatrix();
+	return getModelMatrix();
+}
+
+const glm::mat4& Transform::getModelMatrix() const
+{
 	return modelMatrix_;
 }
 
-void Transform::updateModelMatrix()
+bool Transform::tryUpdateModelMatrix()
 {
 	bool updateOccured = parent_ && parent_->childModelNeedsUpdating_;
 	if (localModelNeedsUpdating_) {
@@ -85,7 +90,7 @@ void Transform::updateModelMatrix()
 		updateOccured = true;
 	}
 
-	if(updateOccured)
+	if (updateOccured)
 	{
 		if (parent_)
 			modelMatrix_ = parent_->getUpdatedModelMatrix() * localModelMatrix_;
@@ -99,4 +104,7 @@ void Transform::updateModelMatrix()
 		else if (childCount_ == 0)
 			childModelNeedsUpdating_ = false;
 	}
+	return updateOccured;
 }
+
+

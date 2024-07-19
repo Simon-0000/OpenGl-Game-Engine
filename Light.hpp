@@ -1,5 +1,6 @@
 #pragma once
-#include "GameObject.hpp"
+#include "Primitive.hpp"
+#include "Constants.hpp"
 #include <glm/glm.hpp>
 #include <format>
 struct LightAttenuation {
@@ -31,7 +32,7 @@ private:
 	static inline unsigned int count_ = 0;
 };
 
-class PointLight : public GameObject {
+class PointLight : public Cube {
 public:
 	PointLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation,
 		const LightColors& colors);
@@ -39,11 +40,11 @@ public:
 	void addToShader();
 	void localBind() override;
 	void localUnbind() override;
-	void draw() override{}//TODO make a visible light cube 
+	bool tryUpdateModelMatrix() override;
+
 private:
 	LightAttenuation attenuation_;
 	LightColors light_;
-
 	short shaderIndex_ = -1;
 	static inline unsigned int count_ = 0;
 

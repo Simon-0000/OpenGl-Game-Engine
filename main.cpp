@@ -112,17 +112,17 @@ int main() {
 
 	//shaders
 	Shader shader("shader.vs", "shader.fs");
-	Shader lightShader("unlitShader.vs", "unlitShader.fs");
 
 
 
 	//GameObjects setup
-	Primitive cube = Primitive::cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
-	Primitive secondCube = Primitive::cube(&shader, { secondCubePosition });
-	Primitive secondCubeChild = Primitive::cube(&shader, { secondCubeChildPosition },0.1f);
+	Cube cube = Cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
+	Cube secondCube = Cube(&shader, { secondCubePosition });
+	Cube secondCubeChild = Cube(&shader, { secondCubeChildPosition },0.1f);
 	secondCubeChild.setParent(&secondCube);
 
-	Primitive light = Primitive::cube(&lightShader, {lightPosition}, 0.1f);
+	//Cube lightCube = Cube(& lightShader, {lightPosition}, 0.1f);
+	//Cube lightCube = Cube(& lightShader, {lightPosition}, 0.1f);
 
 	//textures
 	//Texture textureA("container.jpg", &shader);
@@ -141,15 +141,21 @@ int main() {
 	colors.diffuse = { 0.2f, 0.2f, 0.2f };
 	colors.specular = { 0.5f, 0.5f, 0.5f };
 
+	LightColors colorsB;
+	colorsB.ambient = { 0.02f, 0.02f, 0.02f };
+	colorsB.diffuse = { 0.5f,0.1f,0.1f };
+	colorsB.specular = { 1.0f, 0.0f, 0.0f };
+
 	DirectionalLight directionalLight(&shader, { -1,-1,0 }, colors);
 	directionalLight.addToShader();
-	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colors);
+	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
 	pointLight.addToShader();
 
+	//lightCube.linkChild(&pointLight);
 
-	lightShader.useThenSetMat4f("uProjection", &projection);
+	LightShader::lightShader().useThenSetMat4f("uProjection", &projection);
 
-	Material mat("container2.png", "container2_specular.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 32.0f);
+	Material mat("container2.png", "container2_specular.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 100.0f);
 	Material mat2("coolGuy.png", "coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
 
 	cube.linkChild(&mat);
@@ -187,9 +193,9 @@ int main() {
 		//secondCube.draw();
 
 		//light shader section
-		lightShader.useThenSetMat4f("uView", &view);
-		light.draw();
-
+		LightShader::lightShader().useThenSetMat4f("uView", &view);
+		//lightCube.draw();
+		pointLight.draw();
 
 
 		//Swap buffer and check events
