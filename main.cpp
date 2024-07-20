@@ -102,7 +102,7 @@ int main() {
 	initEditorInputs(window);
 
 	//variables
-	glm::vec3 lightPosition = { -2.0f, 0.0f, 1.65f };
+	glm::vec3 lightPosition = { -5.0f, 0.0f, 1.65f };
 	glm::vec3 cubePosition = { 0.0f, 0.0f, 0.0f };
 	glm::vec3 secondCubePosition = { 0.0f, 2.0f, 0.0f };
 	glm::vec3 secondCubeChildPosition = { 0.0f, 1.0f, 0.0f };
@@ -149,7 +149,18 @@ int main() {
 	DirectionalLight directionalLight(&shader, { -1,-1,0 }, colors);
 	directionalLight.addToShader();
 	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
+	PointLight pointLight2(&shader, { {0,1,0} }, { 0.09f,0.032f }, colorsB);
+	PointLight pointLight3(&shader, { {0,-2,0} }, { 0.09f,0.032f }, colorsB);
+	pointLight.rotate({ glm::pi<float>()/2,0,0});
+
+	pointLight2.setParent(&pointLight);
+	pointLight3.setParent(&pointLight2);
 	pointLight.addToShader();
+	pointLight2.addToShader();
+	pointLight3.addToShader();
+
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_UP ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * -2,0,0}); });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_DOWN ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * 2,0,0 }); });
 
 	//lightCube.linkChild(&pointLight);
 
@@ -196,8 +207,8 @@ int main() {
 		LightShader::lightShader().useThenSetMat4f("uView", &view);
 		//lightCube.draw();
 		pointLight.draw();
-
-
+		pointLight2.draw();
+		pointLight3.draw();
 		//Swap buffer and check events
 		glfwPollEvents();
 		glfwSwapBuffers(window);

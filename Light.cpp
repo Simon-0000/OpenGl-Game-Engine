@@ -40,7 +40,7 @@ void PointLight::addToShader() {
 	shaderIndex_ = count_++;
 	auto name = std::format("uPointLights[{}]", shaderIndex_);
 	shader_->useThenSetInt("uPointLightsCount", count_);
-	shader_->useThenSetVec3f((name + ".position").c_str(), &getPosition());
+	tryUpdateModelMatrix();//not necessary to write postion i think but its still here in case it was
 	shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
 	shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
 	shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
@@ -67,8 +67,12 @@ void PointLight::localUnbind()
 bool PointLight::tryUpdateModelMatrix()
 {
 	if (Transform::tryUpdateModelMatrix()) {
+		glm::vec3 position;
+		if(parent_ != nullptr)
+			position = getModelMatrix() * glm::vec4(getPosition(), 1.0f);
+		else
+			position = glm::transpose(getModelMatrix()) * glm::vec4(getPosition(), 1.0f);
 
-		glm::vec3 position = getModelMatrix() * glm::vec4(getPosition(),1.0f);
 		shader_->useThenSetVec3f((std::format("uPointLights[{}].position", shaderIndex_)).c_str(), &position);
 		return true;
 	}

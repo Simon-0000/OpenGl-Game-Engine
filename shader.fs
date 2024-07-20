@@ -41,8 +41,8 @@ out vec4 FragColor;
 //UNIFORMS
 uniform vec3 uViewPosition;
 uniform Material uMaterial;
-uniform DirectionalLight[MAX_DIRECTIONAL_LIGHTS] uDirectionalLights;
-uniform PointLight[MAX_POINT_LIGHTS] uPointLights;
+uniform DirectionalLight uDirectionalLights[MAX_DIRECTIONAL_LIGHTS];
+uniform PointLight uPointLights[MAX_POINT_LIGHTS];
 uniform int uDirectionalLightsCount;
 uniform int uPointLightsCount;
 
@@ -58,7 +58,7 @@ void main()
     for(int i = 0; i < uDirectionalLightsCount; ++i)
         finalColor += calculateDirectional(uDirectionalLights[i]);
     for(int i = 0; i < uPointLightsCount; ++i)
-        finalColor += calculatePoint(uPointLights[0]);
+        finalColor += calculatePoint(uPointLights[i]);
     FragColor = vec4(finalColor,1.0);
 }
 

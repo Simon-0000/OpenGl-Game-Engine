@@ -3,56 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Light.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Primitive.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Primitive.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Primitive.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Primitive.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Shader.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Shader.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Constants.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Constants.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.fs||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:shader.fs||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.fs||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:shader.fs||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Light.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.vs||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:shader.vs||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Shader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Constants.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Constants.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Primitive.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Primitive.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Inputs.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Inputs.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Primitive.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Primitive.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Shader.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|solutionrelative:Shader.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4D253B6-3B2A-478C-AD1D-5EA72F09483C}|OpenGl-Game-Engine.vcxproj|C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\GameObject.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -115,17 +115,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AQIAALgAAAAAAAAAAAAiwMEAAAAAAAAA",
+              "ViewState": "AQIAAJAAAAAAAAAAAAAWwJcAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-08T16:03:37.358Z",
               "IsPinned": true,
@@ -133,46 +133,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Light.hpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.hpp",
               "RelativeDocumentMoniker": "Light.hpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.hpp",
               "RelativeToolTip": "Light.hpp",
-              "ViewState": "AQIAACMAAAAAAAAAAADgvygAAAAPAAAA",
+              "ViewState": "AQIAABoAAAAAAAAAAAAiwCYAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-19T03:13:02.582Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-19T03:13:02.582Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Light.cpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.cpp",
               "RelativeDocumentMoniker": "Light.cpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Light.cpp",
               "RelativeToolTip": "Light.cpp",
-              "ViewState": "AQIAAC8AAAAAAAAAAAAiwDsAAAABAAAA",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAWwEQAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-19T04:29:04.256Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-19T04:29:04.256Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 0,
               "Title": "shader.fs",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.fs",
               "RelativeDocumentMoniker": "shader.fs",
-              "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.fs",
-              "RelativeToolTip": "shader.fs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAAADgAAABFAAAA",
+              "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.fs*",
+              "RelativeToolTip": "shader.fs*",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAwwEUAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-07-09T01:27:10.551Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Constants.hpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Constants.hpp",
               "RelativeDocumentMoniker": "Constants.hpp",
@@ -180,8 +178,7 @@
               "RelativeToolTip": "Constants.hpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-18T20:57:27.811Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-18T20:57:27.811Z"
             },
             {
               "$type": "Document",
@@ -217,8 +214,7 @@
               "RelativeToolTip": "GameObject.hpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-14T02:29:17.631Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T02:29:17.631Z"
             },
             {
               "$type": "Document",
@@ -230,8 +226,7 @@
               "RelativeToolTip": "GameObject.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-16T20:02:50.147Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-16T20:02:50.147Z"
             },
             {
               "$type": "Document",
@@ -241,40 +236,37 @@
               "RelativeDocumentMoniker": "Transform.hpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Transform.hpp",
               "RelativeToolTip": "Transform.hpp",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABQAAAAeAAAA",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAACEAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-14T19:02:35.356Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T19:02:35.356Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Transform.cpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Transform.cpp",
               "RelativeDocumentMoniker": "Transform.cpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Transform.cpp",
               "RelativeToolTip": "Transform.cpp",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABoAAAAOAAAA",
+              "ViewState": "AQIAAE4AAAAAAAAAAAAWwGEAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-14T19:17:50.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-14T19:17:50.694Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 6,
               "Title": "shader.vs",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.vs",
               "RelativeDocumentMoniker": "shader.vs",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\shader.vs",
               "RelativeToolTip": "shader.vs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAABIAAAAAAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABcAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-07-09T01:08:40.084Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T01:08:40.084Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "Shader.hpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Shader.hpp",
               "RelativeDocumentMoniker": "Shader.hpp",
@@ -282,21 +274,19 @@
               "RelativeToolTip": "Shader.hpp",
               "ViewState": "AQIAAAkAAAAAAAAAAAAAABoAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-09T00:04:29.324Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T00:04:29.324Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 7,
               "Title": "Shader.cpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Shader.cpp",
               "RelativeDocumentMoniker": "Shader.cpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Shader.cpp",
               "RelativeToolTip": "Shader.cpp",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAWwA8AAAAAAAAA",
+              "ViewState": "AQIAADEAAAAAAAAAAAAmwEUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-09T00:04:18.808Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-09T00:04:18.808Z"
             },
             {
               "$type": "Document",
@@ -348,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
               "Title": "Inputs.cpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Inputs.cpp",
               "RelativeDocumentMoniker": "Inputs.cpp",
@@ -356,25 +346,23 @@
               "RelativeToolTip": "Inputs.cpp",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAABsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-11T18:54:15.441Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-11T18:54:15.441Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 9,
               "Title": "Primitive.cpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Primitive.cpp",
               "RelativeDocumentMoniker": "Primitive.cpp",
               "ToolTip": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Primitive.cpp",
               "RelativeToolTip": "Primitive.cpp",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAiwB0AAAAAAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-10T02:23:47.555Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-10T02:23:47.555Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 11,
               "Title": "Primitive.hpp",
               "DocumentMoniker": "C:\\Users\\asmar\\Documents\\Visual Studio 2022\\OpenGlPractice projects\\OpenGl-Game-Engine\\Primitive.hpp",
               "RelativeDocumentMoniker": "Primitive.hpp",
@@ -382,8 +370,7 @@
               "RelativeToolTip": "Primitive.hpp",
               "ViewState": "AQIAAE4AAAAAAAAAAAAAAFcAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-10T02:23:58.608Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-10T02:23:58.608Z"
             },
             {
               "$type": "Document",
