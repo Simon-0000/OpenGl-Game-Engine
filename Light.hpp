@@ -3,6 +3,7 @@
 #include "Constants.hpp"
 #include <glm/glm.hpp>
 #include <format>
+
 struct LightAttenuation {
 public:
 	LightAttenuation(const float cst, const float lin, const float quad) :constant(cst), linear(lin), quadratic(quad) {}
@@ -48,5 +49,8 @@ private:
 	short shaderIndex_ = -1;
 	static inline unsigned int count_ = 0;
 
+};
 
+class SpotLight : public Cube {
+	//SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors);// will need to fix rotation before trying to obtain the front/direction of a spotlight
 };

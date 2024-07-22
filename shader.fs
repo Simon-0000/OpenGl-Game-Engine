@@ -1,6 +1,7 @@
 #version 330 core 
 const int MAX_DIRECTIONAL_LIGHTS = 5;
 const int MAX_POINT_LIGHTS = 50;
+const int MAX_SPOT_LIGHTS = 50;
 
 struct Material {
 	sampler2D diffuse;
@@ -27,6 +28,14 @@ struct PointLight {
     float quadratic;
 };
 
+struct SpotLight {
+    vec3 position;
+    vec3 direction;
+    float angle;
+    float quadratic;
+    LightColors light;
+};
+
 
 
 
@@ -43,22 +52,29 @@ uniform vec3 uViewPosition;
 uniform Material uMaterial;
 uniform DirectionalLight uDirectionalLights[MAX_DIRECTIONAL_LIGHTS];
 uniform PointLight uPointLights[MAX_POINT_LIGHTS];
+uniform SpotLight uSpotLights[MAX_SPOT_LIGHTS];
 uniform int uDirectionalLightsCount;
 uniform int uPointLightsCount;
+uniform int uSpotLightsCount;
 
 
 
 vec3 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light);
 vec3 calculateDirectional(DirectionalLight directionalLight);
 vec3 calculatePoint(PointLight pointLight);
+vec3 calculateSpotlight(SpotLight spot);
+
 
 void main()
 {
-    vec3 finalColor = vec3(0);//calculateDirectional(uDirectionalLights[0]);
+    vec3 finalColor = vec3(0);
     for(int i = 0; i < uDirectionalLightsCount; ++i)
         finalColor += calculateDirectional(uDirectionalLights[i]);
     for(int i = 0; i < uPointLightsCount; ++i)
         finalColor += calculatePoint(uPointLights[i]);
+    for(int i = 0; i < uSpotLightsCount; ++i)
+        finalColor += calculateSpotlight(uSpotLights[i]);
+
     FragColor = vec4(finalColor,1.0);
 }
 
@@ -79,7 +95,7 @@ vec3 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light)
     //specular
     vec3 viewDir = normalize(uViewPosition - FragmentPosition);
     vec3 reflectDir = reflect(-lightDir, norm);  
-    float spec = pow(max(dot(viewDir,reflectDir), 0.0),uMaterial.shininess);//the 32 makes it more targeted towards a small spot 
+    float spec = pow(max(dot(viewDir,reflectDir), 0.0),uMaterial.shininess);
     vec3 specular = vec3(texture(uMaterial.specular,Uv)) * spec * light.specular;  
     
     return ambient + diffuse + specular;
@@ -104,4 +120,16 @@ vec3 calculatePoint(PointLight pointLight)
                        );
     
     return attenuation * calculateAmbientDiffuseSpecular(lightDir,pointLight.light);
+}
+
+vec3 calculateSpotlight(SpotLight spot){
+   
+    vec3 lightDir = normalize(spot.position - FragmentPosition);
+    vec3 viewDir = normalize(spot.direction - FragmentPosition);
+    float angle = dot(lightDir, viewDir);
+    vec3 spotLightColor = vec3(0.0,1.0,0.0);
+    if(angle > 0 && angle <= spot.angle){
+        spotLightColor = log(angle + 1) * calculateAmbientDiffuseSpecular(spot.position,spot.light);
+    }
+    return spotLightColor;
 }

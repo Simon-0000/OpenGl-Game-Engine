@@ -21,12 +21,12 @@ void Bindable::linkChild(Bindable* child) {
 
 
 void Bindable::unlinkChild(Bindable* child) {
-
 	Bindable*& relative = child_;
 	while (relative != child)
 		if (!(relative = relative->sibling_))
 			return;
 	relative = relative->sibling_;
 }
+
 
 

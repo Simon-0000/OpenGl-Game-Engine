@@ -151,7 +151,7 @@ int main() {
 	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
 	PointLight pointLight2(&shader, { {0,1,0} }, { 0.09f,0.032f }, colorsB);
 	PointLight pointLight3(&shader, { {0,-2,0} }, { 0.09f,0.032f }, colorsB);
-	pointLight.rotate({ glm::pi<float>()/2,0,0});
+	
 
 	pointLight2.setParent(&pointLight);
 	pointLight3.setParent(&pointLight2);
@@ -161,7 +161,7 @@ int main() {
 
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_UP ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * -2,0,0}); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_DOWN ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * 2,0,0 }); });
-
+	
 	//lightCube.linkChild(&pointLight);
 
 	LightShader::lightShader().useThenSetMat4f("uProjection", &projection);
