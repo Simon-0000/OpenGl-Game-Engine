@@ -122,13 +122,12 @@ vec3 calculatePoint(PointLight pointLight)
     return attenuation * calculateAmbientDiffuseSpecular(lightDir,pointLight.light);
 }
 
-vec3 calculateSpotlight(SpotLight spot){
-   
+vec3 calculateSpotlight(SpotLight spot){   
     vec3 lightDir = normalize(spot.position - FragmentPosition);
-    vec3 viewDir = normalize(spot.direction - FragmentPosition);
+    vec3 viewDir = normalize(-spot.direction - FragmentPosition);
     float angle = dot(lightDir, viewDir);
     vec3 spotLightColor = vec3(0.0,1.0,0.0);
-    if(angle > 0 && angle <= spot.angle){
+    if(angle >= spot.angle) {
         spotLightColor = log(angle + 1) * calculateAmbientDiffuseSpecular(spot.position,spot.light);
     }
     return spotLightColor;

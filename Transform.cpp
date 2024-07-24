@@ -35,6 +35,10 @@ void Transform::setPosition(const glm::vec3& position)
 const glm::vec3& Transform::getPosition() const{
 	return position_;
 }
+const glm::vec3& Transform::getRotation() const
+{
+	return rotation_;
+}
 void Transform::translate(const glm::vec3& translation)
 {
 	localModelNeedsUpdating_ = true;

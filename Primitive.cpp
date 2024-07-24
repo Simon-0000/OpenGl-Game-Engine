@@ -26,7 +26,7 @@ Cube::Cube(Shader* shader, const Transform& transInfo, float halfSideLength) : P
 
 }
 Primitive Cube::createCube(Shader* shader, const Transform& transInfo, float halfSideLength) {
-	std::vector<BasicVertex> vertices = {
+	std::vector<Vertex> vertices = {
 		{{-halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
 		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
 		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,1.0f}, {0.0f,  0.0f, -1.0f}},

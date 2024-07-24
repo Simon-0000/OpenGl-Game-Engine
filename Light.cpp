@@ -67,11 +67,14 @@ void PointLight::localUnbind()
 bool PointLight::tryUpdateModelMatrix()
 {
 	if (Transform::tryUpdateModelMatrix()) {
-		glm::vec3 position;
-		if(parent_ != nullptr)
-			position = getModelMatrix() * glm::vec4(getPosition(), 1.0f);
-		else
-			position = glm::transpose(getModelMatrix()) * glm::vec4(getPosition(), 1.0f);
+		auto modelMatrix = getModelMatrix();
+		glm::vec3 position = glm::vec3(modelMatrix[3][0], modelMatrix[3][1], modelMatrix[3][2]);
+		//if (parent_ != nullptr) {
+		//	auto testA = getModelMatrix();
+		//	position = glm::vec4(getPosition(), 1.0f) * getModelMatrix() ;
+		//}
+		//else
+		//	position = glm::transpose(getModelMatrix()) * glm::vec4(getPosition(), 1.0f);
 
 		shader_->useThenSetVec3f((std::format("uPointLights[{}].position", shaderIndex_)).c_str(), &position);
 		return true;
@@ -80,7 +83,3 @@ bool PointLight::tryUpdateModelMatrix()
 	return false;
 }
 
-//void PointLight::updateModelMatrix()
-//{
-
-//}
