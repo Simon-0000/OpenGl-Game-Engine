@@ -52,5 +52,17 @@ private:
 };
 
 class SpotLight : public Cube {
-	//SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors);// will need to fix rotation before trying to obtain the front/direction of a spotlight
+public:
+	SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle);
+	void addToShader();
+	void localBind() override;
+	void localUnbind() override;
+	bool tryUpdateModelMatrix() override;
+private:
+	LightColors light_;
+	float angle_;
+	short shaderIndex_ = -1;
+	static inline unsigned int count_ = 0;
+
+
 };

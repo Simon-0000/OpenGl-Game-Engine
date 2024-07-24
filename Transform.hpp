@@ -23,6 +23,10 @@ public:
 	const glm::vec3& getRotation() const;
 	const glm::vec3& getScale() const;
 
+	const glm::vec3& getForward() const;
+	const glm::vec3& getGlobalPosition() const;
+
+
 protected:
 	virtual bool tryUpdateModelMatrix();
 private:

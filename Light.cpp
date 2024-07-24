@@ -37,10 +37,10 @@ PointLight::PointLight(Shader* shader, const Transform& transInfo, const LightAt
 PointLight::~PointLight() { --count_;}
 
 void PointLight::addToShader() {
+	//dont need to set the position because it will be set when its drawn
 	shaderIndex_ = count_++;
 	auto name = std::format("uPointLights[{}]", shaderIndex_);
 	shader_->useThenSetInt("uPointLightsCount", count_);
-	tryUpdateModelMatrix();//not necessary to write postion i think but its still here in case it was
 	shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
 	shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
 	shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
@@ -67,19 +67,50 @@ void PointLight::localUnbind()
 bool PointLight::tryUpdateModelMatrix()
 {
 	if (Transform::tryUpdateModelMatrix()) {
-		auto modelMatrix = getModelMatrix();
-		glm::vec3 position = glm::vec3(modelMatrix[3][0], modelMatrix[3][1], modelMatrix[3][2]);
-		//if (parent_ != nullptr) {
-		//	auto testA = getModelMatrix();
-		//	position = glm::vec4(getPosition(), 1.0f) * getModelMatrix() ;
-		//}
-		//else
-		//	position = glm::transpose(getModelMatrix()) * glm::vec4(getPosition(), 1.0f);
-
-		shader_->useThenSetVec3f((std::format("uPointLights[{}].position", shaderIndex_)).c_str(), &position);
+		shader_->useThenSetVec3f((std::format("uPointLights[{}].position", shaderIndex_)).c_str(), &getGlobalPosition());
 		return true;
 	}
 
 	return false;
 }
 
+SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle) :
+	Cube(shader, transInfo, 0.1f), light_(colors), angle_(angle)
+
+{
+}
+
+void SpotLight::addToShader()
+{
+	shaderIndex_ = count_++;
+	auto name = std::format("uSpotLights[{}]", shaderIndex_);
+	shader_->useThenSetInt("uSpotLightsCount", count_);
+	shader_->useThenSetFloat((name + ".angle").c_str(), angle_);
+	shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
+	shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
+	shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+}
+
+void SpotLight::localBind()
+{
+	Primitive::localBind();
+	if (shaderIndex_ == -1)
+		addToShader();
+}
+
+void SpotLight::localUnbind()
+{
+	Primitive::localUnbind();
+}
+
+bool SpotLight::tryUpdateModelMatrix()
+{
+	if (Transform::tryUpdateModelMatrix()) {
+		auto name = std::format("uSpotLights[{}]", shaderIndex_);
+		shader_->useThenSetVec3f((name + ".direction").c_str(), &getForward());
+		shader_->useThenSetVec3f((name + ".position").c_str(), &getGlobalPosition());
+		return true;
+	}
+
+	return false;
+}

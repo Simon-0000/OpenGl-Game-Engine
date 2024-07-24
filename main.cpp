@@ -150,7 +150,7 @@ int main() {
 	directionalLight.addToShader();
 	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
 	PointLight pointLight2(&shader, { {0,1,0} }, { 0.09f,0.032f }, colorsB);
-	PointLight pointLight3(&shader, { {0,-2,0} }, { 0.09f,0.032f }, colorsB);
+	SpotLight pointLight3(&shader, { {0,-2,0} }, colorsB, 0.95f);
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_RIGHT ,GLFW_PRESS }, [&]() { pointLight.rotate({deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_LEFT ,GLFW_PRESS }, [&]() { pointLight.rotate({-deltaTime * glm::pi<float>() / 4,0,0 }); });
 

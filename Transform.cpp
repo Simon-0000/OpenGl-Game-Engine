@@ -39,6 +39,14 @@ const glm::vec3& Transform::getRotation() const
 {
 	return rotation_;
 }
+const glm::vec3& Transform::getForward() const
+{
+	return glm::vec3(modelMatrix_[2][0], modelMatrix_[2][1], modelMatrix_[2][2]);
+}
+const glm::vec3& Transform::getGlobalPosition() const
+{
+	return glm::vec3(modelMatrix_[3][0], modelMatrix_[3][1], modelMatrix_[3][2]);
+}
 void Transform::translate(const glm::vec3& translation)
 {
 	localModelNeedsUpdating_ = true;
