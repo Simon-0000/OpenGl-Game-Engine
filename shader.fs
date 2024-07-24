@@ -127,7 +127,7 @@ vec3 calculateSpotlight(SpotLight spot){
     float angle = dot(lightDir, normalize(-spot.direction));
     vec3 spotLightColor = vec3(0.0,0.0,0.0);
     if(angle > spot.angle) {
-        spotLightColor = /*log(angle + 1) */ calculateAmbientDiffuseSpecular(spot.position,spot.light);
+        spotLightColor = ((angle - spot.angle)/ (1-spot.angle))* calculateAmbientDiffuseSpecular(lightDir,spot.light);
     }
     return spotLightColor;
 }
