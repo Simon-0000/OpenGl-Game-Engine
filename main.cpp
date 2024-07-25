@@ -146,11 +146,13 @@ int main() {
 	colorsB.diffuse = { 0.5f,0.1f,0.1f };
 	colorsB.specular = { 1.0f, 0.0f, 0.0f };
 
+	LightColors colorsC({ 0, 1.0f, 0 }, { 1.0f,1.0f,0 });
+
 	DirectionalLight directionalLight(&shader, { -1,-1,0 }, colors);
 	directionalLight.addToShader();
 	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
 	PointLight pointLight2(&shader, { {0,1,0} }, { 0.09f,0.032f }, colorsB);
-	SpotLight pointLight3(&shader, { {0,-2,0} }, colorsB, 0.95f);
+	SpotLight pointLight3(&shader, { {0,-2,0} }, colorsC, 0.91f,0.88f);
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_RIGHT ,GLFW_PRESS }, [&]() { pointLight.rotate({deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_LEFT ,GLFW_PRESS }, [&]() { pointLight.rotate({-deltaTime * glm::pi<float>() / 4,0,0 }); });
 

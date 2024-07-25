@@ -32,7 +32,7 @@ struct SpotLight {
     vec3 position;
     vec3 direction;
     float angle;
-    float quadratic;
+    float outerAngle;
     LightColors light;
 };
 
@@ -126,8 +126,10 @@ vec3 calculateSpotlight(SpotLight spot){
     vec3 lightDir = normalize(spot.position - FragmentPosition);
     float angle = dot(lightDir, normalize(-spot.direction));
     vec3 spotLightColor = vec3(0.0,0.0,0.0);
-    if(angle > spot.angle) {
-        spotLightColor = ((angle - spot.angle)/ (1-spot.angle))* calculateAmbientDiffuseSpecular(lightDir,spot.light);
+    if(angle > spot.outerAngle) {
+        float epsilon = spot.angle - spot.outerAngle;
+        float intensity = clamp((angle - spot.outerAngle) / epsilon, 0.0, 1.0);    
+        spotLightColor = intensity * calculateAmbientDiffuseSpecular(lightDir,spot.light);
     }
     return spotLightColor;
 }

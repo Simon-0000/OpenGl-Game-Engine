@@ -74,9 +74,8 @@ bool PointLight::tryUpdateModelMatrix()
 	return false;
 }
 
-SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle) :
-	Cube(shader, transInfo, 0.1f), light_(colors), angle_(angle)
-
+SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle) :
+	Cube(shader, transInfo, 0.1f), light_(colors), angle_(angle), outerAngle_(outerAngle)
 {
 }
 
@@ -86,6 +85,8 @@ void SpotLight::addToShader()
 	auto name = std::format("uSpotLights[{}]", shaderIndex_);
 	shader_->useThenSetInt("uSpotLightsCount", count_);
 	shader_->useThenSetFloat((name + ".angle").c_str(), angle_);
+	shader_->useThenSetFloat((name + ".outerAngle").c_str(), outerAngle_);
+
 	shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
 	shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
 	shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);

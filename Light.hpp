@@ -5,13 +5,16 @@
 #include <format>
 
 struct LightAttenuation {
-public:
 	LightAttenuation(const float cst, const float lin, const float quad) :constant(cst), linear(lin), quadratic(quad) {}
 	LightAttenuation(const float lin, const float quad) :linear(lin),quadratic(quad){}
 	const float quadratic,linear,constant = 1;
 };
 
 struct LightColors {
+	LightColors() = default;
+	LightColors(const glm::vec3& amb, const glm::vec3& diff, const glm::vec3& spec): ambient(amb),diffuse(diff),specular(spec){}
+	LightColors(const glm::vec3& diff, const glm::vec3& spec) : ambient(0), diffuse(diff), specular(spec) {}
+
 	glm::vec3 ambient, diffuse, specular;
 };
 
@@ -53,14 +56,14 @@ private:
 
 class SpotLight : public Cube {
 public:
-	SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle);
+	SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle);
 	void addToShader();
 	void localBind() override;
 	void localUnbind() override;
 	bool tryUpdateModelMatrix() override;
 private:
 	LightColors light_;
-	float angle_;
+	float angle_, outerAngle_;
 	short shaderIndex_ = -1;
 	static inline unsigned int count_ = 0;
 
