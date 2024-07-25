@@ -24,6 +24,8 @@ public:
 	const glm::vec3& getScale() const;
 
 	const glm::vec3& getForward() const;
+	const glm::vec3& getUp() const;
+	const glm::vec3& getRight() const;
 	const glm::vec3& getGlobalPosition() const;
 
 

@@ -202,13 +202,31 @@ int main() {
 
 		shader.useThenSetVec3f("uViewPosition", &cameraPos);
 		shader.useThenSetMat4f("uView", &view);
-		
+
+		cube.setPosition(cubePosition);
 		for (int i = 0; i < 1000; ++i) {
 			cube.draw();
 			cube.translate({ -1,0,0 });
 		}
-		cube.setPosition(cubePosition);
-	/*	secondCube.draw();
+		cube.setPosition(lightPosition);
+		cube.translate({ 0,-2,0 });
+		for (int i = 0; i < 1000; ++i) {
+			cube.draw();
+			cube.translate({ -1,0,0 });
+		}
+		cube.setPosition(lightPosition);
+		cube.translate({ 0,2,0 });
+		for (int i = 0; i < 1000; ++i) {
+			cube.draw();
+			cube.translate({ -1,0,0 });
+		}
+		cube.setPosition(lightPosition);
+		cube.translate({ 0,0,2 });
+		for (int i = 0; i < 1000; ++i) {
+			cube.draw();
+			cube.translate({ -1,0,0 });
+		}
+		/*	secondCube.draw();
 		secondCubeChild.draw();*/
 		//secondCube.draw();
 

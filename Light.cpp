@@ -109,6 +109,10 @@ bool SpotLight::tryUpdateModelMatrix()
 	if (Transform::tryUpdateModelMatrix()) {
 		auto name = std::format("uSpotLights[{}]", shaderIndex_);
 		shader_->useThenSetVec3f((name + ".direction").c_str(), &getForward());
+		system("cls");
+		std::cout << getForward()[0] << "\t" << getForward()[1] << "\t" << getForward()[2] << std::endl;
+		std::cout << getGlobalPosition()[0] << "\t" << getGlobalPosition()[1] << "\t" << getGlobalPosition()[2] << std::endl;
+
 		shader_->useThenSetVec3f((name + ".position").c_str(), &getGlobalPosition());
 		return true;
 	}

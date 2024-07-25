@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bindable.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Dependencies\glad\src\glad.c" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Inputs.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bindable.hpp" />
+    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Constants.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="Inputs.hpp" />
