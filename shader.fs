@@ -110,6 +110,7 @@ vec3 calculatePoint(PointLight pointLight)
 {
     vec3 lightDir = pointLight.position - FragmentPosition;  
     
+
     float distance = length(lightDir);
     lightDir = normalize(lightDir);
     
@@ -126,6 +127,7 @@ vec3 calculateSpotlight(SpotLight spot){
     vec3 lightDir = normalize(spot.position - FragmentPosition);
     float angle = dot(lightDir, normalize(-spot.direction));
     vec3 spotLightColor = vec3(0.0,0.0,0.0);
+
     if(angle > spot.outerAngle) {
         float epsilon = spot.angle - spot.outerAngle;
         float intensity = clamp((angle - spot.outerAngle) / epsilon, 0.0, 1.0);    

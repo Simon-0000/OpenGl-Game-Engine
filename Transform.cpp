@@ -41,15 +41,15 @@ const glm::vec3& Transform::getRotation() const
 }
 const glm::vec3& Transform::getForward() const
 {
-	return glm::vec3(modelMatrix_[2]);
+	return glm::vec3(modelMatrix_[2][0], modelMatrix_[2][1], modelMatrix_[2][2]);
 }
 const glm::vec3& Transform::getUp() const
 {
-	return glm::vec3(modelMatrix_[1]);
+	return glm::vec3(modelMatrix_[1][0], modelMatrix_[1][1], modelMatrix_[1][2]);
 }
 const glm::vec3& Transform::getRight() const
 {
-	return glm::vec3(modelMatrix_[0]);
+	return glm::vec3(modelMatrix_[0][0], modelMatrix_[0][1], modelMatrix_[0][2]);
 }
 const glm::vec3& Transform::getGlobalPosition() const
 {
