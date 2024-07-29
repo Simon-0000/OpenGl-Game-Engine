@@ -44,6 +44,8 @@ public:
 	void addToShader();
 	void localBind() override;
 	void localUnbind() override;
+
+protected:
 	bool tryUpdateModelMatrix() override;
 
 private:
@@ -60,7 +62,10 @@ public:
 	void addToShader();
 	void localBind() override;
 	void localUnbind() override;
+
+protected:
 	bool tryUpdateModelMatrix() override;
+
 private:
 	LightColors light_;
 	float angle_, outerAngle_;

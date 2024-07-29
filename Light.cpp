@@ -9,19 +9,21 @@ DirectionalLight::~DirectionalLight() { --count_;}
 
 void DirectionalLight::addToShader()
 {
-	shaderIndex_ = count_++;
-	auto name = std::format("uDirectionalLights[{}]",shaderIndex_);
-	shader_->useThenSetInt("uDirectionalLightsCount", count_);
-	shader_->useThenSetVec3f((name + ".direction").c_str(), &direction_);
-	shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
-	shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
-	shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+	if (shaderIndex_ == -1)
+	{
+		shaderIndex_ = count_++;
+		auto name = std::format("uDirectionalLights[{}]", shaderIndex_);
+		shader_->useThenSetInt("uDirectionalLightsCount", count_);
+		shader_->useThenSetVec3f((name + ".direction").c_str(), &direction_);
+		shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
+		shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
+		shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+	}
 }
 
 void DirectionalLight::localBind()
 {
-	if (shaderIndex_ == -1)
-		addToShader();
+	addToShader();
 }
 void DirectionalLight::localUnbind() 
 {
@@ -37,23 +39,23 @@ PointLight::PointLight(Shader* shader, const Transform& transInfo, const LightAt
 PointLight::~PointLight() { --count_;}
 
 void PointLight::addToShader() {
-	//dont need to set the position because it will be set when its drawn
-	shaderIndex_ = count_++;
-	auto name = std::format("uPointLights[{}]", shaderIndex_);
-	shader_->useThenSetInt("uPointLightsCount", count_);
-	shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
-	shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
-	shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
-	shader_->useThenSetFloat((name + ".constant").c_str(), attenuation_.constant);
-	shader_->useThenSetFloat((name + ".linear").c_str(), attenuation_.linear);
-	shader_->useThenSetFloat((name + ".quadratic").c_str(), attenuation_.quadratic);
+	if (shaderIndex_ == -1) {
+		shaderIndex_ = count_++;
+		auto name = std::format("uPointLights[{}]", shaderIndex_);
+		shader_->useThenSetInt("uPointLightsCount", count_);
+		shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
+		shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
+		shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+		shader_->useThenSetFloat((name + ".constant").c_str(), attenuation_.constant);
+		shader_->useThenSetFloat((name + ".linear").c_str(), attenuation_.linear);
+		shader_->useThenSetFloat((name + ".quadratic").c_str(), attenuation_.quadratic);
+	}
 
 }
 
 void PointLight::localBind() {
 	Primitive::localBind();
-	if (shaderIndex_ == -1)
-		addToShader();
+	addToShader();
 }
 
 void PointLight::localUnbind()
@@ -81,22 +83,23 @@ SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightColo
 
 void SpotLight::addToShader()
 {
-	shaderIndex_ = count_++;
-	auto name = std::format("uSpotLights[{}]", shaderIndex_);
-	shader_->useThenSetInt("uSpotLightsCount", count_);
-	shader_->useThenSetFloat((name + ".angle").c_str(), angle_);
-	shader_->useThenSetFloat((name + ".outerAngle").c_str(), outerAngle_);
+	if (shaderIndex_ == -1) {
+		shaderIndex_ = count_++;
+		auto name = std::format("uSpotLights[{}]", shaderIndex_);
+		shader_->useThenSetInt("uSpotLightsCount", count_);
+		shader_->useThenSetFloat((name + ".angle").c_str(), angle_);
+		shader_->useThenSetFloat((name + ".outerAngle").c_str(), outerAngle_);
 
-	shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
-	shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
-	shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+		shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
+		shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
+		shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+	}
 }
 
 void SpotLight::localBind()
 {
 	Primitive::localBind();
-	if (shaderIndex_ == -1)
-		addToShader();
+	addToShader();
 }
 
 void SpotLight::localUnbind()
@@ -109,10 +112,6 @@ bool SpotLight::tryUpdateModelMatrix()
 	if (Transform::tryUpdateModelMatrix()) {
 		auto name = std::format("uSpotLights[{}]", shaderIndex_);
 		shader_->useThenSetVec3f((name + ".direction").c_str(), &getForward());
-		system("cls");
-		std::cout << getForward()[0] << "\t" << getForward()[1] << "\t" << getForward()[2] << std::endl;
-		std::cout << getGlobalPosition()[0] << "\t" << getGlobalPosition()[1] << "\t" << getGlobalPosition()[2] << std::endl;
-
 		shader_->useThenSetVec3f((name + ".position").c_str(), &getGlobalPosition());
 		return true;
 	}

@@ -14,6 +14,7 @@
 #include "Material.hpp"
 #include "Constants.hpp"
 #include "Light.hpp"
+#include "Camera.hpp"
 
 using namespace std;
 
@@ -232,7 +233,6 @@ int main() {
 
 		//light shader section
 		LightShader::lightShader().useThenSetMat4f("uView", &view);
-		//lightCube.draw();
 		pointLight.draw();
 		pointLight2.draw();
 		pointLight3.draw();

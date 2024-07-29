@@ -7,9 +7,5 @@ namespace LightShader {
 		static Shader shader("unlitShader.vs", "unlitShader.fs");
 		return shader;
 	}
-	enum LightType {
-		DIRECTIONAL = 0,
-		POSITIONAL = 1
-	};
 };
 
