@@ -29,9 +29,10 @@ static constexpr float TURN_SENSITIVITY = 0.1f, TRANSLATION_SENSITIVITY = 2.0f;
 static bool shiftFunctionsEnabled = false, controlFunctionsEnabled = false;
 static double oldXPos, oldYPos;
 static float yaw = -90.0f, pitch = 0;
-static glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+static glm::vec3 cameraPos = glm::vec3(-8.0f, 0.0f, 3.0f);
 static glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+Camera camera({ cameraPos }, 60.0f, 800.0f / 600.0f, 100.0f);
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -48,6 +49,8 @@ static void mouse_callback(GLFWwindow* window, double xpos,double ypos){
 		cameraFront.y = sin(glm::radians(pitch));
 		cameraFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 		cameraFront = glm::normalize(cameraFront);
+		glm::vec3 a = { -glm::radians(pitch), -glm::radians(yaw),0 };
+		camera.setRotation(a);
 	}
 	oldXPos = xpos;
 	oldYPos = ypos;
@@ -60,12 +63,14 @@ static void initEditorInputs(GLFWwindow* window) {
 	Inputs::addKeyCallback({ GLFW_KEY_LEFT_CONTROL ,GLFW_PRESS }, []() {controlFunctionsEnabled = true;  });
 	Inputs::addKeyCallback({ GLFW_KEY_LEFT_CONTROL ,GLFW_RELEASE }, []() {controlFunctionsEnabled = false;  });
 
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_W ,GLFW_PRESS }, []() {cameraPos += deltaTime * TRANSLATION_SENSITIVITY * cameraFront; });
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_A ,GLFW_PRESS }, []() {cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * TRANSLATION_SENSITIVITY * deltaTime; });
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_S ,GLFW_PRESS }, []() {cameraPos -= deltaTime * TRANSLATION_SENSITIVITY * cameraFront; });
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_D ,GLFW_PRESS }, []() {cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * TRANSLATION_SENSITIVITY * deltaTime; });
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_E ,GLFW_PRESS }, []() {cameraPos += deltaTime * TRANSLATION_SENSITIVITY * cameraUp; });
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_Q ,GLFW_PRESS }, []() {cameraPos -= deltaTime * TRANSLATION_SENSITIVITY * cameraUp; });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_W ,GLFW_PRESS }, []() {camera.translate(deltaTime * TRANSLATION_SENSITIVITY * camera.getForward()); });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_A ,GLFW_PRESS }, []() {camera.translate(camera.getRight() * TRANSLATION_SENSITIVITY * deltaTime); });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_S ,GLFW_PRESS }, []() {camera.translate(-deltaTime * TRANSLATION_SENSITIVITY * camera.getForward()); });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_D ,GLFW_PRESS }, []() {camera.translate(camera.getRight() * -TRANSLATION_SENSITIVITY * deltaTime); });
+
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_E ,GLFW_PRESS }, []() {camera.translate(deltaTime * TRANSLATION_SENSITIVITY * camera.getUp()); });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_Q ,GLFW_PRESS }, []() {camera.translate(-deltaTime * TRANSLATION_SENSITIVITY * camera.getUp()); });
+
 
 }
 static GLFWwindow* initOpenGlLibraries() {
@@ -115,6 +120,9 @@ int main() {
 	Shader shader("shader.vs", "shader.fs");
 
 
+	camera.linkShader(&shader);
+	camera.linkShader(&LightShader::lightShader());
+	camera.bind();
 
 	//GameObjects setup
 	Cube cube = Cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
@@ -133,9 +141,9 @@ int main() {
 	//secondCube.linkChild(&textureB);
 
 	//other stuff >:)
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-	shader.useThenSetMat4f("uProjection", &projection);
+	//glm::mat4 projection;
+	//projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	//shader.useThenSetMat4f("uProjection", &projection);
 
 	LightColors colors;
 	colors.ambient = { 0.05f, 0.05f, 0.05f };
@@ -174,7 +182,7 @@ int main() {
 
 	//lightCube.linkChild(&pointLight);
 
-	LightShader::lightShader().useThenSetMat4f("uProjection", &projection);
+	//LightShader::lightShader().useThenSetMat4f("uProjection", &projection);
 
 	Material mat("container2.png", "container2_specular.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 100.0f);
 	Material mat2("coolGuy.png", "coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
@@ -198,11 +206,11 @@ int main() {
 		previousTime = currentTime;
 
 		//shader section
-		glm::mat4 view;
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
+		//glm::mat4 view;
+		//view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		camera.update();
 		shader.useThenSetVec3f("uViewPosition", &cameraPos);
-		shader.useThenSetMat4f("uView", &view);
+		//shader.useThenSetMat4f("uView", &view);
 
 		cube.setPosition(cubePosition);
 		for (int i = 0; i < 1000; ++i) {
@@ -232,7 +240,7 @@ int main() {
 		//secondCube.draw();
 
 		//light shader section
-		LightShader::lightShader().useThenSetMat4f("uView", &view);
+		//LightShader::lightShader().useThenSetMat4f("uView", &view);
 		pointLight.draw();
 		pointLight2.draw();
 		pointLight3.draw();

@@ -28,10 +28,15 @@ void Camera::localUnbind()
 {
 }
 
+void Camera::update()
+{
+	tryUpdateModelMatrix();
+}
+
 bool Camera::tryUpdateModelMatrix() {
 	if (Transform::tryUpdateModelMatrix()) {
 		glm::mat4 view;
-		view = glm::lookAt(getPosition(), getPosition() + getForward(), getUp());
+		view = glm::lookAt(getPosition(), getPosition() + getForward(), {0,1.0f,0});
 		for (auto& shader : shaders_)
 			shader->useThenSetMat4f("uView", &view);
 
