@@ -1,7 +1,7 @@
 #include "Transform.hpp"
 
 Transform::Transform(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, Transform* parent) :
-	position_(position), rotation_(rotation), scale_(scale), localModelMatrix_(1.0f),modelMatrix_(1.0f),localModelNeedsUpdating_(true), childModelNeedsUpdating_(true), parent_(parent), childCount_(0)
+	position_(position), scale_(scale), rotation2_(rotation), localModelMatrix_(1.0f), modelMatrix_(1.0f), localModelNeedsUpdating_(true), childModelNeedsUpdating_(true), parent_(parent), childCount_(0)
 {
 	if (parent)
 		childId_ = ++parent->childCount_;
@@ -16,7 +16,7 @@ Transform::Transform(const Transform& other)
 Transform& Transform::operator=(const Transform& other)//doesnt copy parent and parentModel
 {
 	position_ = other.position_;
-	rotation_ = other.rotation_;
+	rotation2_ = other.rotation2_;
 	scale_ = other.scale_;
 	localModelMatrix_ = other.localModelMatrix_;
 	modelMatrix_ = other.modelMatrix_;
@@ -32,12 +32,13 @@ void Transform::setPosition(const glm::vec3& position)
 	localModelNeedsUpdating_ = true;
 	position_ = position;
 }
-const glm::vec3& Transform::getPosition() const{
+const glm::vec3& Transform::getPosition() const
+{
 	return position_;
 }
-const glm::vec3& Transform::getRotation() const
+const glm::quat& Transform::getRotation() const
 {
-	return rotation_;
+	return rotation2_;
 }
 
 const glm::vec3& Transform::getRight() const
@@ -65,11 +66,17 @@ void Transform::translate(const glm::vec3& translation)
 void Transform::setRotation(const glm::vec3& rotation)
 {
 	localModelNeedsUpdating_ = true;
-	rotation_ = rotation;
+	rotation2_ = glm::quat(rotation);
 }
+void Transform::setRotation(const glm::quat& rotation)
+{
+	localModelNeedsUpdating_ = true;
+	rotation2_ = rotation;
+}
+
 void Transform::rotate(const glm::vec3& rotation) {
 	localModelNeedsUpdating_ = true;
-	rotation_ += rotation;
+	rotation2_ *= glm::quat(rotation);
 }
 
 void Transform::setScale(const glm::vec3& scale)
@@ -104,8 +111,7 @@ bool Transform::tryUpdateModelMatrix()
 	if (localModelNeedsUpdating_) {
 		localModelMatrix_ = glm::mat4(1.0f);
 		localModelMatrix_ = glm::translate(localModelMatrix_, position_);
-		if(glm::length(rotation_) > ZERO_LENGTH_EPSILON)//prevent zero length rotation (nan)
-			localModelMatrix_ = glm::rotate(localModelMatrix_, glm::length(rotation_), glm::normalize(rotation_));
+		localModelMatrix_ *= glm::mat4_cast(rotation2_);
 		localModelMatrix_ = glm::scale(localModelMatrix_, scale_);
 		localModelNeedsUpdating_ = false;
 		updateOccured = true;

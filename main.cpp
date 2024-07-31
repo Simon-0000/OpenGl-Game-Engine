@@ -44,13 +44,7 @@ static void mouse_callback(GLFWwindow* window, double xpos,double ypos){
 		
 		yaw += (xpos - oldXPos) * TURN_SENSITIVITY;
 		pitch = max(min( pitch + ((oldYPos - ypos) * TURN_SENSITIVITY), 89.9), -89.9);
-
-		cameraFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-		cameraFront.y = sin(glm::radians(pitch));
-		cameraFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-		cameraFront = glm::normalize(cameraFront);
-		glm::vec3 a = { -glm::radians(pitch), -glm::radians(yaw),0 };
-		camera.setRotation(a);
+		camera.setRotation( glm::quat(-glm::vec3(glm::radians(pitch), glm::radians(yaw),0)));
 	}
 	oldXPos = xpos;
 	oldYPos = ypos;
