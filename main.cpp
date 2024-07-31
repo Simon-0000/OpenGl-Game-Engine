@@ -29,10 +29,7 @@ static constexpr float TURN_SENSITIVITY = 0.1f, TRANSLATION_SENSITIVITY = 2.0f;
 static bool shiftFunctionsEnabled = false, controlFunctionsEnabled = false;
 static double oldXPos, oldYPos;
 static float yaw = -90.0f, pitch = 0;
-static glm::vec3 cameraPos = glm::vec3(-8.0f, 0.0f, 3.0f);
-static glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-Camera camera({ cameraPos }, 60.0f, 800.0f / 600.0f, 100.0f);
+Camera camera({ {0,0,1} }, 60.0f, 800.0f / 600.0f, 100.0f);
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -198,13 +195,9 @@ int main() {
 		currentTime = glfwGetTime();
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
+		camera.update();
 
 		//shader section
-		//glm::mat4 view;
-		//view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-		camera.update();
-		shader.useThenSetVec3f("uViewPosition", &cameraPos);
-		//shader.useThenSetMat4f("uView", &view);
 
 		cube.setPosition(cubePosition);
 		for (int i = 0; i < 1000; ++i) {
@@ -229,15 +222,12 @@ int main() {
 			cube.draw();
 			cube.translate({ -1,0,0 });
 		}
-		/*	secondCube.draw();
-		secondCubeChild.draw();*/
-		//secondCube.draw();
-
-		//light shader section
-		//LightShader::lightShader().useThenSetMat4f("uView", &view);
 		pointLight.draw();
 		pointLight2.draw();
 		pointLight3.draw();
+
+
+
 		//Swap buffer and check events
 		glfwPollEvents();
 		glfwSwapBuffers(window);

@@ -31,14 +31,22 @@ void Camera::localUnbind()
 void Camera::update()
 {
 	tryUpdateModelMatrix();
+
 }
 
 bool Camera::tryUpdateModelMatrix() {
 	if (Transform::tryUpdateModelMatrix()) {
 		glm::mat4 view;
 		view = glm::lookAt(getPosition(), getPosition() + getForward(), {0,1.0f,0});
-		for (auto& shader : shaders_)
+		for (auto& shader : shaders_) {
 			shader->useThenSetMat4f("uView", &view);
+			try {//TODO: change this to not be called for unlitShader.vs/fs
+				shader->useThenSetVec3f("uViewPosition", &getGlobalPosition());
+			}
+			catch (...) {
+
+			}
+		}
 
 		return true;
 	}
