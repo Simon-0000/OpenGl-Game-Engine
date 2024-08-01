@@ -25,23 +25,23 @@ struct AttributeDescriptor {
 	unsigned int size;
 };
 
-struct Vertex {
+struct BasicVertex {
 	glm::vec3 positions;
 	glm::vec2 TextureCoords;
 	glm::vec3 normals;
 
 };
-class Primitive : public GameObject {
+class Mesh : public GameObject {
 public:
 
 	template<typename T>
-	Primitive(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo):
-		Primitive(&vertices[0], sizeof(Vertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize,shader, transInfo){
+	Mesh(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo):
+		Mesh(&vertices[0], sizeof(BasicVertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize,shader, transInfo){
 		
 	}
 
 	template<typename T>
-	Primitive(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo) : GameObject(shader,transInfo){
+	Mesh(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo) : GameObject(shader,transInfo){
 		//generate VAO(VBO,EBO) which VAO Also stores the vertex attributes
 		unsigned int VAO;
 		glGenVertexArrays(1, &VAO);
@@ -83,11 +83,11 @@ private:
 	unsigned int id_,numberOfIndices_;
 };
 
-class Cube :public Primitive{
+class Cube :public Mesh{
 public:
 	Cube(Shader* shader, const Transform& transInfo, float halfSideLength = 0.5f);
 private:
-	static Primitive createCube(Shader* shader, const Transform& transInfo, float halfSideLength);
+	static Mesh createCube(Shader* shader, const Transform& transInfo, float halfSideLength);
 
 
 };

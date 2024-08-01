@@ -1,5 +1,5 @@
 #pragma once
-#include "Primitive.hpp"
+#include "Mesh.hpp"
 #include "Constants.hpp"
 #include <glm/glm.hpp>
 #include <format>

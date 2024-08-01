@@ -30,7 +30,7 @@
     <ClCompile Include="Bindable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Primitive.cpp">
+    <ClCompile Include="Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Inputs.cpp">
@@ -65,7 +65,7 @@
     <ClInclude Include="Bindable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.hpp">
+    <ClInclude Include="Mesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Inputs.hpp">

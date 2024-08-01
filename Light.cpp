@@ -54,13 +54,13 @@ void PointLight::addToShader() {
 }
 
 void PointLight::localBind() {
-	Primitive::localBind();
+	Mesh::localBind();
 	addToShader();
 }
 
 void PointLight::localUnbind()
 {
-	Primitive::localUnbind();
+	Mesh::localUnbind();
 
 	//TODO implement a system to keep track of all lights in cpu in order to remove them if necessary
 
@@ -98,13 +98,13 @@ void SpotLight::addToShader()
 
 void SpotLight::localBind()
 {
-	Primitive::localBind();
+	Mesh::localBind();
 	addToShader();
 }
 
 void SpotLight::localUnbind()
 {
-	Primitive::localUnbind();
+	Mesh::localUnbind();
 }
 
 bool SpotLight::tryUpdateModelMatrix()

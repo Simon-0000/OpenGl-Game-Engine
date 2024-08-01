@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Primitive.hpp"
+#include "Mesh.hpp"
 #include <vector>
 #include <cmath>
 #include "Inputs.hpp"
@@ -101,9 +101,6 @@ int main() {
 	//variables
 	glm::vec3 lightPosition = { -5.0f, 0.0f, 1.65f };
 	glm::vec3 cubePosition = { 0.0f, 0.0f, 0.0f };
-	glm::vec3 secondCubePosition = { 0.0f, 2.0f, 0.0f };
-	glm::vec3 secondCubeChildPosition = { 0.0f, 1.0f, 0.0f };
-
 	float currentTime, previousTime;
 
 
@@ -117,25 +114,9 @@ int main() {
 
 	//GameObjects setup
 	Cube cube = Cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
-	Cube secondCube = Cube(&shader, { secondCubePosition });
-	Cube secondCubeChild = Cube(&shader, { secondCubeChildPosition },0.1f);
-	secondCubeChild.setParent(&secondCube);
 
-	//Cube lightCube = Cube(& lightShader, {lightPosition}, 0.1f);
-	//Cube lightCube = Cube(& lightShader, {lightPosition}, 0.1f);
-
-	//textures
-	//Texture textureA("container.jpg", &shader);
-	//cube.linkChild(&textureA);
-	//secondCubeChild.linkChild(&textureA);
-	//Texture textureB("coolGuy.png", &shader);
-	//secondCube.linkChild(&textureB);
-
-	//other stuff >:)
-	//glm::mat4 projection;
-	//projection = glm::perspective(glm::radians(60.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-	//shader.useThenSetMat4f("uProjection", &projection);
-
+	
+	//lights
 	LightColors colors;
 	colors.ambient = { 0.05f, 0.05f, 0.05f };
 	colors.diffuse = { 0.2f, 0.2f, 0.2f };
@@ -155,36 +136,26 @@ int main() {
 	SpotLight pointLight3(&shader, { {0,-2,0} }, colorsC, 0.91f,0.88f);
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_RIGHT ,GLFW_PRESS }, [&]() { pointLight.rotate({deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_LEFT ,GLFW_PRESS }, [&]() { pointLight.rotate({-deltaTime * glm::pi<float>() / 4,0,0 }); });
-
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_UP ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * -2,0,0 }); });
+	Inputs::addContinuousKeyCallback({ GLFW_KEY_DOWN ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * 2,0,0 }); });
 	
-
 	pointLight2.setParent(&pointLight);
-
-	LightColors light;
-
-
 	pointLight3.setParent(&pointLight2);
 	pointLight.addToShader();
 	pointLight2.addToShader();
 	pointLight3.addToShader();
 
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_UP ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * -2,0,0}); });
-	Inputs::addContinuousKeyCallback({ GLFW_KEY_DOWN ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * 2,0,0 }); });
 
-	//lightCube.linkChild(&pointLight);
-
-	//LightShader::lightShader().useThenSetMat4f("uProjection", &projection);
 
 	Material mat("container2.png", "container2_specular.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 100.0f);
-	Material mat2("coolGuy.png", "coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
+	//Material mat2("coolGuy.png", "coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
 
 	cube.linkChild(&mat);
-	secondCube.linkChild(&mat2);
-	secondCubeChild.linkChild(&mat2);
 
 
 	currentTime = previousTime = glfwGetTime();
-
+	int frameCount = 0;
+	float timeElapsed = 0;
 	while (!glfwWindowShouldClose(window))
 	{
 		//clear
@@ -196,28 +167,16 @@ int main() {
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
 		camera.update();
-
+		if ((timeElapsed += deltaTime) > 1.0f) {
+			system("cls");
+			std::cout << "FPS:" << frameCount << std::endl;
+			timeElapsed = 0;
+			frameCount = 0;
+		}
+		++frameCount;
 		//shader section
 
 		cube.setPosition(cubePosition);
-		for (int i = 0; i < 1000; ++i) {
-			cube.draw();
-			cube.translate({ -1,0,0 });
-		}
-		cube.setPosition(lightPosition);
-		cube.translate({ 0,-2,0 });
-		for (int i = 0; i < 1000; ++i) {
-			cube.draw();
-			cube.translate({ -1,0,0 });
-		}
-		cube.setPosition(lightPosition);
-		cube.translate({ 0,2,0 });
-		for (int i = 0; i < 1000; ++i) {
-			cube.draw();
-			cube.translate({ -1,0,0 });
-		}
-		cube.setPosition(lightPosition);
-		cube.translate({ 0,0,2 });
 		for (int i = 0; i < 1000; ++i) {
 			cube.draw();
 			cube.translate({ -1,0,0 });
