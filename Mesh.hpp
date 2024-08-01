@@ -6,6 +6,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Drawable.hpp"
 #include "Bindable.hpp"
 
 static std::unordered_map<GLenum, unsigned int> typeToSize{ 
@@ -30,7 +31,7 @@ struct BasicVertex {
 	glm::vec3 normals;
 
 };
-class Mesh : public Bindable {
+class Mesh : public Drawable, public Bindable {
 public:
 
 	template<typename T>
@@ -73,11 +74,10 @@ public:
 		}
 	}
 	
-	void draw();
+	void draw() override;
 	void localBind() override;
 	void localUnbind() override;
 
-	unsigned int getNumberOfIndices();
 private:
 	unsigned int id_,numberOfIndices_;
 };

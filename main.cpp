@@ -115,8 +115,8 @@ int main() {
 
 	//GameObjects setup
 	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
-	Cube cubeMesh = Cube();
-	cube.meshes.push_back(&cubeMesh);
+	Model cubeModel({ Cube() });
+	cube.model = &cubeModel;
 	
 	//lights
 	LightColors colors;
@@ -152,7 +152,7 @@ int main() {
 	Material mat("container2.png", "container2_specular.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 100.0f);
 	//Material mat2("coolGuy.png", "coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
 
-	cubeMesh.linkChild(&mat);
+	cubeModel.meshes[0].linkChild(&mat);
 	pointLight.linkChild(&mat);
 	pointLight2.linkChild(&mat);
 	pointLight3.linkChild(&mat);
@@ -183,12 +183,12 @@ int main() {
 
 		cube.setPosition(cubePosition);
 		for (int i = 0; i < 1000; ++i) {
-			cube.drawMeshes();
+			cube.drawModel();
 			cube.translate({ -1,0,0 });
 		}
-		pointLight.drawMeshes();
-		pointLight2.drawMeshes();
-		pointLight3.drawMeshes();
+		pointLight.drawModel();
+		pointLight2.drawModel();
+		pointLight3.drawModel();
 
 
 

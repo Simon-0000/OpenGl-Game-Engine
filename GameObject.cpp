@@ -1,8 +1,8 @@
 #include "GameObject.hpp"
 
-void GameObject::drawMeshes()
+void GameObject::drawModel()
 {
 	shader_->useThenSetMat4f("uModel", &getUpdatedModelMatrix());
-	for (int i = 0; i < meshes.size(); ++i)
-		meshes[i]->draw();
+	model->draw();
+
 }

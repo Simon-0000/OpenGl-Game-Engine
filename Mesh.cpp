@@ -9,12 +9,8 @@ void Mesh::localUnbind() {
 }
 
 void Mesh::draw() {
-	bind();
-	glDrawElements(GL_TRIANGLES, getNumberOfIndices(), GL_UNSIGNED_INT, 0);
-}
-
-unsigned int Mesh::getNumberOfIndices() {
-	return numberOfIndices_;
+	bind();//assume that shader has been set up previously 
+	glDrawElements(GL_TRIANGLES, numberOfIndices_, GL_UNSIGNED_INT, 0);
 }
 
 
