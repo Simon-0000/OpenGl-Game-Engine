@@ -10,7 +10,6 @@ void Mesh::localUnbind() {
 
 void Mesh::draw() {
 	bind();
-	shader_->useThenSetMat4f("uModel", &getUpdatedModelMatrix());
 	glDrawElements(GL_TRIANGLES, getNumberOfIndices(), GL_UNSIGNED_INT, 0);
 }
 
@@ -21,11 +20,11 @@ unsigned int Mesh::getNumberOfIndices() {
 
 
 
-Cube::Cube(Shader* shader, const Transform& transInfo, float halfSideLength) : Mesh(createCube(shader,transInfo,halfSideLength))
+Cube::Cube(float halfSideLength) : Mesh(createCube(halfSideLength))
 {
 
 }
-Mesh Cube::createCube(Shader* shader, const Transform& transInfo, float halfSideLength) {
+Mesh Cube::createCube(float halfSideLength) {
 	std::vector<BasicVertex> vertices = {
 		{{-halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
 		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
@@ -71,5 +70,5 @@ Mesh Cube::createCube(Shader* shader, const Transform& transInfo, float halfSide
 		}
 	}
 	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
-	return Mesh(vertices, indices, attributes, 3, shader, transInfo);
+	return Mesh(vertices, indices, attributes, 3);
 }

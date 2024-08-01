@@ -6,8 +6,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "GameObject.hpp"
-#include "Shader.hpp"
+#include "Bindable.hpp"
 
 static std::unordered_map<GLenum, unsigned int> typeToSize{ 
 	
@@ -31,17 +30,17 @@ struct BasicVertex {
 	glm::vec3 normals;
 
 };
-class Mesh : public GameObject {
+class Mesh : public Bindable {
 public:
 
 	template<typename T>
-	Mesh(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo):
-		Mesh(&vertices[0], sizeof(BasicVertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize,shader, transInfo){
+	Mesh(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize):
+		Mesh(&vertices[0], sizeof(BasicVertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize){
 		
 	}
 
 	template<typename T>
-	Mesh(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize, Shader* shader, const Transform& transInfo) : GameObject(shader,transInfo){
+	Mesh(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize){
 		//generate VAO(VBO,EBO) which VAO Also stores the vertex attributes
 		unsigned int VAO;
 		glGenVertexArrays(1, &VAO);
@@ -74,7 +73,7 @@ public:
 		}
 	}
 	
-	void draw() override;
+	void draw();
 	void localBind() override;
 	void localUnbind() override;
 
@@ -85,9 +84,9 @@ private:
 
 class Cube :public Mesh{
 public:
-	Cube(Shader* shader, const Transform& transInfo, float halfSideLength = 0.5f);
+	Cube(float halfSideLength = 0.5f);
 private:
-	static Mesh createCube(Shader* shader, const Transform& transInfo, float halfSideLength);
+	static Mesh createCube(float halfSideLength);
 
 
 };

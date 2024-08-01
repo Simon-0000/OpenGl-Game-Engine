@@ -111,7 +111,7 @@ bool Transform::tryUpdateModelMatrix()
 	if (localModelNeedsUpdating_) {
 		localModelMatrix_ = glm::mat4(1.0f);
 		localModelMatrix_ = glm::translate(localModelMatrix_, position_);
-		localModelMatrix_ *= glm::mat4_cast(rotation2_);
+		localModelMatrix_ *= glm::mat4_cast(rotation2_);//TODO use a bool for each transformation because individual transformations eat a lot of resources which could 
 		localModelMatrix_ = glm::scale(localModelMatrix_, scale_);
 		localModelNeedsUpdating_ = false;
 		updateOccured = true;

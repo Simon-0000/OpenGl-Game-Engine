@@ -1,5 +1,6 @@
 #pragma once
 #include "Mesh.hpp"
+#include "GameObject.hpp"
 #include "Constants.hpp"
 #include <glm/glm.hpp>
 #include <format>
@@ -36,7 +37,7 @@ private:
 	static inline unsigned int count_ = 0;
 };
 
-class PointLight : public Cube {
+class PointLight : public GameObject, public Cube {
 public:
 	PointLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation,
 		const LightColors& colors);
@@ -56,7 +57,7 @@ private:
 
 };
 
-class SpotLight : public Cube {
+class SpotLight : public GameObject, public Cube {
 public:
 	SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle);
 	void addToShader();

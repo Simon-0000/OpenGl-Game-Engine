@@ -15,6 +15,7 @@
 #include "Constants.hpp"
 #include "Light.hpp"
 #include "Camera.hpp"
+#include "GameObject.hpp"
 
 using namespace std;
 
@@ -113,8 +114,9 @@ int main() {
 	camera.bind();
 
 	//GameObjects setup
-	Cube cube = Cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
-
+	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
+	Cube cubeMesh = Cube();
+	cube.meshes.push_back(&cubeMesh);
 	
 	//lights
 	LightColors colors;
@@ -150,7 +152,10 @@ int main() {
 	Material mat("container2.png", "container2_specular.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 100.0f);
 	//Material mat2("coolGuy.png", "coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
 
-	cube.linkChild(&mat);
+	cubeMesh.linkChild(&mat);
+	pointLight.linkChild(&mat);
+	pointLight2.linkChild(&mat);
+	pointLight3.linkChild(&mat);
 
 
 	currentTime = previousTime = glfwGetTime();
@@ -178,12 +183,12 @@ int main() {
 
 		cube.setPosition(cubePosition);
 		for (int i = 0; i < 1000; ++i) {
-			cube.draw();
+			cube.drawMeshes();
 			cube.translate({ -1,0,0 });
 		}
-		pointLight.draw();
-		pointLight2.draw();
-		pointLight3.draw();
+		pointLight.drawMeshes();
+		pointLight2.drawMeshes();
+		pointLight3.drawMeshes();
 
 
 

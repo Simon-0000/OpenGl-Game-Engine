@@ -32,8 +32,9 @@ void DirectionalLight::localUnbind()
 }
 
 PointLight::PointLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation, const LightColors& colors)
-:Cube(shader, transInfo, 0.1f), attenuation_(attenuation), light_(colors)
+:GameObject(shader, transInfo), Cube( 0.1f), attenuation_(attenuation), light_(colors)
 {
+	this->meshes.push_back(this);
 }
 
 PointLight::~PointLight() { --count_;}
@@ -77,8 +78,10 @@ bool PointLight::tryUpdateModelMatrix()
 }
 
 SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle) :
-	Cube(shader, transInfo, 0.1f), light_(colors), angle_(angle), outerAngle_(outerAngle)
+	GameObject(shader, transInfo), Cube( 0.1f), light_(colors), angle_(angle), outerAngle_(outerAngle)
 {
+	this->meshes.push_back(this);
+
 }
 
 void SpotLight::addToShader()
