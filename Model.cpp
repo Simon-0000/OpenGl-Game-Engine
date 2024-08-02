@@ -78,17 +78,20 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 			indices.push_back(face.mIndices[i]);
 	}
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+	//TODO finish material
+	//vector<Texture*> 
+
 	return Mesh(vertices, indices, attributes,3);
 }
 
-std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type)
+std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, const unsigned int textureUnit, const char* TextureName)
 {
 	std::vector<Texture*> textures = {};
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
 	{
 		aiString path;
 		mat->GetTexture(type, i, &path);
-		textures.push_back(&Texture::tryCreateTexture(path.C_Str(), &LightShader::litShader()));
+		textures.push_back(&Texture::tryCreateTexture(path.C_Str(), &LightShader::litShader(),textureUnit,TextureName));
 		//textures.push_back(Texture())
 	}
 	return {};
