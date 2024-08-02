@@ -121,6 +121,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(SolutionDir)\Dependencies\GLFW\lib\glfw3.lib;$(CoreLibraryDependencies);$(SolutionDir)\Dependencies\Assimp\lib\assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>COPY "$(SolutionDir)Dependencies\Assimp\lib\assimp-vc143-mtd.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -139,6 +142,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(SolutionDir)\Dependencies\GLFW\lib\glfw3.lib;$(CoreLibraryDependencies);$(SolutionDir)\Dependencies\Assimp\lib\assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>COPY "$(SolutionDir)Dependencies\Assimp\lib\assimp-vc143-mtd.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bindable.cpp" />
