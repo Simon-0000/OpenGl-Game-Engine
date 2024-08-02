@@ -182,7 +182,7 @@ int main() {
 		//shader section
 
 		cube.setPosition(cubePosition);
-		for (int i = 0; i < 1000; ++i) {
+		for (int i = 0; i < 500; ++i) {
 			cube.drawModel();
 			cube.translate({ -1,0,0 });
 		}

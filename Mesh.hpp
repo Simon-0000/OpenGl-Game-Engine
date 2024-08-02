@@ -26,9 +26,9 @@ struct AttributeDescriptor {
 };
 
 struct BasicVertex {
-	glm::vec3 positions;
+	glm::vec3 position;
 	glm::vec2 TextureCoords;
-	glm::vec3 normals;
+	glm::vec3 normal;
 
 };
 class Mesh : public Drawable, public Bindable {

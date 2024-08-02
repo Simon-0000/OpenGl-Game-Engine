@@ -19,8 +19,9 @@ Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit
 
 	stbi_set_flip_vertically_on_load(true);
 	unsigned char* data = stbi_load(imagePath, &width, &height, &nrChannels, 0);
-	if (!data){}
-		//throw 
+	if (!data){
+		throw std::runtime_error("Could not load texture, directory is invalid");
+	}
 
 	std::string path(imagePath);
 	if(path.ends_with(".png"))

@@ -19,5 +19,4 @@ public:
 	Model* model;
 protected:
 	Shader* shader_;
-	void loadModel(std::string path);
 };

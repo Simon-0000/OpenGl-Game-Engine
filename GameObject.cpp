@@ -4,5 +4,4 @@ void GameObject::drawModel()
 {
 	shader_->useThenSetMat4f("uModel", &getUpdatedModelMatrix());
 	model->draw();
-
 }
