@@ -12,5 +12,5 @@ public:
 	float shininess;
 private:
 	Shader* shader_;
-	Texture diffuseImage_, specularImage_;
+	Texture& diffuseImage_, specularImage_;
 };

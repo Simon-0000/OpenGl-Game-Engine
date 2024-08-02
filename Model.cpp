@@ -39,12 +39,12 @@ void Model::loadModel(const std::string& path)
 
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
-	for (int i = 0; i < node->mNumMeshes; ++i)
+	for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		meshes.push_back(processMesh(mesh, scene));
 	}
-	for (int i = 0; i < node->mNumChildren; ++i)
+	for (unsigned int i = 0; i < node->mNumChildren; ++i)
 		processNode(node->mChildren[i], scene);
 }
 
@@ -53,32 +53,43 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	std::vector<unsigned int> indices;
 	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
 
-	for (int i = 0; i < mesh->mNumVertices; ++i)
+	for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
 	{
+		glm::vec2 uvs = {};
+		glm::vec3 normals = {};
+		if (mesh->mTextureCoords[0])
+			uvs = { mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y };
+		
+		if (mesh->HasNormals())
+			normals = { mesh->mNormals[i].x,mesh->mNormals[i].y,mesh->mNormals[i].z };
+
 		BasicVertex vertex{
-			{ mesh->mVertices[i].x  ,mesh->mVertices[i].y, mesh->mVertices[i].z},
-			{},//{mesh->mTextureCoords[i]->x,mesh->mTextureCoords[i]->y},
-			{mesh->mNormals[i].x,mesh->mNormals[i].y,mesh->mNormals[i].z}
+			{mesh->mVertices[i].x  ,mesh->mVertices[i].y, mesh->mVertices[i].z},
+			uvs,
+			normals
 		};
 		vertices.push_back(vertex);
+
 	}
-	for (int i = 0; i < mesh->mNumFaces; ++i)
+	for (unsigned int i = 0; i < mesh->mNumFaces; ++i)
 	{
 		aiFace face = mesh->mFaces[i];
 		for (int j = 0; j < face.mNumIndices; ++j)
 			indices.push_back(face.mIndices[i]);
 	}
+	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 	return Mesh(vertices, indices, attributes,3);
 }
 
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type)
+std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type)
 {
-	std::vector<Texture> textures;
-	for (int i = 0; i < mat->GetTextureCount(type); ++i)
+	std::vector<Texture*> textures = {};
+	for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
 	{
 		aiString path;
 		mat->GetTexture(type, i, &path);
+		textures.push_back(&Texture::tryCreateTexture(path.C_Str(), &LightShader::litShader()));
 		//textures.push_back(Texture())
 	}
-	return textures;
+	return {};
 }

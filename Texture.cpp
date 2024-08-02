@@ -3,6 +3,8 @@
 #include "stb_image.h"
 
 Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit, const char* textureName) : textureUnit_(textureUnit){
+
+
 	static int MAX_TEXTURE_UNITS = getNumberOfTextureUnits();
 	if (textureUnit_ >= MAX_TEXTURE_UNITS)
 		throw std::range_error(std::format("Texture unit location out of maximum range: {}",MAX_TEXTURE_UNITS));
@@ -31,6 +33,16 @@ Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
 	shader->useThenSetInt(textureName, textureUnit_);
+}
+
+Texture& Texture::tryCreateTexture(const char* imagePath, Shader* shader, unsigned int textureUnit, const char* textureName)
+{
+	if (loadedTextures_.find(imagePath) != loadedTextures_.end())
+	{
+		return loadedTextures_[imagePath];
+	}
+	loadedTextures_[imagePath] = Texture(imagePath, shader, textureUnit, textureName);
+	return loadedTextures_[imagePath];
 }
 
 void Texture::localBind() {

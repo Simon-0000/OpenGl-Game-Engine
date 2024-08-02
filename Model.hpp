@@ -8,8 +8,8 @@
 #include "Shader.hpp"
 #include "Drawable.hpp"
 #include "Bindable.hpp"
-#include "Texture.hpp"
-
+#include "Material.hpp"
+#include "Constants.hpp"
 class Model: public Drawable, public Bindable {
 public:
 	Model();
@@ -26,5 +26,5 @@ private:
 	void loadModel(const std::string& path);
 	void processNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type);
+	std::vector<Texture*> loadMaterialTextures(aiMaterial* mat, aiTextureType type);
 };

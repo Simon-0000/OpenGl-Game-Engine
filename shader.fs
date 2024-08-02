@@ -4,8 +4,8 @@ const int MAX_POINT_LIGHTS = 50;
 const int MAX_SPOT_LIGHTS = 50;
 
 struct Material {
-	sampler2D diffuse;
-	sampler2D specular;
+	sampler2D diffuse;//0
+	sampler2D specular;//1
 	float shininess;
 };
 
