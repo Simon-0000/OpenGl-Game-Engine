@@ -106,11 +106,11 @@ int main() {
 
 
 	//shaders
-	Shader shader("shader.vs", "shader.fs");
+	Shader& shader = LightShader::litShader();
 
 
 	camera.linkShader(&shader);
-	camera.linkShader(&LightShader::lightShader());
+	camera.linkShader(&LightShader::unlitShader());
 	camera.bind();
 
 	//GameObjects setup
@@ -149,8 +149,7 @@ int main() {
 
 
 
-	Material mat("container2.png", "container2_specular.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 100.0f);
-	//Material mat2("coolGuy.png", "coolGuy.png", &shader, {1.0f, 0.5f, 0.31f}, {1.0f, 0.5f, 0.31f}, {0.5f, 0.5f, 0.5f}, 1);
+	Material mat("container2.png", "container2_specular.png", &shader, 100.0f);
 
 	cubeModel.meshes[0].linkChild(&mat);
 	pointLight.linkChild(&mat);

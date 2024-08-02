@@ -47,6 +47,7 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 	for (int i = 0; i < node->mNumChildren; ++i)
 		processNode(node->mChildren[i], scene);
 }
+
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	std::vector<BasicVertex> vertices;
 	std::vector<unsigned int> indices;
@@ -68,4 +69,16 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 			indices.push_back(face.mIndices[i]);
 	}
 	return Mesh(vertices, indices, attributes,3);
+}
+
+std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type)
+{
+	std::vector<Texture> textures;
+	for (int i = 0; i < mat->GetTextureCount(type); ++i)
+	{
+		aiString path;
+		mat->GetTexture(type, i, &path);
+		//textures.push_back(Texture())
+	}
+	return textures;
 }
