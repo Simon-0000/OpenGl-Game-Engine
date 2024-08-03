@@ -90,21 +90,20 @@ Mesh Model::processMesh(const char* path, aiMesh* mesh, const aiScene* scene) {
 	//TODO finish material
 	//vector<Texture*> 
 	Mesh mMesh = Mesh(vertices, indices, attributes, 3);
-	//mMesh.linkChild(loadMaterialTextures(path, material, aiTextureType_DIFFUSE, 0, "uMaterial.diffuse")[0]);
-	//mMesh.linkChild(loadMaterialTextures(path, material, aiTextureType_SPECULAR, 0, "uMaterial.specular")[0]);
+	mMesh.linkChild(loadMaterialTextures(path, material, aiTextureType_DIFFUSE, 0, "uMaterial.diffuse"));
+	mMesh.linkChild(loadMaterialTextures(path, material, aiTextureType_SPECULAR, 0, "uMaterial.specular"));
 
 	return mMesh;
 }
 
-std::vector<Texture*> Model::loadMaterialTextures(const char* path, aiMaterial* mat, aiTextureType type, const unsigned int textureUnit, const char* TextureName)
+Texture* Model::loadMaterialTextures(const char* path, aiMaterial* mat, aiTextureType type, const unsigned int textureUnit, const char* TextureName)
 {
-	std::vector<Texture*> textures = {};
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
+	Texture* texture = nullptr;
+	if(mat->GetTextureCount(type) > 0)
 	{
 		aiString subPath;
-		mat->GetTexture(type, i, &subPath);
-		textures.push_back(&Texture::tryCreateTexture((std::string(path) + subPath.C_Str()).c_str(), &LightShader::litShader(), textureUnit, TextureName));
-		//textures.push_back(Texture())
+		mat->GetTexture(type, 0, &subPath);
+		texture = &Texture::tryCreateTexture((std::string(path) + subPath.C_Str()).c_str(), &LightShader::litShader(), textureUnit, TextureName);
 	}
-	return textures;
+	return texture;
 }

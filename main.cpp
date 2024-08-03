@@ -118,11 +118,10 @@ int main() {
 	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
 	Model cubeModel({ Cube() });
 	cube.model = &cubeModel;
-	Assimp::Importer importer;
 
-
+	GameObject backpack(&shader,{{0,0,0}});
 	Model backpackModel("ressources/backpack/backpack.obj");
-
+	backpack.model = &backpackModel;
 
 	//lights
 	LightColors colors;
@@ -194,7 +193,7 @@ int main() {
 		pointLight.drawModel();
 		pointLight2.drawModel();
 		pointLight3.drawModel();
-		backpackModel.draw();
+		backpack.drawModel();
 
 
 		//Swap buffer and check events

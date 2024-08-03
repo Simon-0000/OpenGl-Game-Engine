@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <vector>
+#include <unordered_set>
 
 class Bindable {
 public:
@@ -16,6 +16,8 @@ public:
 	void unlinkChild(Bindable* child);
 	
 private:
+	void linkChild(Bindable* child,std::unordered_set<Bindable*>& parents);
+
 	Bindable* sibling_ = nullptr;
 	Bindable* child_ = nullptr;
 };
