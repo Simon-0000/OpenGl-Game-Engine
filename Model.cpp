@@ -4,7 +4,7 @@ Model::Model(): meshes({})
 {
 }
 
-Model::Model(const std::string& path): meshes({})
+Model::Model(const char* path): meshes({})
 {
 	loadModel(path);
 }
@@ -27,28 +27,37 @@ void Model::localUnbind()
 {
 }
 
-void Model::loadModel(const std::string& path)
+void Model::loadModel(const char* path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);//TODO add aiProcess_GenNormals and aiProcess_OptimizeMeshes
+	
+	const aiScene* scene = importer.ReadFile( path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);//TODO add aiProcess_GenNormals and aiProcess_OptimizeMeshes
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 		throw std::runtime_error("Could not load model, directory is invalid");
 	}
-	processNode(scene->mRootNode, scene);
+	auto directory = std::string(path);
+	auto pos = directory.rfind("/");
+	if (pos != directory.npos)
+	{
+		processNode(directory.substr(0, pos + 1).c_str(), scene->mRootNode, scene);
+	}
+	else {
+		processNode(directory.c_str(), scene->mRootNode, scene);
+	}
 }
 
-void Model::processNode(aiNode* node, const aiScene* scene)
+void Model::processNode(const char* path, aiNode* node, const aiScene* scene)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(processMesh(mesh, scene));
+		meshes.push_back(processMesh(path, mesh, scene));
 	}
 	for (unsigned int i = 0; i < node->mNumChildren; ++i)
-		processNode(node->mChildren[i], scene);
+		processNode(path, node->mChildren[i], scene);
 }
 
-Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
+Mesh Model::processMesh(const char* path, aiMesh* mesh, const aiScene* scene) {
 	std::vector<BasicVertex> vertices;
 	std::vector<unsigned int> indices;
 	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
@@ -75,24 +84,27 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	{
 		aiFace face = mesh->mFaces[i];
 		for (int j = 0; j < face.mNumIndices; ++j)
-			indices.push_back(face.mIndices[i]);
+			indices.push_back(face.mIndices[j]);
 	}
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 	//TODO finish material
 	//vector<Texture*> 
+	Mesh mMesh = Mesh(vertices, indices, attributes, 3);
+	//mMesh.linkChild(loadMaterialTextures(path, material, aiTextureType_DIFFUSE, 0, "uMaterial.diffuse")[0]);
+	//mMesh.linkChild(loadMaterialTextures(path, material, aiTextureType_SPECULAR, 0, "uMaterial.specular")[0]);
 
-	return Mesh(vertices, indices, attributes,3);
+	return mMesh;
 }
 
-std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, const unsigned int textureUnit, const char* TextureName)
+std::vector<Texture*> Model::loadMaterialTextures(const char* path, aiMaterial* mat, aiTextureType type, const unsigned int textureUnit, const char* TextureName)
 {
 	std::vector<Texture*> textures = {};
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
 	{
-		aiString path;
-		mat->GetTexture(type, i, &path);
-		textures.push_back(&Texture::tryCreateTexture(path.C_Str(), &LightShader::litShader(),textureUnit,TextureName));
+		aiString subPath;
+		mat->GetTexture(type, i, &subPath);
+		textures.push_back(&Texture::tryCreateTexture((std::string(path) + subPath.C_Str()).c_str(), &LightShader::litShader(), textureUnit, TextureName));
 		//textures.push_back(Texture())
 	}
-	return {};
+	return textures;
 }

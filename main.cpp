@@ -16,6 +16,8 @@
 #include "Camera.hpp"
 #include "GameObject.hpp"
 
+
+
 using namespace std;
 
 static constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
@@ -116,7 +118,12 @@ int main() {
 	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
 	Model cubeModel({ Cube() });
 	cube.model = &cubeModel;
-	
+	Assimp::Importer importer;
+
+
+	Model backpackModel("ressources/backpack/backpack.obj");
+
+
 	//lights
 	LightColors colors;
 	colors.ambient = { 0.05f, 0.05f, 0.05f };
@@ -187,7 +194,7 @@ int main() {
 		pointLight.drawModel();
 		pointLight2.drawModel();
 		pointLight3.drawModel();
-
+		backpackModel.draw();
 
 
 		//Swap buffer and check events
