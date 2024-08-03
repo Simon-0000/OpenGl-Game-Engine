@@ -115,7 +115,7 @@ int main() {
 	camera.bind();
 
 	//GameObjects setup
-	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0} });
+	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0},{10.0f,0.2f,10.0f} });
 	Model cubeModel({ Cube() });
 	cube.model = &cubeModel;
 
@@ -135,12 +135,13 @@ int main() {
 	colorsB.specular = { 1.0f, 0.0f, 0.0f };
 
 	LightColors colorsC({ 0, 1.0f, 0 }, { 1.0f,1.0f,0 });
+	LightAttenuation attenuation{ 0.09f,0.032f };
 
 	DirectionalLight directionalLight(&shader, { -1,-1,0 }, colors);
 	directionalLight.addToShader();
 	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
-	PointLight pointLight2(&shader, { {0,1,0} }, { 0.09f,0.032f }, colorsB);
-	SpotLight pointLight3(&shader, { {0,-2,0} }, colorsC, 0.91f,0.88f);
+	PointLight pointLight2(&shader, { {0,1,0} }, attenuation, colorsB);
+	SpotLight pointLight3(&shader, { {0,-2,0} }, attenuation, colorsC, 0.91f,0.88f);
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_RIGHT ,GLFW_PRESS }, [&]() { pointLight.rotate({deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_LEFT ,GLFW_PRESS }, [&]() { pointLight.rotate({-deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_UP ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * -2,0,0 }); });

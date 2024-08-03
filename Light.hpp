@@ -59,7 +59,8 @@ private:
 
 class SpotLight : public GameObject, public Bindable {
 public:
-	SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle);
+	SpotLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation, 
+		const LightColors& colors, const float angle, const float outerAngle);
 	void addToShader();
 	void localBind() override;
 	void localUnbind() override;
@@ -68,6 +69,7 @@ protected:
 	bool tryUpdateModelMatrix() override;
 
 private:
+	LightAttenuation attenuation_;
 	LightColors light_;
 	float angle_, outerAngle_;
 	short shaderIndex_ = -1;

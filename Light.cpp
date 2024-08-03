@@ -76,8 +76,8 @@ bool PointLight::tryUpdateModelMatrix()
 	return false;
 }
 
-SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle) :
-	GameObject(shader, transInfo), light_(colors), angle_(angle), outerAngle_(outerAngle)
+SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation, const LightColors& colors, const float angle, const float outerAngle) :
+	GameObject(shader, transInfo), attenuation_(attenuation), light_(colors), angle_(angle), outerAngle_(outerAngle)
 {
 
 }
@@ -94,6 +94,9 @@ void SpotLight::addToShader()
 		shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
 		shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
 		shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+		shader_->useThenSetFloat((name + ".constant").c_str(), attenuation_.constant);
+		shader_->useThenSetFloat((name + ".linear").c_str(), attenuation_.linear);
+		shader_->useThenSetFloat((name + ".quadratic").c_str(), attenuation_.quadratic);
 	}
 }
 
