@@ -11,7 +11,7 @@
 #include "Bindable.hpp"
 #include "Material.hpp"
 #include "Constants.hpp"
-class Model: public Drawable, public Bindable {
+class Model: public Drawable {
 public:
 	Model();
 	Model(const char* path);
@@ -19,8 +19,6 @@ public:
 	Model(const std::vector<Mesh>& meshes);
 	void draw() override;
 	std::vector<Mesh> meshes;
-	void localBind() override;
-	void localUnbind() override;
 
 
 private:

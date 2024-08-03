@@ -1,7 +1,9 @@
 #include "GameObject.hpp"
 
-void GameObject::drawModel()
+void GameObject::draw()
 {
 	shader_->useThenSetMat4f("uModel", &getUpdatedModelMatrix());
-	model->draw();
+	if (model) {
+		model->draw();
+	}
 }

@@ -32,9 +32,8 @@ void DirectionalLight::localUnbind()
 }
 
 PointLight::PointLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation, const LightColors& colors)
-	:GameObject(shader, transInfo), Model({ Cube(0.1f) }), attenuation_(attenuation), light_(colors)
+	:GameObject(shader, transInfo), attenuation_(attenuation), light_(colors)
 {
-	this->model = this;
 }
 
 PointLight::~PointLight() { --count_;}
@@ -55,13 +54,13 @@ void PointLight::addToShader() {
 }
 
 void PointLight::localBind() {
-	Model::localBind();
+	//Model::localBind();
 	addToShader();
 }
 
 void PointLight::localUnbind()
 {
-	Model::localUnbind();
+	//Model::localUnbind();
 
 	//TODO implement a system to keep track of all lights in cpu in order to remove them if necessary
 
@@ -78,9 +77,8 @@ bool PointLight::tryUpdateModelMatrix()
 }
 
 SpotLight::SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle) :
-	GameObject(shader, transInfo), Model({ Cube(0.1f) }), light_(colors), angle_(angle), outerAngle_(outerAngle)
+	GameObject(shader, transInfo), light_(colors), angle_(angle), outerAngle_(outerAngle)
 {
-	this->model = this;
 
 }
 
@@ -101,13 +99,13 @@ void SpotLight::addToShader()
 
 void SpotLight::localBind()
 {
-	Model::localBind();
+	//Model::localBind();
 	addToShader();
 }
 
 void SpotLight::localUnbind()
 {
-	Model::localUnbind();
+	//Model::localUnbind();
 }
 
 bool SpotLight::tryUpdateModelMatrix()

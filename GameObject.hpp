@@ -10,12 +10,12 @@
 #include "Drawable.hpp"
 #include "Model.hpp"
 
-class GameObject: public Transform {
+class GameObject: public Transform, public Drawable {
 
 public:
 	GameObject(Shader* shader, const Transform& transInfo) : Transform(transInfo), shader_(shader) {}
 	virtual ~GameObject() = default;
-	void drawModel();
+	void draw() override;
 	Model* model;
 protected:
 	Shader* shader_;

@@ -19,14 +19,6 @@ void Model::draw()
 		mesh.draw();
 }
 
-void Model::localBind()
-{
-}
-
-void Model::localUnbind()
-{
-}
-
 void Model::loadModel(const char* path)
 {
 	Assimp::Importer importer;

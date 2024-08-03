@@ -37,7 +37,7 @@ private:
 	static inline unsigned int count_ = 0;
 };
 
-class PointLight : public GameObject, public Model {
+class PointLight : public GameObject, public Bindable {
 public:
 	PointLight(Shader* shader, const Transform& transInfo, const LightAttenuation& attenuation,
 		const LightColors& colors);
@@ -57,7 +57,7 @@ private:
 
 };
 
-class SpotLight : public GameObject, public Model {
+class SpotLight : public GameObject, public Bindable {
 public:
 	SpotLight(Shader* shader, const Transform& transInfo, const LightColors& colors, const float angle, const float outerAngle);
 	void addToShader();

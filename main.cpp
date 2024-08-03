@@ -187,13 +187,13 @@ int main() {
 
 		cube.setPosition(cubePosition);
 		for (int i = 0; i < 500; ++i) {
-			cube.drawModel();
+			cube.draw();
 			cube.translate({ -1,0,0 });
 		}
-		pointLight.drawModel();
-		pointLight2.drawModel();
-		pointLight3.drawModel();
-		backpack.drawModel();
+		pointLight.draw();
+		pointLight2.draw();
+		pointLight3.draw();
+		backpack.draw();
 
 
 		//Swap buffer and check events
