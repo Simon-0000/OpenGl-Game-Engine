@@ -14,10 +14,10 @@ void DirectionalLight::addToShader()
 		shaderIndex_ = count_++;
 		auto name = std::format("uDirectionalLights[{}]", shaderIndex_);
 		shader_->useThenSetInt("uDirectionalLightsCount", count_);
-		shader_->useThenSetVec3f((name + ".direction").c_str(), &direction_);
-		shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
-		shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
-		shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
+		shader_->setVec3f((name + ".direction").c_str(), &direction_);
+		shader_->setVec3f((name + ".light.ambient").c_str(), &light_.ambient);
+		shader_->setVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
+		shader_->setVec3f((name + ".light.specular").c_str(), &light_.specular);
 	}
 }
 
@@ -43,12 +43,12 @@ void PointLight::addToShader() {
 		shaderIndex_ = count_++;
 		auto name = std::format("uPointLights[{}]", shaderIndex_);
 		shader_->useThenSetInt("uPointLightsCount", count_);
-		shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
-		shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
-		shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
-		shader_->useThenSetFloat((name + ".constant").c_str(), attenuation_.constant);
-		shader_->useThenSetFloat((name + ".linear").c_str(), attenuation_.linear);
-		shader_->useThenSetFloat((name + ".quadratic").c_str(), attenuation_.quadratic);
+		shader_->setVec3f((name + ".light.ambient").c_str(), &light_.ambient);
+		shader_->setVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
+		shader_->setVec3f((name + ".light.specular").c_str(), &light_.specular);
+		shader_->setFloat((name + ".constant").c_str(), attenuation_.constant);
+		shader_->setFloat((name + ".linear").c_str(), attenuation_.linear);
+		shader_->setFloat((name + ".quadratic").c_str(), attenuation_.quadratic);
 	}
 
 }
@@ -69,7 +69,7 @@ void PointLight::localUnbind()
 bool PointLight::tryUpdateModelMatrix()
 {
 	if (Transform::tryUpdateModelMatrix()) {
-		shader_->useThenSetVec3f((std::format("uPointLights[{}].position", shaderIndex_)).c_str(), &getGlobalPosition());
+		shader_->setVec3f((std::format("uPointLights[{}].position", shaderIndex_)).c_str(), &getGlobalPosition());
 		return true;
 	}
 
@@ -88,15 +88,15 @@ void SpotLight::addToShader()
 		shaderIndex_ = count_++;
 		auto name = std::format("uSpotLights[{}]", shaderIndex_);
 		shader_->useThenSetInt("uSpotLightsCount", count_);
-		shader_->useThenSetFloat((name + ".angle").c_str(), angle_);
-		shader_->useThenSetFloat((name + ".outerAngle").c_str(), outerAngle_);
+		shader_->setFloat((name + ".angle").c_str(), angle_);
+		shader_->setFloat((name + ".outerAngle").c_str(), outerAngle_);
 
-		shader_->useThenSetVec3f((name + ".light.ambient").c_str(), &light_.ambient);
-		shader_->useThenSetVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
-		shader_->useThenSetVec3f((name + ".light.specular").c_str(), &light_.specular);
-		shader_->useThenSetFloat((name + ".constant").c_str(), attenuation_.constant);
-		shader_->useThenSetFloat((name + ".linear").c_str(), attenuation_.linear);
-		shader_->useThenSetFloat((name + ".quadratic").c_str(), attenuation_.quadratic);
+		shader_->setVec3f((name + ".light.ambient").c_str(), &light_.ambient);
+		shader_->setVec3f((name + ".light.diffuse").c_str(), &light_.diffuse);
+		shader_->setVec3f((name + ".light.specular").c_str(), &light_.specular);
+		shader_->setFloat((name + ".constant").c_str(), attenuation_.constant);
+		shader_->setFloat((name + ".linear").c_str(), attenuation_.linear);
+		shader_->setFloat((name + ".quadratic").c_str(), attenuation_.quadratic);
 	}
 }
 
@@ -115,8 +115,8 @@ bool SpotLight::tryUpdateModelMatrix()
 {
 	if (Transform::tryUpdateModelMatrix()) {
 		auto name = std::format("uSpotLights[{}]", shaderIndex_);
-		shader_->useThenSetVec3f((name + ".direction").c_str(), &getForward());
-		shader_->useThenSetVec3f((name + ".position").c_str(), &getGlobalPosition());
+		shader_->setVec3f((name + ".direction").c_str(), &getForward());
+		shader_->setVec3f((name + ".position").c_str(), &getGlobalPosition());
 		return true;
 	}
 

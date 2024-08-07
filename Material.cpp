@@ -10,9 +10,9 @@ Material::Material(const char* diffuseImagePath, const char* specularImagePath, 
 }
 
 void Material::localBind() {
-	diffuseImage_.localBind();
-	specularImage_.localBind();
-	shader_->useThenSetFloat("uMaterial.shininess", shininess);
+	//diffuseImage_.localBind();
+	//specularImage_.localBind();
+	shader_->setFloat("uMaterial.shininess", shininess);
 }
 
 void Material::localUnbind() {

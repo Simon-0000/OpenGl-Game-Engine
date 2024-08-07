@@ -116,13 +116,12 @@ int main() {
 
 	//GameObjects setup
 	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0}});
-
 	Model cubeModel({ Cube() });
 	cube.model = &cubeModel;
 
-	GameObject backpack(&shader,{{0,10,0}});
-	Model backpackModel("ressources/backpack/backpack.obj");
-	backpack.model = &backpackModel;
+	//GameObject backpack(&shader,{{0,10,0}});
+	//Model backpackModel("ressources/backpack/backpack.obj");
+	//backpack.model = &backpackModel;
 
 	//lights
 	LightColors colors;
@@ -191,7 +190,6 @@ int main() {
 		++frameCount;
 		//shader section
 
-		cube.setPosition(cubePosition);
 		//GameObject::drawWithOutline({ &cube }, {0.0f,1.0f,0.0f});
 		//auto temp = cube.shader_;
 		//cube.shader_ = &LightShader::unlitShader();
@@ -202,15 +200,16 @@ int main() {
 		//cube.scale(glm::vec3(-0.1f));
 		//cube.shader_ = &LightShader::litShader();
 		//GameObject::drawWithOutline({ &cube }, { 0,0,1.0f });
-		LightShader::unlitShader().useThenSetVec3f("uLightColor", 0,1,0);
+
+		//GameObject::drawWithOutline({ &cube }, { 0,1.0f,1.0f });
+		LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
 
 		cube.shader_ = &shader;
 		cube.setPosition(cubePosition);
 		cube.draw();
-		cube.setPosition(cubePosition + glm::vec3{0, 1.5f, 0});
+		cube.setPosition(cubePosition + glm::vec3{ 0, 1.5f, 0 });
 		cube.shader_ = &LightShader::unlitShader();
-		cube.draw();
-
+		cube.localDraw();
 
 		//cube.shader_ = temp;
 

@@ -11,57 +11,95 @@ std::string Shader::readShaderFile(const char* shaderPath) {
 void Shader::use() const{
 	glUseProgram(id_);
 }
-void Shader::useThenSetInt(const char* name, int a) const {
+void Shader::useThenSetInt(const char* name, int a) const 
+{
 	use();
-	glUniform1i(getUniformId(name), a);
-
+	setInt(name, a);
 }
+void Shader::setInt(const char* name, int a) const
+{
+	glUniform1i(getUniformId(name), a);
+}
+
 
 void Shader::useThenSetFloat(const char* name, float a) const {
 	use();
+	setFloat(name, a);
+}
+void Shader::setFloat(const char* name, float a) const {
 	glUniform1f(getUniformId(name), a);
-
 }
 
-void Shader::useThenSetVec2f(const char* name, float a, float b) const {
+
+void Shader::useThenSetVec2f(const char* name, float a, float b) const 
+{
 	use();
-	glUniform2f(getUniformId(name), a, b);
+	setVec2f(name, a, b);
 }
 void Shader::useThenSetVec2f(const char* name, const glm::vec2* vec) const
 {
 	use();
-	glUniform2f(getUniformId(name), vec->x,vec->y);
+	setVec2f(name, vec);
+}
+void Shader::setVec2f(const char* name, float a, float b) const {
+	glUniform2f(getUniformId(name), a, b);
+}
+void Shader::setVec2f(const char* name, const glm::vec2* vec) const
+{
+	glUniform2f(getUniformId(name), vec->x, vec->y);
 }
 
 
-void Shader::useThenSetVec3f(const char* name, float a, float b, float c) const {
+
+void Shader::useThenSetVec3f(const char* name, float a, float b, float c) const 
+{
 	use();
-	glUniform3f(getUniformId(name), a, b, c);
+	setVec3f(name, a,b,c);
 
 }
 void Shader::useThenSetVec3f(const char* name, const glm::vec3* vec) const
 {
 	use();
-	glUniform3f(getUniformId(name), vec->x, vec->y,vec->z);
+	setVec3f(name, vec);
+}
+void Shader::setVec3f(const char* name, float a, float b, float c) const 
+{
+	glUniform3f(getUniformId(name), a, b, c);
+}
+void Shader::setVec3f(const char* name, const glm::vec3* vec) const
+{
+	glUniform3f(getUniformId(name), vec->x, vec->y, vec->z);
 }
 
-void Shader::useThenSetVec4f(const char* name, float a, float b, float c, float d) const {
+
+void Shader::useThenSetVec4f(const char* name, float a, float b, float c, float d) const 
+{
 	use();
-	glUniform4f(getUniformId(name), a,b,c,d);
+	setVec4f(name, a,b,c,d);
 }
 void Shader::useThenSetVec4f(const char* name, const glm::vec4* vec) const
 {
 	use();
-	glUniform4f(getUniformId(name), vec->x, vec->y, vec->z, vec->w);
-
+	setVec4f(name, vec);
 }
+void Shader::setVec4f(const char* name, float a, float b, float c, float d) const
+{
+	glUniform4f(getUniformId(name), a, b, c, d);
+}
+void Shader::setVec4f(const char* name, const glm::vec4* vec) const
+{
+	glUniform4f(getUniformId(name), vec->x, vec->y, vec->z, vec->w);
+}
+
 
 
 void Shader::useThenSetMat4f(const char* name, const glm::mat4* mat) const {
 	use();
+	setMat4f(name, mat);
+}
+void Shader::setMat4f(const char* name, const glm::mat4* mat) const {
 	glUniformMatrix4fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
 }
-
 
 
 int Shader::getUniformId(const char* name) const {
