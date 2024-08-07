@@ -174,8 +174,7 @@ int main() {
 	currentTime = previousTime = glfwGetTime();
 	int frameCount = 0;
 	float timeElapsed = 0;
-	glEnable(GL_STENCIL_TEST);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
 	Inputs::addKeyCallback({ GLFW_KEY_P ,GLFW_PRESS }, [&]() {
 		if (cube.shader_ == &shader)
 		{
@@ -193,7 +192,6 @@ int main() {
 	{
 		//clear color and depth buffers 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glStencilMask(0x00);
 
 		//update data
 		Inputs::checkContinuousInputs();
@@ -221,7 +219,7 @@ int main() {
 		//cube.shader_ = &LightShader::litShader();
 		//GameObject::drawWithOutline({ &cube }, { 0,0,1.0f });
 
-		GameObject::drawWithOutline({ &cube,&cubeB }, { 0,1.0f,1.0f });
+		GameObject::drawWithOutline({ &cube }, { 0,1.0f,1.0f });
 		auto a = LightShader::unlitShader();
 
 		//LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
