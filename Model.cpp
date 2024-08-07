@@ -18,6 +18,11 @@ void Model::draw()
 	for (auto& mesh : meshes)
 		mesh.draw();
 }
+void Model::localDraw()
+{
+	for (auto& mesh : meshes)
+		mesh.localDraw();
+}
 
 void Model::loadModel(const char* path)
 {

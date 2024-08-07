@@ -18,6 +18,8 @@ public:
 
 	Model(const std::vector<Mesh>& meshes);
 	void draw() override;
+	void localDraw();
+
 	std::vector<Mesh> meshes;
 
 

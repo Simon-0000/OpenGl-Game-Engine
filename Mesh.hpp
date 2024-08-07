@@ -75,6 +75,8 @@ public:
 	}
 	
 	void draw() override;
+	void localDraw();
+
 	void localBind() override;
 	void localUnbind() override;
 

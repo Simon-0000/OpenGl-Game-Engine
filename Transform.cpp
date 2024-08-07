@@ -85,6 +85,12 @@ void Transform::setScale(const glm::vec3& scale)
 	scale_ = scale;
 }
 
+void Transform::scale(const glm::vec3& scale)
+{
+	localModelNeedsUpdating_ = true;
+	scale_ += scale;
+}
+
 void Transform::setParent(Transform* parent)
 {
 	if (parent_ = parent)

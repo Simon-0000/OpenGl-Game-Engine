@@ -36,6 +36,7 @@ void Camera::update()
 
 bool Camera::tryUpdateModelMatrix() {
 	if (Transform::tryUpdateModelMatrix()) {
+
 		glm::mat4 view;
 		view = glm::lookAt(getPosition(), getPosition() + getForward(), {0,1.0f,0});
 		for (auto& shader : shaders_) {
@@ -44,7 +45,6 @@ bool Camera::tryUpdateModelMatrix() {
 				shader->useThenSetVec3f("uViewPosition", &getGlobalPosition());
 			}
 			catch (...) {
-
 			}
 		}
 

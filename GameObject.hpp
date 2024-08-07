@@ -16,7 +16,12 @@ public:
 	GameObject(Shader* shader, const Transform& transInfo) : Transform(transInfo), shader_(shader) {}
 	virtual ~GameObject() = default;
 	void draw() override;
+	void localDraw();
+
+	static void drawWithOutline(const std::vector<GameObject*>& objects, const glm::vec3& color, float outlineWidthPercentage = 0.1f);
+
 	Model* model;
-protected:
 	Shader* shader_;
+
+protected:
 };

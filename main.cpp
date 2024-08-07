@@ -115,11 +115,12 @@ int main() {
 	camera.bind();
 
 	//GameObjects setup
-	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0},{10.0f,0.2f,10.0f} });
+	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0}});
+
 	Model cubeModel({ Cube() });
 	cube.model = &cubeModel;
 
-	GameObject backpack(&shader,{{0,0,0}});
+	GameObject backpack(&shader,{{0,10,0}});
 	Model backpackModel("ressources/backpack/backpack.obj");
 	backpack.model = &backpackModel;
 
@@ -166,10 +167,14 @@ int main() {
 	currentTime = previousTime = glfwGetTime();
 	int frameCount = 0;
 	float timeElapsed = 0;
+	glEnable(GL_STENCIL_TEST);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
 	while (!glfwWindowShouldClose(window))
 	{
-		//clear
+		//clear color and depth buffers 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glStencilMask(0x00);
 
 		//update data
 		Inputs::checkContinuousInputs();
@@ -187,14 +192,36 @@ int main() {
 		//shader section
 
 		cube.setPosition(cubePosition);
-		for (int i = 0; i < 500; ++i) {
-			cube.draw();
-			cube.translate({ -1,0,0 });
-		}
+		//GameObject::drawWithOutline({ &cube }, {0.0f,1.0f,0.0f});
+		//auto temp = cube.shader_;
+		//cube.shader_ = &LightShader::unlitShader();
+		//LightShader::unlitShader().useThenSetVec3f("uLightColor", 0.0f,0.0f,1.0f);
+		//cube.shader_ = &LightShader::unlitShader();
+		//cube.scale(glm::vec3(0.1f));
+		//cube.localDraw();
+		//cube.scale(glm::vec3(-0.1f));
+		//cube.shader_ = &LightShader::litShader();
+		//GameObject::drawWithOutline({ &cube }, { 0,0,1.0f });
+		LightShader::unlitShader().useThenSetVec3f("uLightColor", 0,1,0);
+
+		cube.shader_ = &shader;
+		cube.setPosition(cubePosition);
+		cube.draw();
+		cube.setPosition(cubePosition + glm::vec3{0, 1.5f, 0});
+		cube.shader_ = &LightShader::unlitShader();
+		cube.draw();
+
+
+		//cube.shader_ = temp;
+
+		//for (int i = 0; i < 500; ++i) {
+		//	cube.translate({ -1,0,0 });
+		//	cube.draw();
+		//}
 		pointLight.draw();
-		pointLight2.draw();
-		pointLight3.draw();
-		backpack.draw();
+		//pointLight2.draw();
+		//pointLight3.draw();
+		//backpack.draw();
 
 
 		//Swap buffer and check events

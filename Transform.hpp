@@ -12,10 +12,10 @@ public:
 
 	void setRotation(const glm::vec3& rotation);
 	void setRotation(const glm::quat& rotation);
-
 	void rotate(const glm::vec3& rotation);
 
 	void setScale(const glm::vec3& scale);
+	void scale(const glm::vec3& scale);
 	void setParent(Transform* parent);
 
 	const glm::mat4& getUpdatedModelMatrix();
