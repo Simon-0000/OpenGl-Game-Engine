@@ -116,8 +116,13 @@ int main() {
 
 	//GameObjects setup
 	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0}});
-	Model cubeModel({ Cube() });
-	cube.model = &cubeModel;
+	GameObject cubeB(&LightShader::unlitShader(), { cubePosition,{0, glm::pi<float>() / 3,0} });
+
+	Model cubeModelA({ Cube() });
+	Model cubeModelB({ Cube() });
+
+	cube.model = &cubeModelA;
+	cubeB.model = &cubeModelB;
 
 	//GameObject backpack(&shader,{{0,10,0}});
 	//Model backpackModel("ressources/backpack/backpack.obj");
@@ -156,8 +161,11 @@ int main() {
 
 
 	Material mat("container2.png", "container2_specular.png", &shader, 100.0f);
+	Material matB("container.jpg", "container2_specular.png", &shader, 100.0f);
 
-	cubeModel.meshes[0].linkChild(&mat);
+	cubeModelA.meshes[0].linkChild(&mat);
+	cubeModelB.meshes[0].linkChild(&matB);
+
 	pointLight.linkChild(&mat);
 	pointLight2.linkChild(&mat);
 	pointLight3.linkChild(&mat);
@@ -168,6 +176,18 @@ int main() {
 	float timeElapsed = 0;
 	glEnable(GL_STENCIL_TEST);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	Inputs::addKeyCallback({ GLFW_KEY_P ,GLFW_PRESS }, [&]() {
+		if (cube.shader_ == &shader)
+		{
+			cube.shader_ = &LightShader::unlitShader();
+			cubeB.shader_ = &shader;
+		}
+		else {
+			cubeB.shader_ = &LightShader::unlitShader();
+			cube.shader_ = &shader;
+		}
+		}
+	);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -201,15 +221,22 @@ int main() {
 		//cube.shader_ = &LightShader::litShader();
 		//GameObject::drawWithOutline({ &cube }, { 0,0,1.0f });
 
-		//GameObject::drawWithOutline({ &cube }, { 0,1.0f,1.0f });
-		LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
+		GameObject::drawWithOutline({ &cube,&cubeB }, { 0,1.0f,1.0f });
+		auto a = LightShader::unlitShader();
+
+		//LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
+		cube.setPosition({ 0,0,0 });
+		//cube.draw();
+		cubeB.setPosition({ 0,1,0 });
+		//cubeB.draw();
+	/*	LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
 
 		cube.shader_ = &shader;
 		cube.setPosition(cubePosition);
 		cube.draw();
 		cube.setPosition(cubePosition + glm::vec3{ 0, 1.5f, 0 });
 		cube.shader_ = &LightShader::unlitShader();
-		cube.localDraw();
+		cube.localDraw();*/
 
 		//cube.shader_ = temp;
 

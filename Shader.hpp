@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <format>
+#include <unordered_map>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -12,7 +13,10 @@
 
 class Shader {
 public:
+	Shader() = default;
 	Shader(const char* vertexShaderPath, const char* fragmentShaderPath);
+	static Shader& tryCreateShader(const char* vertexShaderPath, const char* fragmentShaderPath);
+
 	void use() const;
 
 	void useThenSetInt(const char* name, int a) const;
@@ -48,5 +52,5 @@ private:
 	static unsigned int createShaderProgram(const char* vertexShaderSrc, const char* fragmentShaderSrc);
 
 	unsigned int id_;
-
+	static inline std::unordered_map<std::string, Shader> loadedShaders_ = {};
 };

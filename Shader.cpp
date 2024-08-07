@@ -2,6 +2,18 @@
 Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath): id_(createShaderProgram(vertexShaderPath,fragmentShaderPath)) {
 
 }
+Shader& Shader::tryCreateShader(const char* vertexShaderPath, const char* fragmentShaderPath)
+{
+	std::string key = std::string(vertexShaderPath) + fragmentShaderPath;
+	if (loadedShaders_.find(key) != loadedShaders_.end())
+	{
+		return loadedShaders_[key];
+	}
+	loadedShaders_[key] = Shader(vertexShaderPath,fragmentShaderPath);
+	return loadedShaders_[key];
+}
+
+
 std::string Shader::readShaderFile(const char* shaderPath) {
 	std::ifstream ifs(shaderPath);
 	std::stringstream buffer;

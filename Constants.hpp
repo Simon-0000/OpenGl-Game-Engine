@@ -4,11 +4,11 @@
 
 namespace LightShader {
 	static Shader& unlitShader() {
-		static Shader shader("unlitShader.vs", "unlitShader.fs");
+		static Shader& shader = Shader::tryCreateShader("unlitShader.vs", "unlitShader.fs");
 		return shader;
 	}
 	static Shader& litShader() {
-		static Shader shader("shader.vs", "shader.fs");
+		static Shader& shader = Shader::tryCreateShader("shader.vs", "shader.fs");
 		return shader;
 	}
 };
