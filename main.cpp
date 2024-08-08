@@ -161,7 +161,7 @@ int main() {
 
 
 	Material mat("container2.png", "container2_specular.png", &shader, 100.0f);
-	Material matB("container.jpg", "container2_specular.png", &shader, 100.0f);
+	Material matB("coolGuy.png", "coolGuy.png", &shader, 100.0f);
 
 	cubeModelA.meshes[0].linkChild(&mat);
 	cubeModelB.meshes[0].linkChild(&matB);

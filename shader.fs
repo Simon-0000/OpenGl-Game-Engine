@@ -80,6 +80,8 @@ void main()
     for(int i = 0; i < uSpotLightsCount; ++i)
         finalColor += calculateSpotlight(uSpotLights[i]);
 
+    if(finalColor.a < 0.05)
+        discard;
     FragColor = finalColor;
 }
 
@@ -90,7 +92,6 @@ vec4 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light)
     
     //ambient 
     vec4 ambient = diffuseVec * vec4(light.ambient,1.0);
-    
     //diffuse
     vec3 norm = normalize(Normal);
     
@@ -101,7 +102,7 @@ vec4 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light)
     vec3 viewDir = normalize(uViewPosition - FragmentPosition);
     vec3 reflectDir = reflect(-lightDir, norm);  
     float spec = pow(max(dot(viewDir,reflectDir), 0.0),uMaterial.shininess);
-    vec4 specular = texture(uMaterial.specular,Uv) * vec4(spec * light.specular,1.0);  
+    vec4 specular = texture(uMaterial.specular,Uv) * vec4(spec * light.specular,0.0);  
     
     return ambient + diffuse + specular;
 }

@@ -71,3 +71,8 @@ Mesh Cube::createCube(float halfSideLength) {
 	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
 	return Mesh(vertices, indices, attributes, 3);
 }
+
+//Mesh Quad::createQuad(float width, float height)
+//{
+//	return Mesh();
+//}

@@ -89,7 +89,12 @@ public:
 	Cube(float halfSideLength = 0.5f);
 private:
 	static Mesh createCube(float halfSideLength);
-
-
 };
 
+
+//class Quad :public Mesh {
+//public:
+//	Quad(float width, float height);
+//private:
+//	static Mesh createQuad(float width, float height);
+//};

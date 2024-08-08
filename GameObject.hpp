@@ -18,7 +18,7 @@ public:
 	void draw() override;
 	void localDraw();
 
-	static void drawWithOutline(const std::vector<GameObject*>& objects, const glm::vec3& color, float outlineWidthPercentage = 0.1f);
+	static void drawWithOutline(const std::vector<GameObject*>& objects, const glm::vec3& color, float outlineWidthPercentage = 0.05f);
 
 	Model* model;
 	Shader* shader_;
