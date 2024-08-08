@@ -115,8 +115,8 @@ int main() {
 	camera.bind();
 
 	//GameObjects setup
-	GameObject cube(&shader, { cubePosition,{0, glm::pi<float>() / 3,0}});
-	GameObject cubeB(&LightShader::unlitShader(), { cubePosition,{0, glm::pi<float>() / 3,0} });
+	GameObject cube(&shader, { {0,0,0},{0, glm::pi<float>() / 3,0}});
+	GameObject cubeB(&shader, { {0,1,0},{0, glm::pi<float>() / 3,0}});
 
 	Model cubeModelA({ Cube() });
 	Model cubeModelB({ Cube() });
@@ -188,6 +188,8 @@ int main() {
 		}
 	);
 
+
+
 	while (!glfwWindowShouldClose(window))
 	{
 		//clear color and depth buffers 
@@ -207,41 +209,11 @@ int main() {
 		}
 		++frameCount;
 		//shader section
-
-		//GameObject::drawWithOutline({ &cube }, {0.0f,1.0f,0.0f});
-		//auto temp = cube.shader_;
-		//cube.shader_ = &LightShader::unlitShader();
-		//LightShader::unlitShader().useThenSetVec3f("uLightColor", 0.0f,0.0f,1.0f);
-		//cube.shader_ = &LightShader::unlitShader();
-		//cube.scale(glm::vec3(0.1f));
-		//cube.localDraw();
-		//cube.scale(glm::vec3(-0.1f));
-		//cube.shader_ = &LightShader::litShader();
-		//GameObject::drawWithOutline({ &cube }, { 0,0,1.0f });
-
-		GameObject::drawWithOutline({ &cube }, { 0,1.0f,1.0f });
-		auto a = LightShader::unlitShader();
-
-		//LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
-		cube.setPosition({ 0,0,0 });
-		//cube.draw();
-		cubeB.setPosition({ 0,1,0 });
-		//cubeB.draw();
-	/*	LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
-
-		cube.shader_ = &shader;
-		cube.setPosition(cubePosition);
+		cube.setPosition({ 2,0,0 });
 		cube.draw();
-		cube.setPosition(cubePosition + glm::vec3{ 0, 1.5f, 0 });
-		cube.shader_ = &LightShader::unlitShader();
-		cube.localDraw();*/
+		cube.setPosition({ 0,0,0 });
+		GameObject::drawWithOutline({ &cube,&cubeB }, { 0,1.0f,1.0f });
 
-		//cube.shader_ = temp;
-
-		//for (int i = 0; i < 500; ++i) {
-		//	cube.translate({ -1,0,0 });
-		//	cube.draw();
-		//}
 		pointLight.draw();
 		//pointLight2.draw();
 		//pointLight3.draw();

@@ -20,13 +20,12 @@ void GameObject::localDraw()
 
 void GameObject::drawWithOutline(const std::vector<GameObject*>& objects,const glm::vec3& color,float outlineWidthPercentage)
 {
-	LightShader::unlitShader().useThenSetVec3f("uLightColor", 0, 1, 0);
+	LightShader::unlitShader().useThenSetVec3f("uLightColor", &color);
 
 	glEnable(GL_STENCIL_TEST);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 	glClear(GL_STENCIL_BUFFER_BIT);
 	
-
 
 	glStencilFunc(GL_ALWAYS, 1, 0xFF);
 	glStencilMask(0xFF);
@@ -49,4 +48,6 @@ void GameObject::drawWithOutline(const std::vector<GameObject*>& objects,const g
 	glStencilMask(0xFF);
 	glStencilFunc(GL_ALWAYS, 1, 0xff);
 	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_STENCIL_TEST);
+
 }
