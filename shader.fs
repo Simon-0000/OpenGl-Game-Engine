@@ -64,15 +64,15 @@ uniform int uSpotLightsCount;
 
 
 
-vec3 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light);
-vec3 calculateDirectional(DirectionalLight directionalLight);
-vec3 calculatePoint(PointLight pointLight);
-vec3 calculateSpotlight(SpotLight spot);
+vec4 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light);
+vec4 calculateDirectional(DirectionalLight directionalLight);
+vec4 calculatePoint(PointLight pointLight);
+vec4 calculateSpotlight(SpotLight spot);
 
 
 void main()
 {
-    vec3 finalColor = vec3(0);
+    vec4 finalColor = vec4(0);
     for(int i = 0; i < uDirectionalLightsCount; ++i)
         finalColor += calculateDirectional(uDirectionalLights[i]);
     for(int i = 0; i < uPointLightsCount; ++i)
@@ -80,38 +80,38 @@ void main()
     for(int i = 0; i < uSpotLightsCount; ++i)
         finalColor += calculateSpotlight(uSpotLights[i]);
 
-    FragColor = vec4(finalColor,1.0);
+    FragColor = finalColor;
 }
 
 
-vec3 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light)
+vec4 calculateAmbientDiffuseSpecular(vec3 lightDir,  LightColors light)
 {
-    vec3 diffuseVec =  vec3(texture(uMaterial.diffuse,Uv));
+    vec4 diffuseVec =  texture(uMaterial.diffuse,Uv);
     
     //ambient 
-    vec3 ambient = diffuseVec * light.ambient;
+    vec4 ambient = diffuseVec * vec4(light.ambient,1.0);
     
     //diffuse
     vec3 norm = normalize(Normal);
     
     float diff = max(dot(norm,lightDir), 0.0);
-    vec3 diffuse = light.diffuse * diff * diffuseVec;
+    vec4 diffuse = vec4(light.diffuse * diff,1.0) * diffuseVec;
     
     //specular
     vec3 viewDir = normalize(uViewPosition - FragmentPosition);
     vec3 reflectDir = reflect(-lightDir, norm);  
     float spec = pow(max(dot(viewDir,reflectDir), 0.0),uMaterial.shininess);
-    vec3 specular = vec3(texture(uMaterial.specular,Uv)) * spec * light.specular;  
+    vec4 specular = texture(uMaterial.specular,Uv) * vec4(spec * light.specular,1.0);  
     
     return ambient + diffuse + specular;
 }
 
-vec3 calculateDirectional(DirectionalLight directionalLight)
+vec4 calculateDirectional(DirectionalLight directionalLight)
 {
     return calculateAmbientDiffuseSpecular(normalize(-directionalLight.direction),directionalLight.light);
 }
 
-vec3 calculatePoint(PointLight pointLight)
+vec4 calculatePoint(PointLight pointLight)
 {
     vec3 lightDir = pointLight.position - FragmentPosition;  
     
@@ -128,13 +128,13 @@ vec3 calculatePoint(PointLight pointLight)
     return attenuation * calculateAmbientDiffuseSpecular(lightDir,pointLight.light);
 }
 
-vec3 calculateSpotlight(SpotLight spot){   
+vec4 calculateSpotlight(SpotLight spot){   
     vec3 lightDir = spot.position - FragmentPosition;
     float distance = length(lightDir);
     lightDir = normalize(lightDir);
 
     float angle = dot(lightDir, normalize(-spot.direction));
-    vec3 spotLightColor = vec3(0.0,0.0,0.0);
+    vec4 spotLightColor = vec4(0);
 
     
 
