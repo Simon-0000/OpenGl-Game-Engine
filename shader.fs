@@ -80,8 +80,8 @@ void main()
     for(int i = 0; i < uSpotLightsCount; ++i)
         finalColor += calculateSpotlight(uSpotLights[i]);
 
-    if(finalColor.a < 0.05)
-        discard;
+//    if(finalColor.a < 0.05)
+//        discard;
     FragColor = finalColor;
 }
 
