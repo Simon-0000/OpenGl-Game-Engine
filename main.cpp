@@ -15,7 +15,7 @@
 #include "Light.hpp"
 #include "Camera.hpp"
 #include "GameObject.hpp"
-
+#include "Renderer.hpp"
 
 
 using namespace std;
@@ -177,19 +177,11 @@ int main() {
 	int frameCount = 0;
 	float timeElapsed = 0;
 
-	Inputs::addKeyCallback({ GLFW_KEY_P ,GLFW_PRESS }, [&]() {
-		if (cube.shader_ == &shader)
-		{
-			cube.shader_ = &LightShader::unlitShader();
-			cubeB.shader_ = &shader;
-		}
-		else {
-			cubeB.shader_ = &LightShader::unlitShader();
-			cube.shader_ = &shader;
-		}
-		}
-	);
-
+	Renderer test(&camera);
+	//test.addToOpaqueBuffer(&cube);
+	test.addToTransparentBuffer(&cubeB);
+	for (auto elem : test)
+		auto b = elem;
 
 
 	while (!glfwWindowShouldClose(window))

@@ -44,3 +44,14 @@ bool Renderer::operator()(GameObject* obj1, GameObject* obj2)
 	return glm::length(obj1->getGlobalPosition() - referenceCamera->getGlobalPosition())  <
 		glm::length(obj2->getGlobalPosition() - referenceCamera->getGlobalPosition());
 }
+
+Renderer::Iterator Renderer::begin()
+{
+	return Iterator(this,0);
+}
+Renderer::Iterator Renderer::end()
+{
+	return Iterator(this, opaqueBuffer_.size() + transparentBuffer_.size());
+}
+
+

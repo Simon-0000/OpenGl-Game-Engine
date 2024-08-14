@@ -6,6 +6,7 @@
 
 class Renderer {
 public:
+	struct Iterator;
 	Renderer(Camera* camera = nullptr);
 	void addToOpaqueBuffer(GameObject* obj);
 	void addToTransparentBuffer(GameObject* obj);
@@ -16,22 +17,30 @@ public:
 	void sortTransparentBuffer();
 
 	bool operator()(GameObject* obj1, GameObject* obj2);
+	Iterator begin();
+	Iterator end();
 	Camera* referenceCamera;
-	struct objIterator {
+	
+	struct Iterator {
 	public:
-		objIterator(std::vector<GameObject*>* source, unsigned int index) :
+		Iterator(Renderer* source, unsigned int index) :
 			src(source), index(index) {}
 		GameObject& operator*() {
-			return *(*src)[index];
+			auto opaqueSize = src->opaqueBuffer_.size();
+			if (index < opaqueSize)
+				return *src->opaqueBuffer_[index];
+			else
+				return *src->transparentBuffer_[index - opaqueSize];
 		}
-		objIterator operator++() {
-			return objIterator{ src,index + 1 };
+		Iterator& operator++() {
+			++index;
+			return *this;
 		}
-		bool operator==(const objIterator& other) const{
+		bool operator==(const Iterator& other) const {
 			return other.index == index && src == other.src;
 		}
 	private:
-		std::vector<GameObject*>* src;
+		Renderer* src;
 		unsigned int index;
 	};
 private:
