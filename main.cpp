@@ -126,9 +126,9 @@ int main() {
 	cube.model = &cubeModelA;
 	cubeB.model = &cubeModelB;
 
-	//GameObject backpack(&shader,{{0,10,0}});
-	//Model backpackModel("ressources/backpack/backpack.obj");
-	//backpack.model = &backpackModel;
+	GameObject backpack(&shader,{{0,5,0}});
+	Model backpackModel("ressources/backpack/backpack.obj");
+	backpack.model = &backpackModel;
 
 	//lights
 	LightColors colors;
@@ -146,19 +146,16 @@ int main() {
 
 	DirectionalLight directionalLight(&shader, { -1,-1,0 }, colors);
 	directionalLight.addToShader();
+
 	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
-	PointLight pointLight2(&shader, { {0,1,0} }, attenuation, colorsB);
-	SpotLight pointLight3(&shader, { {0,-2,0} }, attenuation, colorsC, 0.91f,0.88f);
+	pointLight.addToShader();
+
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_RIGHT ,GLFW_PRESS }, [&]() { pointLight.rotate({deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_LEFT ,GLFW_PRESS }, [&]() { pointLight.rotate({-deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_UP ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * -2,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_DOWN ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * 2,0,0 }); });
 	
-	pointLight2.setParent(&pointLight);
-	pointLight3.setParent(&pointLight2);
-	pointLight.addToShader();
-	pointLight2.addToShader();
-	pointLight3.addToShader();
+
 
 
 
@@ -169,8 +166,7 @@ int main() {
 	cubeModelB.meshes[0].linkChild(&matB);
 
 	pointLight.linkChild(&mat);
-	pointLight2.linkChild(&mat);
-	pointLight3.linkChild(&mat);
+
 
 
 	currentTime = previousTime = glfwGetTime();
@@ -178,7 +174,9 @@ int main() {
 	float timeElapsed = 0;
 
 	Renderer test(&camera);
-	//test.addToOpaqueBuffer(&cube);
+	test.addToOpaqueBuffer(&cube);
+	test.addToOpaqueBuffer(&pointLight);
+	test.addToOpaqueBuffer(&backpack);
 	test.addToTransparentBuffer(&cubeB);
 	for (auto elem : test)
 		auto b = elem;
@@ -202,18 +200,8 @@ int main() {
 			frameCount = 0;
 		}
 		++frameCount;
-		//shader section
-		cube.setPosition({ 2,0,0 });
-		cube.draw();
-		cube.setPosition({ 0,0,0 });
-		GameObject::drawWithOutline({ &cube,&cubeB }, { 0,1.0f,1.0f });
 
-		pointLight.draw();
-		//pointLight2.draw();
-		//pointLight3.draw();
-		//backpack.draw();
-
-
+		test.renderBuffers();
 		//Swap buffer and check events
 		glfwPollEvents();
 		glfwSwapBuffers(window);

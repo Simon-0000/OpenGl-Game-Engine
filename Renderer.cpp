@@ -41,8 +41,8 @@ void Renderer::sortTransparentBuffer()
 
 bool Renderer::operator()(GameObject* obj1, GameObject* obj2)
 {
-	return glm::length(obj1->getGlobalPosition() - referenceCamera->getGlobalPosition())  <
-		glm::length(obj2->getGlobalPosition() - referenceCamera->getGlobalPosition());
+	return glm::length2(obj1->getGlobalPosition() - referenceCamera->getGlobalPosition())  <
+		glm::length2(obj2->getGlobalPosition() - referenceCamera->getGlobalPosition());
 }
 
 Renderer::Iterator Renderer::begin()

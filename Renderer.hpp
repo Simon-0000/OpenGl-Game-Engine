@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include <set>
+#define GLM_ENABLE_EXPERIMENTAL //used here to avoid error caused by using experimental glm functions
+#include <glm/gtx/norm.hpp>
+#undef GLM_ENABLE_EXPERIMENTAL
 #include "Camera.hpp"
 #include "GameObject.hpp"
 
