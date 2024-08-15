@@ -188,6 +188,7 @@
     <Image Include="container2.png" />
     <Image Include="container2_specular.png" />
     <Image Include="coolGuy.png" />
+    <Image Include="earth.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="unlitShader.fs" />

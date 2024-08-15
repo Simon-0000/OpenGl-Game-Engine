@@ -91,8 +91,7 @@ static GLFWwindow* initOpenGlLibraries() {
 	glfwSetCursorPosCallback(window, mouse_callback);
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_CULL_FACE);
 	return window;
 }
 
@@ -126,9 +125,9 @@ int main() {
 	cube.model = &cubeModelA;
 	cubeB.model = &cubeModelB;
 
-	GameObject backpack(&shader,{{0,5,0}});
-	Model backpackModel("ressources/backpack/backpack.obj");
-	backpack.model = &backpackModel;
+	//GameObject backpack(&shader,{{0,5,0}});
+	//Model backpackModel("ressources/backpack/backpack.obj");
+	//backpack.model = &backpackModel;
 
 	//lights
 	LightColors colors;
@@ -137,8 +136,8 @@ int main() {
 	colors.specular = { 0.5f, 0.5f, 0.5f };
 
 	LightColors colorsB;
-	colorsB.ambient = { 0.02f, 0.02f, 0.02f };
-	colorsB.diffuse = { 0.5f,0.1f,0.1f };
+	colorsB.ambient = { 0.1f, 0.1f, 0.1f };
+	colorsB.diffuse = { 0.5f, 0.1f,0.1f };
 	colorsB.specular = { 1.0f, 0.0f, 0.0f };
 
 	LightColors colorsC({ 0, 1.0f, 0 }, { 1.0f,1.0f,0 });
@@ -158,8 +157,8 @@ int main() {
 
 
 
-
-	Material mat("container2.png", "container2_specular.png", &shader, 100.0f);
+	//mats and textures
+	Material mat("earth2.jpg", "earth2.jpg", &shader, 100.0f);
 	Material matB("coolGuy.png", "coolGuy.png", &shader, 100.0f);
 
 	cubeModelA.meshes[0].linkChild(&mat);
@@ -169,18 +168,17 @@ int main() {
 
 
 
+	//Renderer
+	Renderer renderer(&camera);
+	renderer.addToOpaqueBuffer(&cube);
+	renderer.addToOpaqueBuffer(&pointLight);
+	renderer.addToTransparentBuffer(&cubeB);
+
+
+
 	currentTime = previousTime = glfwGetTime();
 	int frameCount = 0;
 	float timeElapsed = 0;
-
-	Renderer test(&camera);
-	test.addToOpaqueBuffer(&cube);
-	test.addToOpaqueBuffer(&pointLight);
-	test.addToOpaqueBuffer(&backpack);
-	test.addToTransparentBuffer(&cubeB);
-	for (auto elem : test)
-		auto b = elem;
-
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -201,7 +199,7 @@ int main() {
 		}
 		++frameCount;
 
-		test.renderBuffers();
+		renderer.renderBuffers();
 		//Swap buffer and check events
 		glfwPollEvents();
 		glfwSwapBuffers(window);

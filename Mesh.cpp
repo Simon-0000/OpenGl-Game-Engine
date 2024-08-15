@@ -25,10 +25,10 @@ Cube::Cube(float halfSideLength) : Mesh(createCube(halfSideLength))
 }
 Mesh Cube::createCube(float halfSideLength) {
 	std::vector<BasicVertex> vertices = {
-		{{-halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
-		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f,  0.0f, -1.0f}},
-		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,1.0f}, {0.0f,  0.0f, -1.0f}},
-		{{-halfSideLength,  halfSideLength, -halfSideLength}, {0.0f,1.0f}, {0.0f,  0.0f, -1.0f}},
+		{{ halfSideLength, -halfSideLength,  -halfSideLength}, {0.0f,0.0f},  {0.0f,  0.0f,  -1.0f}},
+		{{-halfSideLength, -halfSideLength,  -halfSideLength}, {1.0f,0.0f},  {0.0f,  0.0f,  -1.0f}},
+		{{-halfSideLength,  halfSideLength,  -halfSideLength}, {1.0f,1.0f},  {0.0f,  0.0f,  -1.0f}},
+		{{ halfSideLength,  halfSideLength,  -halfSideLength}, {0.0f,1.0f},  {0.0f,  0.0f,  -1.0f}},
 
 		{{-halfSideLength, -halfSideLength,  halfSideLength}, {0.0f,0.0f},  {0.0f,  0.0f,  1.0f}},
 		{{ halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,0.0f},  {0.0f,  0.0f,  1.0f}},
@@ -40,10 +40,10 @@ Mesh Cube::createCube(float halfSideLength) {
 		{{-halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {-1.0f,  0.0f,  0.0f}},
 		{{-halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,0.0f}, {-1.0f,  0.0f,  0.0f}},
 
-		{{ halfSideLength,  halfSideLength,  halfSideLength}, {1.0f,1.0f}, {1.0f,  0.0f,  0.0f}},
-		{{ halfSideLength,  halfSideLength, -halfSideLength}, {0.0f,1.0f}, {1.0f,  0.0f,  0.0f}},
-		{{ halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {1.0f,  0.0f,  0.0f}},
-		{{ halfSideLength, -halfSideLength,  halfSideLength}, {1.0f,0.0f}, {1.0f,  0.0f,  0.0f}},
+		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,1.0f}, {1.0f,  0.0f,  0.0f}},
+		{{ halfSideLength,  halfSideLength,  halfSideLength}, {0.0f,1.0f}, {1.0f,  0.0f,  0.0f}},
+		{{ halfSideLength, -halfSideLength,  halfSideLength}, {0.0f,0.0f}, {1.0f,  0.0f,  0.0f}},
+		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,0.0f}, {1.0f,  0.0f,  0.0f}},
 
 		{{-halfSideLength, -halfSideLength, -halfSideLength}, {0.0f,0.0f}, {0.0f, -1.0f,  0.0f}},
 		{{ halfSideLength, -halfSideLength, -halfSideLength}, {1.0f,0.0f}, {0.0f, -1.0f,  0.0f}},
@@ -51,9 +51,9 @@ Mesh Cube::createCube(float halfSideLength) {
 		{{-halfSideLength, -halfSideLength,  halfSideLength}, {0.0f,1.0f}, {0.0f, -1.0f,  0.0f}},
 
 		{{-halfSideLength,  halfSideLength, -halfSideLength}, {0.0f,1.0f}, {0.0f,  1.0f,  0.0f}},
-		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,1.0f}, {0.0f,  1.0f,  0.0f}},
-		{{ halfSideLength,  halfSideLength,  halfSideLength}, {1.0f,0.0f}, {0.0f,  1.0f,  0.0f}},
 		{{-halfSideLength,  halfSideLength,  halfSideLength}, {0.0f,0.0f}, {0.0f,  1.0f,  0.0f}},
+		{{ halfSideLength,  halfSideLength,  halfSideLength}, {1.0f,0.0f}, {0.0f,  1.0f,  0.0f}},
+		{{ halfSideLength,  halfSideLength, -halfSideLength}, {1.0f,1.0f}, {0.0f,  1.0f,  0.0f}},
 	};
 
 	unsigned int baseIndices[] = {
@@ -71,8 +71,3 @@ Mesh Cube::createCube(float halfSideLength) {
 	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
 	return Mesh(vertices, indices, attributes, 3);
 }
-
-//Mesh Quad::createQuad(float width, float height)
-//{
-//	return Mesh();
-//}
