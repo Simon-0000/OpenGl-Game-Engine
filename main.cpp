@@ -20,7 +20,6 @@
 
 using namespace std;
 
-static constexpr int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
 
 //time
 static float deltaTime;
@@ -31,7 +30,7 @@ static constexpr float TURN_SENSITIVITY = 0.1f, TRANSLATION_SENSITIVITY = 2.0f;
 static bool shiftFunctionsEnabled = false, controlFunctionsEnabled = false;
 static double oldXPos, oldYPos;
 static float yaw = -90.0f, pitch = 0;
-Camera camera({ {0,0,1} }, 60.0f, 800.0f / 600.0f, 100.0f);
+Camera camera({ {0,0,1} }, 60.0f, static_cast<float>(Window::WINDOW_WIDTH)/ Window::WINDOW_HEIGHT, 100.0f);
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -71,7 +70,7 @@ static GLFWwindow* initOpenGlLibraries() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "OpenGlGameEngine", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(Window::WINDOW_WIDTH, Window::WINDOW_HEIGHT, "OpenGlGameEngine", NULL, NULL);
 	if (window == NULL) {
 		cout << "Failed to create glfw window" << endl;
 		throw runtime_error{"GLFW init error"};
@@ -84,7 +83,7 @@ static GLFWwindow* initOpenGlLibraries() {
 		throw runtime_error{ "GLAD init error" };
 	}
 
-	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);//display rendering on the whole window
+	glViewport(0, 0, Window::WINDOW_WIDTH, Window::WINDOW_HEIGHT);//display rendering on the whole window
 
 	glfwGetCursorPos(window, &oldXPos, &oldYPos);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);

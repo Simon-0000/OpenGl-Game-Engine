@@ -57,6 +57,9 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.hpp">
@@ -104,6 +107,9 @@
     <ClInclude Include="Renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FrameBuffer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="shader.vs" />
@@ -122,7 +128,7 @@
     <Image Include="container2_specular.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="earth.jpg">
+    <Image Include="earth2.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
