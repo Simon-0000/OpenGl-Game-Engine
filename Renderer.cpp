@@ -19,7 +19,6 @@ void Renderer::renderBuffers()
 	for (auto& obj : opaqueBuffer_)
 		obj->draw();
 	if (transparentBuffer_.size() > 0) {
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		for (auto& obj : transparentBuffer_)
 			obj->draw();
 	}
@@ -44,8 +43,9 @@ void Renderer::sortTransparentBuffer()
 
 bool Renderer::operator()(GameObject* obj1, GameObject* obj2)
 {
-	return glm::length2(obj1->getGlobalPosition() - referenceCamera->getGlobalPosition())  <
-		glm::length2(obj2->getGlobalPosition() - referenceCamera->getGlobalPosition());
+
+	auto posCam = referenceCamera->getGlobalPosition();
+	return  glm::distance2(obj1->getGlobalPosition(), posCam) > glm::distance2(obj2->getGlobalPosition(), posCam);
 }
 
 Renderer::Iterator Renderer::begin()

@@ -92,7 +92,7 @@ static GLFWwindow* initOpenGlLibraries() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
-
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	return window;
 }
 
@@ -111,7 +111,7 @@ int main() {
 	//shaders
 	Shader& shader = LightShader::litShader();
 
-
+	camera.rotate({ 0,glm::pi<float>() / 2 , 0 });
 	camera.linkShader(&shader);
 	camera.linkShader(&LightShader::unlitShader());
 	camera.bind();
