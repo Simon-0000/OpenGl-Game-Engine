@@ -1,14 +1,14 @@
 #pragma once
 #include <glad/glad.h>
 #include "Bindable.hpp"
-#include "Texture.hpp"
-class FrameBuffer : public Bindable{
+#include "Constants.hpp"
+class RenderBuffer :public Bindable {
 public:
-	FrameBuffer();
-	~FrameBuffer();
+	RenderBuffer();
+	~RenderBuffer();
 	void localBind() override;
 	void localUnbind() override;
 private:
-	Texture texture_;
 	unsigned int id_;
+
 };
