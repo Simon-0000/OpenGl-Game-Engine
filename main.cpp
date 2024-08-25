@@ -91,6 +91,8 @@ static GLFWwindow* initOpenGlLibraries() {
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+
 	return window;
 }
 
@@ -115,14 +117,16 @@ int main() {
 	camera.bind();
 
 	//GameObjects setup
-	GameObject cube(&shader, { {0,0,0},{0, glm::pi<float>() / 3,0}});
-	GameObject cubeB(&shader, { {0,1,0},{0, glm::pi<float>() / 3,0}});
-
+	GameObject cube(&shader, { {0,0,0}});
+	GameObject cubeB(&shader, { {0,1,0}});
+	GameObject quad(&shader, { {0,1,1}});
 	Model cubeModelA({ Cube() });
 	Model cubeModelB({ Cube() });
+	Model quadModel({ Quad() });
 
 	cube.model = &cubeModelA;
 	cubeB.model = &cubeModelB;
+	quad.model = &quadModel;
 
 	//GameObject backpack(&shader,{{0,5,0}});
 	//Model backpackModel("ressources/backpack/backpack.obj");
@@ -162,6 +166,7 @@ int main() {
 
 	cubeModelA.meshes[0].linkChild(&mat);
 	cubeModelB.meshes[0].linkChild(&matB);
+	quadModel.meshes[0].linkChild(&matB);
 
 	pointLight.linkChild(&mat);
 
@@ -172,7 +177,7 @@ int main() {
 	renderer.addToOpaqueBuffer(&cube);
 	renderer.addToOpaqueBuffer(&pointLight);
 	renderer.addToTransparentBuffer(&cubeB);
-
+	renderer.addToTransparentBuffer(&quad);
 
 
 	currentTime = previousTime = glfwGetTime();
@@ -189,7 +194,9 @@ int main() {
 		currentTime = glfwGetTime();
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
-		camera.update();
+		if (camera.update()) {
+			renderer.sortTransparentBuffer();
+		}
 		if ((timeElapsed += deltaTime) > 1.0f) {
 			system("cls");
 			std::cout << "FPS:" << frameCount << std::endl;

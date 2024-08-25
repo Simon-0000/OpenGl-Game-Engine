@@ -28,10 +28,9 @@ void Camera::localUnbind()
 {
 }
 
-void Camera::update()
+bool Camera::update()
 {
-	tryUpdateModelMatrix();
-
+	return tryUpdateModelMatrix();
 }
 
 bool Camera::tryUpdateModelMatrix() {

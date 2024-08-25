@@ -14,7 +14,7 @@ public:
 	void linkShaders(std::vector<Shader*> shaders);
 	void localBind() override;
 	void localUnbind() override;
-	void update();
+	bool update();
 	float fovRad, aspectRatio, renderDistance, minRenderDistance;
 protected:
 	bool tryUpdateModelMatrix() override;

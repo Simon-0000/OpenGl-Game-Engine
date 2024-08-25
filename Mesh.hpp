@@ -31,17 +31,19 @@ struct BasicVertex {
 	glm::vec3 normal;
 
 };
+static constexpr AttributeDescriptor basicVertexAttributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
+
 class Mesh : public Drawable, public Bindable {
 public:
 
 	template<typename T>
-	Mesh(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, AttributeDescriptor* attributes, size_t attributesSize):
+	Mesh(const std::vector<T>& vertices, const std::vector<unsigned int>& indices, const AttributeDescriptor* attributes, size_t attributesSize):
 		Mesh(&vertices[0], sizeof(BasicVertex)* vertices.size(), &indices[0], sizeof(unsigned int)* indices.size(), attributes, attributesSize){
 		
 	}
 
 	template<typename T>
-	Mesh(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, AttributeDescriptor* attributes, size_t attributesSize){
+	Mesh(const T* vertices, size_t verticesSize, const unsigned int* indices, size_t indicesSize, const AttributeDescriptor* attributes, size_t attributesSize){
 		//generate VAO(VBO,EBO) which VAO Also stores the vertex attributes
 		unsigned int VAO;
 		glGenVertexArrays(1, &VAO);
@@ -92,9 +94,9 @@ private:
 };
 
 
-//class Quad :public Mesh {
-//public:
-//	Quad(float width, float height);
-//private:
-//	static Mesh createQuad(float width, float height);
-//};
+class Quad :public Mesh {
+public:
+	Quad(float halfWidth = 0.75f, float halfHeight = 0.5f);
+private:
+	static Mesh createQuad(float width, float height);
+};

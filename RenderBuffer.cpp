@@ -3,7 +3,9 @@
 RenderBuffer::RenderBuffer()
 {
 	glGenRenderbuffers(1, &id_);
+	localBind();
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Window::WINDOW_WIDTH, Window::WINDOW_HEIGHT);
+	localUnbind();
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, id_);
 }
 

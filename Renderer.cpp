@@ -19,11 +19,9 @@ void Renderer::renderBuffers()
 	for (auto& obj : opaqueBuffer_)
 		obj->draw();
 	if (transparentBuffer_.size() > 0) {
-		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		for (auto& obj : transparentBuffer_)
 			obj->draw();
-		glDisable(GL_BLEND);
 	}
 }
 

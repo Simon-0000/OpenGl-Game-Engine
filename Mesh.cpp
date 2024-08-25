@@ -68,6 +68,25 @@ Mesh Cube::createCube(float halfSideLength) {
 			indices.push_back(baseIndices[j] + 4 * i);
 		}
 	}
-	AttributeDescriptor attributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
-	return Mesh(vertices, indices, attributes, 3);
+	return Mesh(vertices, indices, basicVertexAttributes, 3);
+}
+
+Quad::Quad(float halfWidth, float halfHeight) : Mesh(createQuad(halfWidth, halfHeight))
+{
+
+}
+
+Mesh Quad::createQuad(float halfWidth, float halfHeight) {
+	std::vector<BasicVertex> vertices = {
+		{{-halfWidth, -halfHeight, 0}, {0.0f,0.0f},  {0.0f,  0.0f,  1.0f}},
+		{{-halfWidth,  halfHeight, 0}, {0.0f,1.0f},  {0.0f,  0.0f,  1.0f}},
+		{{ halfWidth,  halfHeight, 0}, {1.0f,1.0f},  {0.0f,  0.0f,  1.0f}},
+		{{ halfWidth, -halfHeight, 0}, {1.0f,0.0f},  {0.0f,  0.0f,  1.0f}},
+	};
+	std::vector<unsigned int> indices = {
+		0,1,2,
+		2,3,0
+	};
+
+	return Mesh(vertices, indices, basicVertexAttributes, 3);
 }
