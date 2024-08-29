@@ -9,8 +9,7 @@
 
 class Texture : public Bindable{
 public:
-	Texture() = default;
-	Texture(Shader* shader, unsigned int textureUnit = 0, const char* textureName = DEFAULT_SHADER_TEXTURE_NAME);
+	Texture();
 	Texture(const char* imagePath, Shader* shader, unsigned int textureUnit = 0, const char* textureName = DEFAULT_SHADER_TEXTURE_NAME);
 
 	static Texture& tryCreateTexture(const char* imagePath, Shader* shader, unsigned int textureUnit = 0, const char* textureName = DEFAULT_SHADER_TEXTURE_NAME);

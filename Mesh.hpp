@@ -29,9 +29,14 @@ struct BasicVertex {
 	glm::vec3 position;
 	glm::vec2 TextureCoords;
 	glm::vec3 normal;
-
+};
+struct BasicVertex2d {
+	glm::vec2 position;
+	glm::vec2 TextureCoords;
 };
 static constexpr AttributeDescriptor basicVertexAttributes[] = { {GL_FLOAT,3 },{GL_FLOAT,2},{GL_FLOAT,3} };
+static constexpr AttributeDescriptor basicVertex2dAttributes[] = { {GL_FLOAT,2 },{GL_FLOAT,2} };
+
 
 class Mesh : public Drawable, public Bindable {
 public:
@@ -96,7 +101,14 @@ private:
 
 class Quad :public Mesh {
 public:
-	Quad(float halfWidth = 0.75f, float halfHeight = 0.5f);
+	Quad(float halfWidth = 0.5f, float halfHeight = 0.5f);
 private:
 	static Mesh createQuad(float width, float height);
+};
+
+class Quad2d :public Mesh {
+public:
+	Quad2d(float halfWidth = 1.0f, float halfHeight = 1.0f);
+private:
+	static Mesh createQuad2d(float width, float height);
 };

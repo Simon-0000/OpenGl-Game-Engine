@@ -34,26 +34,23 @@ Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit
 	shader->useThenSetInt(textureName, textureUnit_);
 }
 
-Texture::Texture(Shader* shader, unsigned int textureUnit, const char* textureName): textureUnit_(0)
+Texture::Texture(): textureUnit_(0)
 {
 	static int MAX_TEXTURE_UNITS = getNumberOfTextureUnits();
 	if (textureUnit_ >= MAX_TEXTURE_UNITS)
 		throw std::range_error(std::format("Texture unit location out of maximum range: {}", MAX_TEXTURE_UNITS));
-
 	//int width, height, nrChannels;
 	glGenTextures(1, &id_);
-	glActiveTexture(GL_TEXTURE0 + textureUnit_);
+	//glActiveTexture(GL_TEXTURE0 + textureUnit_);
 	glBindTexture(GL_TEXTURE_2D, id_);
-
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Window::WINDOW_WIDTH, Window::WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	//glGenerateMipmap(GL_TEXTURE_2D);
 	//stbi_image_free(data);
-	shader->useThenSetInt(textureName, textureUnit_);
+	//shader->useThenSetInt(textureName, textureUnit_);
 }
 
 Texture& Texture::tryCreateTexture(const char* imagePath, Shader* shader, unsigned int textureUnit, const char* textureName)

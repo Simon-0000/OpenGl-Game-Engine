@@ -10,10 +10,11 @@ void Mesh::localUnbind() {
 
 void Mesh::draw() {
 	bind();//assume that shader has been set up previously 
-	localDraw();
+	glDrawElements(GL_TRIANGLES, numberOfIndices_, GL_UNSIGNED_INT, 0);
 }
 
 void Mesh::localDraw() {
+	localBind();
 	glDrawElements(GL_TRIANGLES, numberOfIndices_, GL_UNSIGNED_INT, 0);
 }
 
@@ -89,4 +90,25 @@ Mesh Quad::createQuad(float halfWidth, float halfHeight) {
 	};
 
 	return Mesh(vertices, indices, basicVertexAttributes, 3);
+}
+
+Quad2d::Quad2d(float halfWidth, float halfHeight) : Mesh(createQuad2d(halfWidth, halfHeight))
+{
+
+}
+
+Mesh Quad2d::createQuad2d(float halfWidth, float halfHeight) {
+	std::vector<BasicVertex2d> vertices = {
+		{{-halfWidth, -halfHeight}, {0.0f,0.0f}},
+		{{-halfWidth,  halfHeight}, {0.0f,1.0f}},
+		{{ halfWidth,  halfHeight}, {1.0f,1.0f}},
+		{{ halfWidth, -halfHeight}, {1.0f,0.0f}},
+	};
+	std::vector<unsigned int> indices = {
+		0,1,2,
+		2,3,0
+	};
+
+	return Mesh(vertices, indices, basicVertex2dAttributes, 2);
+
 }

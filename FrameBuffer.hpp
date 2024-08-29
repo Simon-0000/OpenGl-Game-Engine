@@ -2,10 +2,9 @@
 #include <glad/glad.h>
 #include "Bindable.hpp"
 #include "Texture.hpp"
-#include "Shader.hpp"
 class FrameBuffer : public Bindable{
 public:
-	FrameBuffer(Shader* shader);
+	FrameBuffer();
 	~FrameBuffer();
 	void localBind() override;
 	void localUnbind() override;
