@@ -8,6 +8,8 @@ RenderBuffer::RenderBuffer(FrameBuffer& fBuffer)
 	localUnbind();
 	fBuffer.localBind();
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, id_);
+	fBuffer.localUnbind();
+
 }
 
 RenderBuffer::~RenderBuffer()

@@ -9,6 +9,7 @@ public:
 	~RenderBuffer();
 	void localBind() override;
 	void localUnbind() override;
+
 private:
 	unsigned int id_;
 

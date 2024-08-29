@@ -1,6 +1,6 @@
 #include "FrameBuffer.hpp"
 
-FrameBuffer::FrameBuffer():texture()
+FrameBuffer::FrameBuffer(Shader* shader):texture(shader)
 {
 	glGenFramebuffers(1, &id_);
 	localBind();
