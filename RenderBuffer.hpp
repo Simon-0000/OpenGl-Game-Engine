@@ -2,9 +2,10 @@
 #include <glad/glad.h>
 #include "Bindable.hpp"
 #include "Constants.hpp"
+#include "FrameBuffer.hpp"
 class RenderBuffer :public Bindable {
 public:
-	RenderBuffer();
+	RenderBuffer(FrameBuffer& fBuffer);
 	~RenderBuffer();
 	void localBind() override;
 	void localUnbind() override;

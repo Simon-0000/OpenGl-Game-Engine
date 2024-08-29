@@ -116,6 +116,7 @@
     <ClInclude Include="RenderBuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="customShader.fs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="shader.vs" />
@@ -141,5 +142,6 @@
   <ItemGroup>
     <None Include="unlitShader.fs" />
     <None Include="unlitShader.vs" />
+    <None Include="customShader.vs" />
   </ItemGroup>
 </Project>

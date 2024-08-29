@@ -8,7 +8,8 @@ public:
 	~FrameBuffer();
 	void localBind() override;
 	void localUnbind() override;
+	Texture texture;
+
 private:
-	Texture texture_;
 	unsigned int id_;
 };

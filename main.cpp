@@ -16,7 +16,8 @@
 #include "Camera.hpp"
 #include "GameObject.hpp"
 #include "Renderer.hpp"
-
+#include "FrameBuffer.hpp"
+#include "RenderBuffer.hpp"
 
 using namespace std;
 
@@ -110,7 +111,8 @@ int main() {
 
 	//shaders
 	Shader& shader = LightShader::litShader();
-
+	Shader& customShader = Shader::tryCreateShader("customShader.vs", "customShader.fs");
+	
 	camera.rotate({ 0,glm::pi<float>() / 2 , 0 });
 	camera.linkShader(&shader);
 	camera.linkShader(&LightShader::unlitShader());
@@ -134,7 +136,7 @@ int main() {
 
 	//lights
 	LightColors colors;
-	colors.ambient = { 0.05f, 0.05f, 0.05f };
+	colors.ambient = { 0.6f, 0.6f, 0.6f };
 	colors.diffuse = { 0.2f, 0.2f, 0.2f };
 	colors.specular = { 0.5f, 0.5f, 0.5f };
 
@@ -166,10 +168,15 @@ int main() {
 
 	cubeModelA.meshes[0].linkChild(&mat);
 	cubeModelB.meshes[0].linkChild(&matB);
-	quadModel.meshes[0].linkChild(&matB);
+	//quadModel.meshes[0].linkChild(&matB);
 
 	pointLight.linkChild(&mat);
 
+
+	//framebuffer and renderBuffer
+	
+	FrameBuffer fBuffer;
+	RenderBuffer rBuffer(fBuffer);
 
 
 	//Renderer
@@ -195,7 +202,7 @@ int main() {
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
 		if (camera.update()) {
-			renderer.sortTransparentBuffer();
+			renderer.sortTransparentBuffer();//could optimize by only sorting every few frames (downside is that it will cause small visible glitches)
 		}
 		if ((timeElapsed += deltaTime) > 1.0f) {
 			system("cls");
@@ -205,7 +212,29 @@ int main() {
 		}
 		++frameCount;
 
+		//RENDERING
+		fBuffer.bind();
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // we're not using the stencil buffer now
+		glEnable(GL_DEPTH_TEST);
 		renderer.renderBuffers();
+
+		// second pass
+		fBuffer.unbind();
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		customShader.use();
+		//glBindVertexArray(quadVAO);
+		quad.model->draw();
+		glDisable(GL_DEPTH_TEST);
+		fBuffer.texture.bind();
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+
+
+
 		//Swap buffer and check events
 		glfwPollEvents();
 		glfwSwapBuffers(window);
