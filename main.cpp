@@ -129,9 +129,9 @@ int main() {
 	cube.model = &cubeModelA;
 	cubeB.model = &cubeModelB;
 
-	//GameObject backpack(&shader,{{0,5,0}});
-	//Model backpackModel("ressources/backpack/backpack.obj");
-	//backpack.model = &backpackModel;
+	/*GameObject backpack(&shader,{{0,5,0}});
+	Model backpackModel("ressources/backpack/backpack.obj");
+	backpack.model = &backpackModel;*/
 
 	//lights
 	LightColors colors;
@@ -175,8 +175,6 @@ int main() {
 	
 	FrameBuffer fBuffer;
 	RenderBuffer rBuffer(fBuffer);
-	Mesh screenQuad = Quad2d(1.0f, 1.0f);
-	screenQuad.linkChild(&fBuffer.texture);
 
 	//Renderer
 	Renderer renderer(&camera);
@@ -202,7 +200,7 @@ int main() {
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
 		if (camera.update()) {
-			renderer.sortTransparentBuffer();//could optimize by only sorting every few frames (downside is that it will cause small visible glitches)
+			//renderer.sortTransparentBuffer();//could optimize by only sorting every few frames (downside is that it will cause small visible glitches)
 		}
 		if ((timeElapsed += deltaTime) > 1.0f) {
 			system("cls");
@@ -214,20 +212,7 @@ int main() {
 
 		
 		//RENDERING
-		// first pass
-		fBuffer.localBind();
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // we're not using the stencil buffer now
-		glEnable(GL_DEPTH_TEST);
-		
-		renderer.renderBuffers();
-		glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		customShader.use();
-		glDisable(GL_DEPTH_TEST);
-		screenQuad.draw();
+		fBuffer.renderFrameBuffer(renderer, customShader);
 
 
 		//Swap buffer and check events
