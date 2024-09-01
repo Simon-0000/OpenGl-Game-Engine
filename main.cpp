@@ -112,7 +112,9 @@ int main() {
 	//shaders
 	Shader& shader = LightShader::litShader();
 	Shader& customShader = Shader::tryCreateShader("customShader.vs", "customShader.fs");
-	
+	glm::mat3 defaultKernel = { 0,0,0,0,1,0,0,0,0 };
+	customShader.useThenSetMat3f("uKernel", &defaultKernel);
+
 	camera.rotate({ 0,glm::pi<float>() / 2 , 0 });
 	camera.linkShader(&shader);
 	camera.linkShader(&LightShader::unlitShader());
@@ -157,8 +159,18 @@ int main() {
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_LEFT ,GLFW_PRESS }, [&]() { pointLight.rotate({-deltaTime * glm::pi<float>() / 4,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_UP ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * -2,0,0 }); });
 	Inputs::addContinuousKeyCallback({ GLFW_KEY_DOWN ,GLFW_PRESS }, [&]() { pointLight.translate({ deltaTime * 2,0,0 }); });
-	
-
+	Inputs::addKeyCallback({ GLFW_KEY_1,GLFW_PRESS }, [&]() {
+		glm::mat3 kernel = { 1 / 16.0f,2 / 16.0f,1 / 16.0f,2 / 16.0f,4 / 16.0f,2 / 16.0f,1 / 16.0f,2 / 16.0f,2 / 16.0f };
+		customShader.useThenSetMat3f("uKernel", &kernel);
+	});
+	Inputs::addKeyCallback({ GLFW_KEY_2,GLFW_PRESS }, [&]() {
+		glm::mat3 kernel = { 2,2,2,2,-15,2,2,2,2 };
+		customShader.useThenSetMat3f("uKernel", &kernel);
+	});
+	Inputs::addKeyCallback({ GLFW_KEY_3,GLFW_PRESS }, [&]() {
+		glm::mat3 kernel = { 0,0,0,0,1,0,0,0,0 };
+		customShader.useThenSetMat3f("uKernel", &kernel);
+	});
 
 
 	//mats and textures

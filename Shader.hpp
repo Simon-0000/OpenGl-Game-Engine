@@ -43,7 +43,8 @@ public:
 
 	void useThenSetMat4f(const char* name, const glm::mat4* mat) const;
 	void setMat4f(const char* name, const glm::mat4* mat) const;
-
+	void useThenSetMat3f(const char* name, const glm::mat3* mat) const;
+	void setMat3f(const char* name, const glm::mat3* mat) const;
 
 private:
 	int getUniformId(const char* name) const;

@@ -113,6 +113,18 @@ void Shader::setMat4f(const char* name, const glm::mat4* mat) const {
 	glUniformMatrix4fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
 }
 
+void Shader::useThenSetMat3f(const char* name, const glm::mat3* mat) const
+{
+	use();
+	setMat3f(name, mat);
+}
+
+void Shader::setMat3f(const char* name, const glm::mat3* mat) const
+{
+	glUniformMatrix3fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
+
+}
+
 
 int Shader::getUniformId(const char* name) const {
 	int location = glGetUniformLocation(id_, name);
