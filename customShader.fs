@@ -21,11 +21,11 @@ void main(){
                         vec2(uOffset, -uOffset)
     };
 
-    FragColor = vec4(0,0,0,1.0f);
     for(int i = 0; i < 9; ++i)
     {
         FragColor += texture(uTexture,Uv.st + offsets[i]) * uKernel[i%3][i/3];
     }
+//    FragColor.w = 1.0f;
     
     //FragColor = texture(uTexture, Uv);
     //float average = 0.2126 * FragColor.r + 0.7152 * FragColor.g + 0.0722 * FragColor.b;

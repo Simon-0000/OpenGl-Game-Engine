@@ -114,7 +114,8 @@ int main() {
 	Shader& customShader = Shader::tryCreateShader("customShader.vs", "customShader.fs");
 	glm::mat3 defaultKernel = { 0,0,0,0,1,0,0,0,0 };
 	customShader.useThenSetMat3f("uKernel", &defaultKernel);
-	customShader.setFloat("uOffset", 1.0f / 300.0f);
+	float uOffset = 1.0f / 300;
+	customShader.setFloat("uOffset", uOffset);
 
 	camera.rotate({ 0,glm::pi<float>() / 2 , 0 });
 	camera.linkShader(&shader);
@@ -155,6 +156,14 @@ int main() {
 
 	PointLight pointLight(&shader, { lightPosition }, { 0.09f,0.032f }, colorsB);
 	pointLight.addToShader();
+	Inputs::addKeyCallback({ GLFW_KEY_UP,GLFW_PRESS }, [&]() {
+		uOffset += 1 / 600.0f;
+		customShader.setFloat("uOffset", uOffset);
+	});
+	Inputs::addKeyCallback({ GLFW_KEY_DOWN,GLFW_PRESS }, [&]() {
+		uOffset -= 1 / 600.0f;
+		customShader.setFloat("uOffset", uOffset);
+	});
 
 	Inputs::addKeyCallback({ GLFW_KEY_1,GLFW_PRESS }, [&]() {
 		glm::mat3 kernel = { 1 / 16.0f,2 / 16.0f,1 / 16.0f,2 / 16.0f,4 / 16.0f,2 / 16.0f,1 / 16.0f,2 / 16.0f,2 / 16.0f };

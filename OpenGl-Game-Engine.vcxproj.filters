@@ -116,9 +116,7 @@
     <ClInclude Include="RenderBuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="customShader.fs">
-      <Filter>Source Files</Filter>
-    </ClInclude>
+    <ClInclude Include="customShader.fs" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="shader.vs" />
