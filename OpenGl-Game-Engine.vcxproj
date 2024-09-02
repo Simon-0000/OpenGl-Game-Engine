@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Bindable.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cubemap.cpp" />
     <ClCompile Include="Dependencies\glad\src\glad.c" />
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Bindable.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Constants.hpp" />
+    <ClInclude Include="Cubemap.hpp" />
     <ClInclude Include="customShader.fs" />
     <ClInclude Include="Drawable.hpp" />
     <ClInclude Include="FrameBuffer.hpp" />
@@ -194,6 +196,12 @@
     <Image Include="container2_specular.png" />
     <Image Include="coolGuy.png" />
     <Image Include="earth2.jpg" />
+    <Image Include="ressources\skybox\back.jpg" />
+    <Image Include="ressources\skybox\bottom.jpg" />
+    <Image Include="ressources\skybox\front.jpg" />
+    <Image Include="ressources\skybox\left.jpg" />
+    <Image Include="ressources\skybox\right.jpg" />
+    <Image Include="ressources\skybox\top.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="customShader.vs" />

@@ -19,10 +19,8 @@ public:
 	void localUnbind() override;
 
 private:
-
-	int getNumberOfTextureUnits();
-
 	unsigned int id_, textureUnit_;
+	int getNumberOfTextureUnits();
 	static inline const char* DEFAULT_SHADER_TEXTURE_NAME = "uTexture";
 	static inline std::unordered_map<std::string, Texture> loadedTextures_ = {};
 };

@@ -1,6 +1,7 @@
 #include "Texture.hpp"
-#define STB_IMAGE_IMPLEMENTATION
+//assumes that #define STB_IMAGE_IMPLEMENTATION is defined in main
 #include "stb_image.h"
+
 
 Texture::Texture(const char* imagePath, Shader* shader, unsigned int textureUnit, const char* textureName) : textureUnit_(textureUnit)
 {
