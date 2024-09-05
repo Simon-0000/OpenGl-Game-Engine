@@ -21,6 +21,7 @@
 #include "Renderer.hpp"
 #include "FrameBuffer.hpp"
 #include "RenderBuffer.hpp"
+#include "Cubemap.hpp"
 
 using namespace std;
 
@@ -115,6 +116,8 @@ int main() {
 	//shaders
 	Shader& shader = LightShader::litShader();
 	Shader& customShader = Shader::tryCreateShader("customShader.vs", "customShader.fs");
+	Shader& cubemapShader = Shader::tryCreateShader("cubemapShader.vs", "cubemapShader.fs");
+
 	glm::mat3 defaultKernel = { 0,0,0,0,1,0,0,0,0 };
 	customShader.useThenSetMat3f("uKernel", &defaultKernel);
 	float uOffset = 1.0f / 300;
@@ -123,6 +126,7 @@ int main() {
 	camera.rotate({ 0,glm::pi<float>() / 2 , 0 });
 	camera.linkShader(&shader);
 	camera.linkShader(&LightShader::unlitShader());
+	camera.linkShader(&cubemapShader);
 	camera.bind();
 
 	//GameObjects setup
@@ -131,7 +135,6 @@ int main() {
 	GameObject quad(&shader, { {0,1,1}});
 	Model cubeModelA({ Cube() });
 	Model cubeModelB({ Cube() });
-	//Model quadModel({ Quad2d() });
 
 	cube.model = &cubeModelA;
 	cubeB.model = &cubeModelB;
@@ -191,7 +194,19 @@ int main() {
 
 	pointLight.linkChild(&mat);
 
-
+	//Cubemaps
+	std::string faces[6]
+	{
+			"ressources/skybox/right.jpg",
+			"ressources/skybox/left.jpg",
+			"ressources/skybox/top.jpg",
+			"ressources/skybox/bottom.jpg",
+			"ressources/skybox/front.jpg",
+			"ressources/skybox/back.jpg"
+	};
+	Cubemap cubemapTexture(faces, &cubemapShader);
+	Mesh skybox = Cube(20);
+	skybox.linkChild(&cubemapTexture);
 	//framebuffer and renderBuffer
 	
 	FrameBuffer fBuffer;
@@ -221,7 +236,7 @@ int main() {
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
 		if (camera.update()) {
-			//renderer.sortTransparentBuffer();//could optimize by only sorting every few frames (downside is that it will cause small visible glitches)
+			renderer.sortTransparentBuffer();//could optimize by only sorting every few frames (downside is that it will cause small visible glitches)
 		}
 		if ((timeElapsed += deltaTime) > 1.0f) {
 			system("cls");
@@ -233,6 +248,14 @@ int main() {
 
 		
 		//RENDERING
+		glDepthMask(GL_FALSE);
+		cubemapShader.use();
+		// ... set view and projection matrix
+		skybox.draw();
+		// ... draw rest of the scene
+		glDepthMask(GL_TRUE);
+
+
 		fBuffer.renderFrameBuffer(renderer, customShader);
 
 

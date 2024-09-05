@@ -204,6 +204,8 @@
     <Image Include="ressources\skybox\top.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cubemapShader.fs" />
+    <None Include="cubemapShader.vs" />
     <None Include="customShader.vs" />
     <None Include="unlitShader.fs" />
     <None Include="unlitShader.vs" />

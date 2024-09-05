@@ -167,5 +167,7 @@
     <None Include="unlitShader.fs" />
     <None Include="unlitShader.vs" />
     <None Include="customShader.vs" />
+    <None Include="cubemapShader.fs" />
+    <None Include="cubemapShader.vs" />
   </ItemGroup>
 </Project>

@@ -11,14 +11,19 @@ Cubemap::Cubemap(std::string locations[6], Shader* shader, unsigned int textureU
     localBind();
     int width, height, nrChannels;
     unsigned char* data;
-    int a = sizeof(locations) / sizeof(std::string);
-    for (unsigned int i = 0; i < sizeof(locations)/sizeof(std::string); ++i)
+    for (unsigned int i = 0; i < 6; ++i)
     {
         data = stbi_load(locations[i].c_str(), &width, &height, &nrChannels, 0);
+        if (!data)
+            throw std::runtime_error("Could not load texture, directory is invalid");
+        
         glTexImage2D(
             GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
             0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
         );
+        stbi_image_free(data);
+
+
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
