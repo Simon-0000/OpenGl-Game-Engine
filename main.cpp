@@ -124,9 +124,12 @@ int main() {
 	customShader.setFloat("uOffset", uOffset);
 
 	camera.rotate({ 0,glm::pi<float>() / 2 , 0 });
-	camera.linkShader(&shader);
-	camera.linkShader(&LightShader::unlitShader());
-	camera.linkShader(&cubemapShader);
+	camera.linkShader(&shader, {"uView","uViewPosition"});
+	camera.linkShader(&LightShader::unlitShader(),{"uView"});
+	camera.linkShader(&cubemapShader, { "uView" });
+	camera.linkUniform("uView", [](Camera* cam) { return glm::lookAt(cam->getPosition(), cam->getPosition() + cam->getForward(), { 0,1.0f,0 }); });
+	camera.linkUniform("uViewPosition", [](Camera* cam) { return cam->getGlobalPosition(); });
+
 	camera.bind();
 
 	//GameObjects setup
