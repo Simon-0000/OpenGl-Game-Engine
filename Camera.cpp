@@ -27,7 +27,7 @@ void Camera::linkUniform(const char* name, std::function<glm::mat4(Camera*)> mat
 		shader->useThenSetMat4f(name, &value);
 	};
 }
-void Camera::linkUniform(const char* name, std::function<glm::vec3(Camera*)> vectorUniform) {
+void Camera::linkUniform(const char* name, std::function<glm::vec3(Camera*)> vectorUniform) {//TODO remove this dupplicate function later on
 	uniformsCalculator_[name] = [=](Shader* shader, bool calculate) {
 		static glm::vec3 value;
 		static bool recalculate;
