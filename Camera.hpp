@@ -15,8 +15,24 @@ class Camera : public Transform, public Bindable {
 public:
 	Camera(const Transform& transform, float fovDeg, float aspectRatio, float renderDistance, float minRenderDistance = 0.1f);
 	void linkShader(Shader* shader,std::unordered_set<const char*> uniforms);
-	void linkUniform(const char* name, std::function<glm::mat4(Camera*)> matrixUniform);
-	void linkUniform(const char* name, std::function<glm::vec3(Camera*)> vectorUniform);
+	template<typename T>
+	void linkUniform(const char* name, std::function<T(Camera*)> uniformCalculation)
+	{
+		uniformsCalculator_[name] = [=](Shader* shader, bool calculate) {
+			static T value;
+			static bool recalculate;
+			if (calculate) {
+				recalculate = true;
+				return;
+			}
+			if (recalculate) {
+				recalculate = false;
+				value = uniformCalculation(this);
+			}
+			shader->use();
+			shader->setUniform(name, &value);
+			};
+	}
 
 	void localBind() override;
 	void localUnbind() override;

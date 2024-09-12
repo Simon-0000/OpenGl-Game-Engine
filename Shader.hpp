@@ -11,6 +11,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "OpenGLDebug.hpp"
 
+
 class Shader {
 public:
 	Shader() = default;
@@ -45,7 +46,10 @@ public:
 	void setMat4f(const char* name, const glm::mat4* mat) const;
 	void useThenSetMat3f(const char* name, const glm::mat3* mat) const;
 	void setMat3f(const char* name, const glm::mat3* mat) const;
-
+	template<typename T >
+	void setUniform(const char* name,const T* uniformVal) const;
+	template<typename T >
+	void useThenSetUniform(const char* name, const T* uniformVal) const;
 private:
 	int getUniformId(const char* name) const;
 	static std::string readShaderFile(const char* shaderPath);

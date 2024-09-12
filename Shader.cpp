@@ -124,6 +124,20 @@ void Shader::setMat3f(const char* name, const glm::mat3* mat) const
 	glUniformMatrix3fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
 
 }
+template<>
+void Shader::setUniform(const char* name, const float* uniformVal) const {setFloat(name, *uniformVal);}
+template<>
+void Shader::setUniform(const char* name, const int* uniformVal) const {setInt(name, *uniformVal);}
+template<>
+void Shader::setUniform(const char* name, const glm::vec2* uniformVal) const {setVec2f(name, uniformVal);}
+template<>
+void Shader::setUniform(const char* name, const glm::vec3* uniformVal) const {setVec3f(name, uniformVal);}
+template<>
+void Shader::setUniform(const char* name, const glm::mat4* uniformVal) const {setMat4f(name, uniformVal);}
+
+
+
+
 
 
 int Shader::getUniformId(const char* name) const {

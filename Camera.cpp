@@ -10,43 +10,6 @@ void Camera::linkShader(Shader* shader,std::unordered_set<const char*> uniforms)
 	shadersUniforms_.push_back({shader,uniforms});
 }
 
-void Camera::linkUniform(const char* name, std::function<glm::mat4(Camera*)> matrixUniform)
-{
-	uniformsCalculator_[name] = [=](Shader* shader, bool calculate) {
-		static glm::mat4 value;
-		static bool recalculate;
-		if (calculate) {
-			recalculate = true;
-			return;
-		}
-		if (recalculate) {
-			recalculate = false;
-			value = matrixUniform(this);
-		}
-
-		shader->useThenSetMat4f(name, &value);
-	};
-}
-void Camera::linkUniform(const char* name, std::function<glm::vec3(Camera*)> vectorUniform) {//TODO remove this dupplicate function later on
-	uniformsCalculator_[name] = [=](Shader* shader, bool calculate) {
-		static glm::vec3 value;
-		static bool recalculate;
-		if (calculate) {
-			recalculate = true;
-			return;
-		}
-		if (recalculate) {
-			recalculate = false;
-			value = vectorUniform(this);
-		}
-
-		shader->useThenSetVec3f(name, &value);
-	};
-}
-
-
-
-
 void Camera::localBind()
 {
 	glm::mat4 projection;

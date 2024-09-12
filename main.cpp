@@ -129,9 +129,9 @@ int main() {
 	camera.linkShader(&cubemapShader, { "uViewSkybox" });
 
 	auto getView = [](Camera* cam) { return glm::lookAt(cam->getPosition(), cam->getPosition() + cam->getForward(), { 0,1.0f,0 }); };
-	camera.linkUniform("uView", getView);
-	camera.linkUniform("uViewPosition", [](Camera* cam) { return cam->getGlobalPosition(); });
-	camera.linkUniform("uViewSkybox",  [&getView](Camera* cam) {return glm::mat4(glm::mat3(getView(cam))); });
+	camera.linkUniform<glm::mat4>("uView", getView);
+	camera.linkUniform<glm::vec3>("uViewPosition", [](Camera* cam) { return cam->getGlobalPosition(); });
+	camera.linkUniform<glm::mat4>("uViewSkybox",  [&getView](Camera* cam) {return glm::mat4(glm::mat3(getView(cam))); });
 	
 
 	camera.bind();
