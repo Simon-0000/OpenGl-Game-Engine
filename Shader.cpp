@@ -158,11 +158,11 @@ unsigned int Shader::createAndCompileShader(GLenum shaderType, const char* shade
 
 	//check if the shader it compiled correctly:
 	int  success;
-	char infoLog[ERROR_MESSAGE_BUFFER_LENGTH];
+	char infoLog[Debug::ERROR_MESSAGE_BUFFER_LENGTH];
 	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
-		glGetShaderInfoLog(shaderId, ERROR_MESSAGE_BUFFER_LENGTH, NULL, infoLog);
+		glGetShaderInfoLog(shaderId, Debug::ERROR_MESSAGE_BUFFER_LENGTH, NULL, infoLog);
 		std::cout << "ERROR::SHADER::" << shaderType << "::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 	return shaderId;
@@ -179,9 +179,9 @@ unsigned int Shader::createShaderProgram(const char* vertexShaderPath, const cha
 	glDeleteShader(fragmentShader);
 	int success;
 	glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
-	char infoLog[ERROR_MESSAGE_BUFFER_LENGTH];
+	char infoLog[Debug::ERROR_MESSAGE_BUFFER_LENGTH];
 	if (!success) {
-		glGetProgramInfoLog(shaderProgramId, ERROR_MESSAGE_BUFFER_LENGTH, NULL, infoLog);
+		glGetProgramInfoLog(shaderProgramId, Debug::ERROR_MESSAGE_BUFFER_LENGTH, NULL, infoLog);
 		std::cout << "ERROR::SHADER PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 	return shaderProgramId;

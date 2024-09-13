@@ -114,7 +114,8 @@ int main() {
 
 
 	//shaders
-	Shader& shader = LightShader::litShader();
+	Shader& shader = Shader::tryCreateShader("shader.vs", "shader.fs");
+	Shader& unlitShader = Shader::tryCreateShader("unlitShader.vs", "unlitShader.fs");
 	Shader& customShader = Shader::tryCreateShader("customShader.vs", "customShader.fs");
 	Shader& cubemapShader = Shader::tryCreateShader("cubemapShader.vs", "cubemapShader.fs");
 
@@ -125,7 +126,7 @@ int main() {
 
 	camera.rotate({ 0,glm::pi<float>() / 2 , 0 });
 	camera.linkShader(&shader, {"uView","uViewPosition"});
-	camera.linkShader(&LightShader::unlitShader(),{"uView"});
+	camera.linkShader(&unlitShader,{"uView"});
 	camera.linkShader(&cubemapShader, { "uViewSkybox" });
 
 	auto getView = [](Camera* cam) {return glm::lookAt(cam->getPosition(), cam->getPosition() + cam->getForward(), { 0,1.0f,0 }); };

@@ -100,7 +100,7 @@ Texture* Model::loadMaterialTextures(const char* path, aiMaterial* mat, aiTextur
 	{
 		aiString subPath;
 		mat->GetTexture(type, 0, &subPath);
-		texture = &Texture::tryCreateTexture((std::string(path) + subPath.C_Str()).c_str(), &LightShader::litShader(), textureUnit, TextureName);
+		texture = &Texture::tryCreateTexture((std::string(path) + subPath.C_Str()).c_str(), &Shader::tryCreateShader("shader.vs", "shader.fs"), textureUnit, TextureName);
 	}
 	return texture;
 }
