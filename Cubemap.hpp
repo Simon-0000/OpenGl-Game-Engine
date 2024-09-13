@@ -9,6 +9,7 @@ public:
 	Cubemap(std::string locations[6], Shader* shader, unsigned int textureUnit = 0, const char* textureName = DEFAULT_SHADER_CUBEMAP_NAME);
 	void localBind() override;
 	void localUnbind() override;
+	unsigned int id() { return id_; }
 private:
 	unsigned int id_, textureUnit_;
 	static inline const char* DEFAULT_SHADER_CUBEMAP_NAME = "uCubemap";

@@ -110,7 +110,7 @@ void Shader::useThenSetMat4f(const char* name, const glm::mat4* mat) const {
 	setMat4f(name, mat);
 }
 void Shader::setMat4f(const char* name, const glm::mat4* mat) const {
-	glUniformMatrix4fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
+		glUniformMatrix4fv(getUniformId(name), 1, GL_FALSE, glm::value_ptr(*mat));
 }
 
 void Shader::useThenSetMat3f(const char* name, const glm::mat3* mat) const

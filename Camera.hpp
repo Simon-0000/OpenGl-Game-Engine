@@ -18,20 +18,20 @@ public:
 	template<typename T>
 	void linkUniform(const char* name, std::function<T(Camera*)> uniformCalculation)
 	{
-		uniformsCalculator_[name] = [=](Shader* shader, bool calculate) {
-			static T value;
-			static bool recalculate;
-			if (calculate) {
-				recalculate = true;
-				return;
-			}
-			if (recalculate) {
-				recalculate = false;
-				value = uniformCalculation(this);
-			}
+		uniformsCalculator_[name] = [=,value = T{}](Shader* shader, bool calculate) mutable {
+			//static bool recalculate;
+			//if (calculate) {
+			//	recalculate = true;
+			//	return;
+			//}
+			//if (recalculate) {
+			//	//recalculate = false;
+			//	value = uniformCalculation(this);
+			//}
+			T a = uniformCalculation(this);
 			shader->use();
-			shader->setUniform(name, &value);
-			};
+			shader->setUniform(name, &a);
+		};
 	}
 
 	void localBind() override;

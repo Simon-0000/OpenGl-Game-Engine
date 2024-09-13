@@ -29,10 +29,11 @@ bool Camera::update()
 }
 
 bool Camera::tryUpdateModelMatrix() {
-	for (auto uniformsFunc : uniformsCalculator_) {
-		uniformsFunc.second(nullptr, true);
-	}
+
 	if (Transform::tryUpdateModelMatrix()) {
+		//for (auto uniformsFunc : uniformsCalculator_) {
+		//	uniformsFunc.second(nullptr, true);
+		//}
 		for (auto& shaderUniforms : shadersUniforms_)
 		{
 			for (auto& uniformName : shaderUniforms.second) {

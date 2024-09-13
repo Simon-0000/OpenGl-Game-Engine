@@ -35,7 +35,7 @@ static constexpr float TURN_SENSITIVITY = 0.1f, TRANSLATION_SENSITIVITY = 2.0f;
 static bool shiftFunctionsEnabled = false, controlFunctionsEnabled = false;
 static double oldXPos, oldYPos;
 static float yaw = -90.0f, pitch = 0;
-Camera camera({ {0,0,1} }, 60.0f, static_cast<float>(Window::WINDOW_WIDTH)/ Window::WINDOW_HEIGHT, 100.0f);
+Camera camera({ {0,0,1} }, 45.0f, static_cast<float>(Window::WINDOW_WIDTH)/ Window::WINDOW_HEIGHT, 100.0f);
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -128,12 +128,12 @@ int main() {
 	camera.linkShader(&LightShader::unlitShader(),{"uView"});
 	camera.linkShader(&cubemapShader, { "uViewSkybox" });
 
-	auto getView = [](Camera* cam) { return glm::lookAt(cam->getPosition(), cam->getPosition() + cam->getForward(), { 0,1.0f,0 }); };
+	auto getView = [](Camera* cam) {return glm::lookAt(cam->getPosition(), cam->getPosition() + cam->getForward(), { 0,1.0f,0 }); };
 	camera.linkUniform<glm::mat4>("uView", getView);
 	camera.linkUniform<glm::vec3>("uViewPosition", [](Camera* cam) { return cam->getGlobalPosition(); });
-	camera.linkUniform<glm::mat4>("uViewSkybox",  [&getView](Camera* cam) {return glm::mat4(glm::mat3(getView(cam))); });
-	
-
+	camera.linkUniform<glm::mat4>("uViewSkybox", [&getView](Camera* cam) {
+		return glm::mat4(glm::mat3(getView(cam)));
+		});
 	camera.bind();
 
 	//GameObjects setup
@@ -202,6 +202,59 @@ int main() {
 	pointLight.linkChild(&mat);
 
 	//Cubemaps
+	float skyboxVertices[] = {
+		// positions          
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
+	};
+	unsigned int skyboxVAO, skyboxVBO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
 	std::string faces[6]
 	{
 			"ressources/skybox/right.jpg",
@@ -212,8 +265,11 @@ int main() {
 			"ressources/skybox/back.jpg"
 	};
 	Cubemap cubemapTexture(faces, &cubemapShader);
-	Mesh skybox = Cube(20);
+	Mesh skybox = Cube(0.5f);
 	skybox.linkChild(&cubemapTexture);
+
+
+
 	//framebuffer and renderBuffer
 	
 	FrameBuffer fBuffer;
@@ -258,12 +314,17 @@ int main() {
 		glDepthMask(GL_FALSE);
 		cubemapShader.use();
 		// ... set view and projection matrix
-		skybox.draw();
-		// ... draw rest of the scene
+		glBindVertexArray(skyboxVAO);
+		//glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		cubemapTexture.bind();
+		//skybox.localDraw();
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glDepthMask(GL_TRUE);
+		renderer.renderBuffers();
+		// ... draw rest of the scene
 
 
-		fBuffer.renderFrameBuffer(renderer, customShader);
+		//fBuffer.renderFrameBuffer(renderer, customShader);
 
 
 		//Swap buffer and check events
