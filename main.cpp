@@ -22,6 +22,7 @@
 #include "FrameBuffer.hpp"
 #include "RenderBuffer.hpp"
 #include "Cubemap.hpp"
+#include "Skybox.hpp"
 
 using namespace std;
 
@@ -114,10 +115,10 @@ int main() {
 
 
 	//shaders
-	Shader& shader = Shader::tryCreateShader("shader.vs", "shader.fs");
-	Shader& unlitShader = Shader::tryCreateShader("unlitShader.vs", "unlitShader.fs");
-	Shader& customShader = Shader::tryCreateShader("customShader.vs", "customShader.fs");
-	Shader& cubemapShader = Shader::tryCreateShader("cubemapShader.vs", "cubemapShader.fs");
+	Shader& shader = Shader::tryCreateShader(ShaderNames::shaderVs, ShaderNames::shaderFs);
+	Shader& unlitShader = Shader::tryCreateShader(ShaderNames::unlitShaderVs, ShaderNames::unlitShaderFs);
+	Shader& customShader = Shader::tryCreateShader(ShaderNames::framebufferShaderVs, ShaderNames::framebufferShaderFs);
+	Shader& cubemapShader = Shader::tryCreateShader(ShaderNames::skyboxShaderVs, ShaderNames::skyboxShaderFs);
 
 	glm::mat3 defaultKernel = { 0,0,0,0,1,0,0,0,0 };
 	customShader.useThenSetMat3f("uKernel", &defaultKernel);
@@ -153,7 +154,7 @@ int main() {
 
 	//lights
 	LightColors colors;
-	colors.ambient = { 0.6f, 0.6f, 0.6f };
+	colors.ambient = { 0.2f, 0.2f, 0.2f };
 	colors.diffuse = { 0.2f, 0.2f, 0.2f };
 	colors.specular = { 0.5f, 0.5f, 0.5f };
 
@@ -266,8 +267,11 @@ int main() {
 			"ressources/skybox/back.jpg"
 	};
 	Cubemap cubemapTexture(faces, &cubemapShader);
-	Mesh skybox = Cube(0.5f);
-	skybox.linkChild(&cubemapTexture);
+
+	
+	//Mesh skybox = Cube(0.5f);
+	Skybox skybox(&cubemapTexture);
+	//skybox.linkChild(&cubemapTexture);
 
 
 
@@ -312,15 +316,8 @@ int main() {
 
 		
 		//RENDERING
-		glDepthMask(GL_FALSE);
-		cubemapShader.use();
-		// ... set view and projection matrix
-		glBindVertexArray(skyboxVAO);
-		//glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-		cubemapTexture.bind();
-		//skybox.localDraw();
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glDepthMask(GL_TRUE);
+		skybox.draw();
+		
 		renderer.renderBuffers();
 		// ... draw rest of the scene
 

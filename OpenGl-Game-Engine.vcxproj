@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClCompile Include="Bindable.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Constants.cpp" />
     <ClCompile Include="Cubemap.cpp" />
     <ClCompile Include="Dependencies\glad\src\glad.c" />
     <ClCompile Include="FrameBuffer.cpp" />
@@ -163,6 +162,7 @@
     <ClCompile Include="RenderBuffer.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>

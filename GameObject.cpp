@@ -20,7 +20,7 @@ void GameObject::localDraw()
 
 void GameObject::drawWithOutline(const std::vector<GameObject*>& objects,const glm::vec3& color,float outlineWidthPercentage)
 {
-	static Shader& unlitShader = Shader::tryCreateShader("unlitShader.vs", "unlitShader.fs");
+	static Shader& unlitShader = Shader::tryCreateShader(ShaderNames::unlitShaderVs, ShaderNames::unlitShaderFs);
 	unlitShader.useThenSetVec3f("uLightColor", &color);
 
 	glEnable(GL_STENCIL_TEST);
