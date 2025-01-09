@@ -1,7 +1,8 @@
 #include "Skybox.hpp"
 
-Skybox::Skybox(Cubemap* texture):Mesh(createSkyboxMesh()) {
-	linkChild(texture);
+Skybox::Skybox(Cubemap* texture) : GameObject(&Shader::tryCreateShader(ShaderNames::skyboxShaderVs, ShaderNames::skyboxShaderFs), {}), texture_(texture){
+	static Model cubeModel = { { createSkyboxMesh() } };
+	model = &cubeModel;
 }
 
 void Skybox::draw()
@@ -9,7 +10,8 @@ void Skybox::draw()
 	static Shader& cubemapShader = Shader::tryCreateShader(ShaderNames::skyboxShaderVs, ShaderNames::skyboxShaderFs);
 	glDepthMask(GL_FALSE);
 	cubemapShader.use();
-	Mesh::draw();
+	texture_->localBind();
+	model->draw();
 	glDepthMask(GL_TRUE);
 }
 
